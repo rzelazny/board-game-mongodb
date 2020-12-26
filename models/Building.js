@@ -9,16 +9,9 @@ const buildingSchema = new Schema(
             trim: true,
         },
         cost: [{
-            name: resource1,
-            type: Number,
-        },
-        {
-            name: resource2,
-            type: Number,
-        },
-        {
-            name: resource3,
-            type: Number,
+            resource1: Number,
+            resource2: Number,
+            resource3: Number,
         }],
         points: {
             type: String,
