@@ -1,0 +1,27 @@
+{
+  "name": "boardgame-online",
+  "version": "1.0.0",
+  "description": "Roll dice to gather resources then strategically construct buildings. Most VP wins.",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.11.8",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rzelazny/board-game-mongodb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rzelazny/board-game-mongodb/issues"
+  },
+  "homepage": "https://github.com/rzelazny/board-game-mongodb#readme"
+}
