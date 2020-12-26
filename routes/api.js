@@ -1,9 +1,10 @@
 const router = require("express").Router();
-const Game = require("../models");
+const db = require("../models");
 
 router.get("/api/gameState/:id", (req, res) => {
-  Game.find({})  //{_id: req.params.id}
+  db.Game.findById(req.params.id)
     .then(gameData => {
+      console.log("GameData: ", gameData);
       res.json(gameData);
     })
     .catch(err => {

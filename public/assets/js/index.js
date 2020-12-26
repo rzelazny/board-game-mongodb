@@ -1,8 +1,9 @@
 let gameState = {};
+let currentGame = "5fe79fc10fe4d0345cbe4e4c";
 
 function init(){
 
-  fetch("/api/gameState/" + "ObjectId(\"5fe79fc10fe4d0345cbe4e4c\")")
+  fetch("/api/gameState/" + currentGame)
   .then(response => {
     return response.json();
   })
