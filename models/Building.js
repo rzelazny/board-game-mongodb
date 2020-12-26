@@ -8,14 +8,16 @@ const buildingSchema = new Schema(
             type: String,
             trim: true,
         },
+        column: {
+            type: Number,
+        },
         cost: [{
             resource1: Number,
             resource2: Number,
             resource3: Number,
         }],
         points: {
-            type: String,
-            trim: true,
+            type: Number,
         },
         effectTiming: {
             type: String,
