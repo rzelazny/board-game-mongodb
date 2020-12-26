@@ -32,10 +32,6 @@ const buildingSchema = new Schema(
             type: String,
             trim: true,
         },
-        built: {
-            type: Boolean,
-            default: false,
-        }
     }
 );
 

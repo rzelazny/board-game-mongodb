@@ -11,10 +11,10 @@ const PlayerSchema = new Schema({
         type: Number,
         default: 0
     },
-    buildingBoard: [
+    constructedBuildings: [
         {
             type: Schema.Types.ObjectId,
-            ref: "BuildingBoard"
+            ref: "Building"
         }
     ]
 });
