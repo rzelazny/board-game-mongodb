@@ -8,15 +8,27 @@ const buildingSchema = new Schema(
             type: String,
             trim: true,
         },
-        cost: {
-            type: String,
-            trim: true,
+        cost: [{
+            name: resource1,
+            type: Number,
         },
+        {
+            name: resource2,
+            type: Number,
+        },
+        {
+            name: resource3,
+            type: Number,
+        }],
         points: {
             type: String,
             trim: true,
         },
-        effect: {
+        effectTiming: {
+            type: String,
+            trim: true,
+        },
+        effectType: {
             type: String,
             trim: true,
         },
