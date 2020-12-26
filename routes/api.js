@@ -2,15 +2,16 @@ const router = require("express").Router();
 const db = require("../models");
 
 router.get("/api/gameState/:id", (req, res) => {
-  db.Game.findById(req.params.id)
-    .then(gameData => {
-      console.log("GameData: ", gameData);
-      res.json(gameData);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(404).json(err);
-    });
+	db.Game.findById(req.params.id)
+		.populate("gameBoard")
+		.then(gameData => {
+			console.log("GameData: ", gameData);
+			res.json(gameData);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json(err);
+		});
 });
 
 

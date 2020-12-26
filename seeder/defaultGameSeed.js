@@ -11,7 +11,7 @@ let gameBoardSetup = {
     nextEnemy: {
         name: "Goblins",
         power: 3,
-        penalty: "",
+        penalty: "-1res 1, -1 building",
         reward: "+1 res3"
     }
 }

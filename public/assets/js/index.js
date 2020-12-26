@@ -1,24 +1,56 @@
 let gameState = {};
 let currentGame = "5fe79fc10fe4d0345cbe4e4c";
 
-function init(){
+//get the state of the game on load
+function init() {
+	fetch("/api/gameState/" + currentGame)
+		.then(response => {
+			return response.json();
+		})
+		.then(data => {
+			// save db data on global variable
+			gameState = data;
+			console.log(gameState);
 
-  fetch("/api/gameState/" + currentGame)
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    // save db data on global variable
-    gameState = data;
-
-    // populateTotal();
-    // populateTable();
-    // populateChart();
-    console.log(gameState);
-  });
+			playGame();
+		});
 }
 
 init();
+
+//Function process game logic through the phases of the game
+function playGame() {
+	switch (gameState.curPhase) {
+		case 1:
+			return aidPhaseOne()
+		case 2:
+			return productivePhase()
+		case 3:
+			return rewardPhase()
+		case 4:
+			return productivePhase()
+		case 5:
+			return aidPhaseTwo()
+		case 6:
+			return productivePhase()
+		case 7:
+			return rallyPhase()
+		case 8:
+			return combatPhase()
+		default:
+			console.log("Phase not found");
+			break;
+	}
+}
+
+//Function runs the game logic for phase one
+function aidPhaseOne() {
+	
+}
+
+function productivePhase(){
+
+}
 
 // let transactions = [];
 // let myChart;
@@ -133,7 +165,7 @@ init();
 //   populateChart();
 //   populateTable();
 //   populateTotal();
-  
+
 //   // also send to server
 //   fetch("/api/transaction", {
 //     method: "POST",
