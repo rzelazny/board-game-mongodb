@@ -23,6 +23,13 @@ router.post("/api/login", passport.authenticate("local"), function (req, res) {
 	res.json(req.user);
 });
 
+// Route for logging user out
+router.get("/logout", function (req, res) {
+	req.logout();
+	// localStorage.removeItem("user");
+	res.redirect("/");
+});
+
 // router.post("/api/signup", async (req, res) => {
 // 	console.log("Signing up " + req.body.email);
 //     try {

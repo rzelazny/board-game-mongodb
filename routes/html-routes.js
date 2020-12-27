@@ -16,7 +16,7 @@ router.get("/gameboard", isAuthenticated, function(req, res) {
 });
 
 //go to for game setup page
-router.get("/setup", function(req, res) {
+router.get("/setup", isAuthenticated, function(req, res) {
     console.log("html get setup");
     res.sendFile(path.join(__dirname, "../public/setup.html"));
 });
