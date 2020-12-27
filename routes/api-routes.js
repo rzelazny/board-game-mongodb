@@ -1,6 +1,33 @@
 const router = require("express").Router();
 const db = require("../models");
 
+//signup functionality
+router.post("/api/signup", ({body}, res) => {
+	console.log("Signing up " + body.email);
+	
+	db.User.create(body)
+		.then(dbUser => {
+			console.log(dbUser);
+			res.json(dbUser);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json(err);
+		});
+});
+
+// router.post("/api/signup", async (req, res) => {
+// 	console.log("Signing up " + req.body.email);
+//     try {
+//         var user = new db.User(req.body);
+//         var result = await user.save();
+//         res.send(result);
+//     } catch (err) {
+// 		console.log(err)
+//         res.status(500).send(err);
+//     }
+// });
+
 //get the current game state
 router.get("/api/gameState/:id", (req, res) => {
 	db.Game.findById(req.params.id)
@@ -17,10 +44,11 @@ router.get("/api/gameState/:id", (req, res) => {
 });
 
 //update the game collection's phase and round
-router.post("/api/updatePhase/:id", (req , res) => {
+router.post("/api/updatePhase/:id", (req, res) => {
 	db.Game.updateOne(
-		{_id: req.params.id},
-		{$set: 
+		{ _id: req.params.id },
+		{
+			$set:
 			{
 				curRound: req.body.curRound,
 				curPhase: req.body.curPhase
@@ -37,9 +65,9 @@ router.post("/api/updatePhase/:id", (req , res) => {
 });
 
 //update the game collection
-router.post("/api/updateGame/:id", (req , res) => {
+router.post("/api/updateGame/:id", (req, res) => {
 	db.Game.updateOne(
-		{_id: req.params.id}, req.body)
+		{ _id: req.params.id }, req.body)
 		.then(gameData => {
 			console.log("Game Data: ", gameData);
 			res.json(gameData);
@@ -51,9 +79,9 @@ router.post("/api/updateGame/:id", (req , res) => {
 });
 
 //update a player collection
-router.post("/api/updatePlayer/:id", (req , res) => {
+router.post("/api/updatePlayer/:id", (req, res) => {
 	db.Player.updateOne(
-		{_id: req.params.id}, req.body)
+		{ _id: req.params.id }, req.body)
 		.then(playerData => {
 			console.log("Player Data: ", playerData);
 			res.json(playerData);
@@ -65,9 +93,9 @@ router.post("/api/updatePlayer/:id", (req , res) => {
 });
 
 //update the gameBoard collection
-router.post("/api/updateBoard/:id", (req , res) => {
+router.post("/api/updateBoard/:id", (req, res) => {
 	db.GameBoard.updateOne(
-		{_id: req.params.id}, req.body)
+		{ _id: req.params.id }, req.body)
 		.then(boardData => {
 			console.log("Game Board Data: ", boardData);
 			res.json(boardData);
