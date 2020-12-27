@@ -83,6 +83,41 @@ function updatePhase() {
 		}
 	})
 }
+//function updates game collection
+function updateGame(game, field, data) {
+
+	let gameUpdateData = {$set : {}};
+	gameUpdateData.$set[field] = data;
+
+	console.log(`Updating game ${game} ${field} to ${data}`);
+	fetch("/api/updatePlayer/" + game, {
+		method: "POST",
+		body: JSON.stringify(gameUpdateData),
+		headers: {
+			Accept: "application/json, text/plain, */*",
+			"Content-Type": "application/json"
+		}
+	})
+}
+
+
+
+//function updates player collection
+function updatePlayer(player, field, data) {
+
+	let playerUpdateData = {$set : {}};
+	playerUpdateData.$set[field] = data;
+
+	console.log(`Updating player ${player} ${field} to ${data}`);
+	fetch("/api/updatePlayer/" + player, {
+		method: "POST",
+		body: JSON.stringify(playerUpdateData),
+		headers: {
+			Accept: "application/json, text/plain, */*",
+			"Content-Type": "application/json"
+		}
+	})
+}
 
 //Function runs the game logic for aid phase one - players with lowest building count get a bonus. 
 function aidPhaseOne() {
@@ -133,6 +168,10 @@ function aidPhaseOne() {
 	}
 	console.log("filtered players", worstOff);
 
+	//update the worst off player's bonus status in the db
+	worstOff.forEach(player => {
+		updatePlayer(player, "hasBonus", true);
+	});
 	
 
 	//move on to the next phase

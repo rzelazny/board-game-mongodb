@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../models");
 
+//get the current game state
 router.get("/api/gameState/:id", (req, res) => {
 	db.Game.findById(req.params.id)
 		.populate("gameBoard")
@@ -15,7 +16,8 @@ router.get("/api/gameState/:id", (req, res) => {
 		});
 });
 
-router.post("/api/updatePhase/:id", (req , res) => {
+//update the game collection
+router.post("/api/updateGame/:id", (req , res) => {
 	db.Game.updateOne(
 		{_id: req.params.id},
 		{$set: 
@@ -27,6 +29,20 @@ router.post("/api/updatePhase/:id", (req , res) => {
 		.then(gameData => {
 			console.log("GameData: ", gameData);
 			res.json(gameData);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json(err);
+		});
+});
+
+//update a player collection
+router.post("/api/updatePlayer/:id", (req , res) => {
+	db.Player.updateOne(
+		{_id: req.params.id}, req.body)
+		.then(playerData => {
+			console.log("Player Data: ", playerData);
+			res.json(playerData);
 		})
 		.catch(err => {
 			console.log(err);
