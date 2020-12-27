@@ -22,15 +22,16 @@ $(document).ready(function() {
     passwordInput.val("");
   });
 
-  // loginUser does a post to our "api/login" route and if successful, redirects us the the casino page
+  // loginUser does a post to our "api/login" route and if successful, redirects us the the setup page
   function loginUser(email, password) {
+    console.log(`attempting to log in with , ${email}, ${password}`)
     $.post("/api/login", {
       email: email,
       password: password
     })
       .then(function(user) {
         //localStorage.setItem("user", JSON.stringify(user.id))
-        window.location.replace("/home");
+        window.location.replace("/setup");
         // If there's an error, log the error
       })
       .catch(function(err) {

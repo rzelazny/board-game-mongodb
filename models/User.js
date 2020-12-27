@@ -17,8 +17,9 @@ const User = new Schema({
 });
 
 //Validate hashed password
-User.methods.comparePassword = function(plaintext, cb) {
-    return cb(null, Bcrypt.compareSync(plaintext, this.password));
+User.methods.comparePassword = function(plaintext) {
+	console.log("checking password");
+    return (bcrypt.compareSync(plaintext, this.password));
 };
 
 //Before a User is created, automatically hash their password

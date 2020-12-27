@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const db = require("../models");
+var passport = require("../config/passport");
 
 //signup functionality
-router.post("/api/signup", ({body}, res) => {
+router.post("/api/signup", ({ body }, res) => {
 	console.log("Signing up " + body.email);
-	
+
 	db.User.create(body)
 		.then(dbUser => {
 			console.log(dbUser);
@@ -14,6 +15,12 @@ router.post("/api/signup", ({body}, res) => {
 			console.log(err);
 			res.status(404).json(err);
 		});
+});
+
+//login functionality
+router.post("/api/login", passport.authenticate("local"), function (req, res) {
+	console.log("Loging in ", req.body.email);
+	res.json(req.user);
 });
 
 // router.post("/api/signup", async (req, res) => {
