@@ -53,71 +53,19 @@ function nextPhase() {
 		else { //if not increment round and set phase back to one
 			gameState.curRound++;
 			gameState.curPhase = 1;
-			updatePhase();
+			updateGame(currentGame, "curPhase", gameState.curPhase);
+			updateGame(currentGame, "curRound", gameState.curRound);
 		}
 	}
 	else {
 		gameState.curPhase++;
-		updatePhase();
-		//update global variable
-		//Object.assign(gameState, phaseUpdateData);
+		updateGame(currentGame, "curPhase", gameState.curPhase);
 
 		//keep playing
 		playGame();
 	}
 }
 
-//function updates current phase in the db
-function updatePhase() {
-	let phaseUpdateData = {
-		round: gameState.curRound,
-		phase: gameState.curPhase
-	};
-	console.log(`Updating game ${currentGame} phase to ${gameState.curPhase} and round to ${gameState.curRound}`);
-	fetch("/api/updatePhase/" + currentGame, {
-		method: "POST",
-		body: JSON.stringify(phaseUpdateData),
-		headers: {
-			Accept: "application/json, text/plain, */*",
-			"Content-Type": "application/json"
-		}
-	})
-}
-//function updates game collection
-function updateGame(game, field, data) {
-
-	let gameUpdateData = {$set : {}};
-	gameUpdateData.$set[field] = data;
-
-	console.log(`Updating game ${game} ${field} to ${data}`);
-	fetch("/api/updatePlayer/" + game, {
-		method: "POST",
-		body: JSON.stringify(gameUpdateData),
-		headers: {
-			Accept: "application/json, text/plain, */*",
-			"Content-Type": "application/json"
-		}
-	})
-}
-
-
-
-//function updates player collection
-function updatePlayer(player, field, data) {
-
-	let playerUpdateData = {$set : {}};
-	playerUpdateData.$set[field] = data;
-
-	console.log(`Updating player ${player} ${field} to ${data}`);
-	fetch("/api/updatePlayer/" + player, {
-		method: "POST",
-		body: JSON.stringify(playerUpdateData),
-		headers: {
-			Accept: "application/json, text/plain, */*",
-			"Content-Type": "application/json"
-		}
-	})
-}
 
 //Function runs the game logic for aid phase one - players with lowest building count get a bonus. 
 function aidPhaseOne() {

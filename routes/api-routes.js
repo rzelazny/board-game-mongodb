@@ -16,8 +16,8 @@ router.get("/api/gameState/:id", (req, res) => {
 		});
 });
 
-//update the game collection
-router.post("/api/updateGame/:id", (req , res) => {
+//update the game collection's phase and round
+router.post("/api/updatePhase/:id", (req , res) => {
 	db.Game.updateOne(
 		{_id: req.params.id},
 		{$set: 
@@ -28,6 +28,20 @@ router.post("/api/updateGame/:id", (req , res) => {
 		})
 		.then(gameData => {
 			console.log("GameData: ", gameData);
+			res.json(gameData);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json(err);
+		});
+});
+
+//update the game collection
+router.post("/api/updateGame/:id", (req , res) => {
+	db.Game.updateOne(
+		{_id: req.params.id}, req.body)
+		.then(gameData => {
+			console.log("Game Data: ", gameData);
 			res.json(gameData);
 		})
 		.catch(err => {
@@ -50,6 +64,19 @@ router.post("/api/updatePlayer/:id", (req , res) => {
 		});
 });
 
+//update the gameBoard collection
+router.post("/api/updateBoard/:id", (req , res) => {
+	db.GameBoard.updateOne(
+		{_id: req.params.id}, req.body)
+		.then(boardData => {
+			console.log("Game Board Data: ", boardData);
+			res.json(boardData);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json(err);
+		});
+});
 // router.post("/api/transaction", ({body}, res) => {
 //   Game.create(body)
 //     .then(dbTransaction => {
