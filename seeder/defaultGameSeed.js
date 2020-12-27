@@ -16,18 +16,49 @@ let gameBoardSetup = {
     }
 }
 
+let playersSetup = [{
+    name: "Player One",
+    score: 0,
+    resource1: 0,
+    resource2: 0,
+    resource3: 0,
+    hasBonus: false,
+    constructedBuildings: [Sawmill]
+    },
+    {
+    name: "AI Overlord",
+    score: 0,
+    resource1: 0,
+    resource2: 1,
+    resource3: 1,
+    hasBonus: false,
+    constructedBuildings: []
+    },
+]
+
 let gameSetup = 
     {
         name: "Demo Game",
         players: ["Player 1", "AI Overlord"],
-        gameBoard: "ObjectId(\"5fe79f6fb409e03588c55476\")",
+        gameBoard: "5fe7d983cdf2912048481cff",
         curPlayer: 1,
         curRound: 1,
         curPhase: 1
 };
 
-db.Building.deleteMany({})
+db.GameBoard.deleteMany({})
     .then(() => db.GameBoard.collection.insertOne(gameBoardSetup))
+    .then(data => {
+        console.log(data.result.n + " record inserted!");
+        process.exit(0);
+    })
+    .catch(err => {
+        console.error(err);
+        process.exit(1);
+});
+
+db.Player.deleteMany({})
+    .then(() => db.Player.collection.insertMany(playersSetup))
     .then(data => {
         console.log(data.result.n + " records inserted!");
         process.exit(0);
@@ -37,7 +68,7 @@ db.Building.deleteMany({})
         process.exit(1);
 });
 
-db.Building.deleteMany({})
+db.Game.deleteMany({})
     .then(() => db.Game.collection.insertOne(gameSetup))
     .then(data => {
         console.log(data.result.n + " records inserted!");

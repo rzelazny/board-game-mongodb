@@ -9,10 +9,12 @@ const gameSchema = new Schema(
             trim: true,
             required: "Enter a name for the game"
         },
-        players: {
-            type: String,
-            required: true
-        },
+        players: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Player"
+            }
+        ],
         gameBoard: [
             {
                 type: Schema.Types.ObjectId,

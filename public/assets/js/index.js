@@ -1,5 +1,5 @@
 let gameState = {};
-let currentGame = "5fe79fc10fe4d0345cbe4e4c";
+const currentGame = "5fe7d983cdf2912048481cfc";
 
 //get the state of the game on load
 function init() {
@@ -43,13 +43,145 @@ function playGame() {
 	}
 }
 
-//Function runs the game logic for phase one
-function aidPhaseOne() {
-	
+//Function moves game state between phases and ends the game after round 5 phase 8
+function nextPhase() {
+	//let {curPhase, curRound} = gameState;
+
+	if (gameState.curPhase === 8) {
+		//check if game is over when it's phase 8
+		if (gameState.curRound === 5) endGame();
+		else { //if not increment round and set phase back to one
+			gameState.curRound++;
+			gameState.curPhase = 1;
+			updatePhase();
+		}
+	}
+	else {
+		gameState.curPhase++;
+		updatePhase();
+		//update global variable
+		//Object.assign(gameState, phaseUpdateData);
+
+		//keep playing
+		playGame();
+	}
 }
 
-function productivePhase(){
+//function updates current phase in the db
+function updatePhase() {
+	let phaseUpdateData = {
+		round: gameState.curRound,
+		phase: gameState.curPhase
+	};
+	console.log(`Updating game ${currentGame} phase to ${gameState.curPhase} and round to ${gameState.curRound}`);
+	fetch("/api/updatePhase/" + currentGame, {
+		method: "POST",
+		body: JSON.stringify(phaseUpdateData),
+		headers: {
+			Accept: "application/json, text/plain, */*",
+			"Content-Type": "application/json"
+		}
+	})
+}
 
+//Function runs the game logic for aid phase one - players with lowest building count get a bonus. 
+function aidPhaseOne() {
+	console.log("Aid phase one running");
+
+	let playerStats = [];
+	let buildCount = [];
+	let resourceCount = [];
+	let worstOff = [];
+
+	//get current player stats
+	gameState.players.forEach(player => {
+		let stats = {
+			id: player._id,
+			buildings: player.constructedBuildings.length,
+			resources: (player.resource1 + player.resource2 + player.resource3)
+		}
+		playerStats.push(stats);
+		buildCount.push(stats.buildings);
+	});
+
+	//Find the lowest building total
+	const fewestBuildings = Math.min(...buildCount);
+
+	let leastBuildingPlayers = playerStats.filter(function(stats){
+		return stats.buildings === fewestBuildings;
+	});
+
+	//if there's a tie for fewest buildings check their resource count
+	if(leastBuildingPlayers.length > 1){
+		leastBuildingPlayers.forEach(player => {
+			resourceCount.push(player.resources);
+		});
+
+		//Find the lowest resource total
+		const fewestResources = Math.min(...resourceCount);
+
+		let leastResourcePlayers = leastBuildingPlayers.filter(function(stats){
+			return stats.resources === fewestResources;
+		});
+		
+		leastResourcePlayers.forEach(player => {
+			worstOff.push(player.id);
+		});
+	}
+	else{ //if there's only one player with the least building they're the worst off
+		worstOff.push(leastBuildingPlayers[0].id);
+	}
+	console.log("filtered players", worstOff);
+
+	
+
+	//move on to the next phase
+	//nextPhase();
+}
+
+//Function runs the game logic for product phases (2, 4, 6)
+function productivePhase() {
+	console.log("Productive phase running");
+
+	//move on to the next phase
+	nextPhase();
+}
+
+
+//Function runs the game logic for aid phase two
+function aidPhaseTwo() {
+	console.log("Aid phase two running");
+
+	//move on to the next phase
+	nextPhase();
+}
+
+//Function runs the game logic for reward phase
+function rewardPhase() {
+	console.log("Reward phase running");
+
+	//move on to the next phase
+	nextPhase();
+}
+
+//Function runs the game logic for rally troops phase
+function rallyPhase() {
+	console.log("Rally phase running");
+
+	//move on to the next phase
+	nextPhase();
+}
+
+//Function runs the game logic for combat phase
+function combatPhase() {
+	console.log("Combat phase running");
+
+	//move on to the next phase
+	nextPhase();
+}
+
+function endGame() {
+	console.log("The game has ended!");
 }
 
 // let transactions = [];

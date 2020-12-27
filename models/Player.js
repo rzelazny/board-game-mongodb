@@ -11,6 +11,22 @@ const PlayerSchema = new Schema({
         type: Number,
         default: 0
     },
+    resource1: {
+        type: Number,
+        default: 0
+    },
+    resource2: {
+        type: Number,
+        default: 0
+    },
+    resource3: {
+        type: Number,
+        default: 0
+    },
+    hasBonus: {
+        type: Boolean,
+        default: false
+    },
     constructedBuildings: [
         {
             type: Schema.Types.ObjectId,

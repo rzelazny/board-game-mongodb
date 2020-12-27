@@ -4,6 +4,7 @@ const db = require("../models");
 router.get("/api/gameState/:id", (req, res) => {
 	db.Game.findById(req.params.id)
 		.populate("gameBoard")
+		.populate("players")
 		.then(gameData => {
 			console.log("GameData: ", gameData);
 			res.json(gameData);
@@ -14,6 +15,24 @@ router.get("/api/gameState/:id", (req, res) => {
 		});
 });
 
+router.post("/api/updatePhase/:id", (req , res) => {
+	db.Game.updateOne(
+		{_id: req.params.id},
+		{$set: 
+			{
+				curRound: req.body.curRound,
+				curPhase: req.body.curPhase
+			}
+		})
+		.then(gameData => {
+			console.log("GameData: ", gameData);
+			res.json(gameData);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json(err);
+		});
+});
 
 // router.post("/api/transaction", ({body}, res) => {
 //   Game.create(body)
