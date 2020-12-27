@@ -66,7 +66,6 @@ function nextPhase() {
 	}
 }
 
-
 //Function runs the game logic for aid phase one - players with lowest building count get a bonus. 
 function aidPhaseOne() {
 	console.log("Aid phase one running");
@@ -121,7 +120,7 @@ function aidPhaseOne() {
 		updatePlayer(player, "hasBonus", true);
 	});
 	
-
+	promptUser(worstOff, "");
 	//move on to the next phase
 	//nextPhase();
 }
