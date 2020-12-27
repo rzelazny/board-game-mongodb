@@ -1,15 +1,17 @@
 const router = require("express").Router();
 var path = require("path");
 
+// Requiring our custom middleware for checking if a user is logged in
+var isAuthenticated = require("../config/middleware/isAuthenticated");
+
 //go home, default path
 router.get("/", function(req, res) {
     console.log("html get home");
-    res.sendFile(path.join(__dirname, "../public/index.html"));
+    res.sendFile(path.join(__dirname, "../public/login.html"));
 });
 
 //go to the main boardgame page
-router.get("/gameboard", function(req, res) {
-    console.log("html get gameBoard");
+router.get("/gameboard", isAuthenticated, function(req, res) {
     res.sendFile(path.join(__dirname, "../public/gameboard.html"));
 });
 

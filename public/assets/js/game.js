@@ -125,6 +125,11 @@ function aidPhaseOne() {
 	//nextPhase();
 }
 
+//Function sends a prompt to the user when input is needed
+function promptUser(players, msg){
+	console.log("Prompting user ", players);
+}
+
 //Function runs the game logic for product phases (2, 4, 6)
 function productivePhase() {
 	console.log("Productive phase running");

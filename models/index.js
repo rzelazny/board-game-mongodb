@@ -7,4 +7,5 @@ module.exports = {
     BuildingRow: require("./BuildingRow"),
     BuildingBoard: require("./BuildingBoard"),
     GameBoard: require("./GameBoard"),
+    User: require("./User"),
 };
