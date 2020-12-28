@@ -1,22 +1,14 @@
 $(document).ready(function () {
 
-    const Game = require('./lib/game_server');
+    
     
     // Create a new gaming table on click
     $("#newGame").on("click", function (event) {
-
-        var game = Game.create();
-        // Server side game loop. This runs at 60 frames per second.
-        setInterval(() => {
-            game.update();
-            game.sendState();
-        }, 1000 / 60);
-
+        
         let newGameData = {
             name: "New Game",
             players: ["5fe7d983cdf2912048481cfd",
-                "5fe7d983cdf2912048481cfe"],
-            gameBoard: "5fe7d983cdf2912048481cff"
+                "5fe7d983cdf2912048481cfe"]
         }
         console.log(`Creating game`);
         fetch("/api/newGame/", {
