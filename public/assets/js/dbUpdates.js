@@ -19,7 +19,7 @@
 //function updates game collection
 function updateGame(game, field, data) {
 
-	let gameUpdateData = {$set : {}};
+	let gameUpdateData = { $set: {} };
 	gameUpdateData.$set[field] = data;
 
 	console.log(`Updating game ${game} ${field} to ${data}`);
@@ -36,7 +36,7 @@ function updateGame(game, field, data) {
 //function updates player collection
 function updatePlayer(player, field, data) {
 
-	let playerUpdateData = {$set : {}};
+	let playerUpdateData = { $set: {} };
 	playerUpdateData.$set[field] = data;
 
 	console.log(`Updating player ${player} ${field} to ${data}`);
@@ -53,7 +53,7 @@ function updatePlayer(player, field, data) {
 //function updates gameBoard collection
 function updateBoard(board, field, data) {
 
-	let boardUpdateData = {$set : {}};
+	let boardUpdateData = { $set: {} };
 	boardUpdateData.$set[field] = data;
 
 	console.log(`Updating board ${board} ${field} to ${data}`);
@@ -65,4 +65,21 @@ function updateBoard(board, field, data) {
 			"Content-Type": "application/json"
 		}
 	})
+}
+
+//function converts any passed function into a promisified function with a callback of err and result
+function promisify(f) {
+	return function (...args) { // return a wrapper-function (*)
+		return new Promise((resolve, reject) => {
+			function callback(err, result) { // our custom callback for f (**)
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result);
+				}
+			}
+			args.push(callback); // append our custom callback to the end of f arguments
+			f.call(this, ...args); // call the original function
+		});
+	};
 }
