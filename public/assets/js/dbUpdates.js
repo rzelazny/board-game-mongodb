@@ -23,7 +23,7 @@ function updateGame(game, field, data) {
 	gameUpdateData.$set[field] = data;
 
 	console.log(`Updating game ${game} ${field} to ${data}`);
-	fetch("/api/updatePlayer/" + game, {
+	fetch("/api/updateGame/" + game, {
 		method: "POST",
 		body: JSON.stringify(gameUpdateData),
 		headers: {
@@ -57,7 +57,7 @@ function updateBoard(board, field, data) {
 	boardUpdateData.$set[field] = data;
 
 	console.log(`Updating board ${board} ${field} to ${data}`);
-	fetch("/api/updatePlayer/" + player, {
+	fetch("/api/updateBoard/" + board, {
 		method: "POST",
 		body: JSON.stringify(boardUpdateData),
 		headers: {

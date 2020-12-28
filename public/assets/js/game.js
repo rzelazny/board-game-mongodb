@@ -1,5 +1,5 @@
 let gameState = {};
-const currentGame = "5fe7d983cdf2912048481cfc";
+const currentGame = document.defaultView.location.pathname.split("gameboard/").pop();
 
 //get the state of the game on load
 function init() {
@@ -10,6 +10,7 @@ function init() {
 		.then(data => {
 			// save db data on global variable
 			gameState = data;
+
 			console.log(gameState);
 
 			playGame();
@@ -125,9 +126,23 @@ function aidPhaseOne() {
 	//nextPhase();
 }
 
-//Function sends a prompt to the user when input is needed
-function promptUser(players, msg){
-	console.log("Prompting user ", players);
+//Function prompts specific players with a message, and tells all other users to wait
+function promptUser(updatePlayer, msg){
+	console.log("Prompting users");
+
+	let {players} = gameState
+
+	//
+	players.forEach(player => {
+		if(updatePlayer.includes(player._id) ){
+			//send msg
+			console.log("Message to specific users");
+		}
+		else{
+			//send waiting for other players message
+			console.log("Waiting on other players");
+		}
+	});
 }
 
 //Function runs the game logic for product phases (2, 4, 6)

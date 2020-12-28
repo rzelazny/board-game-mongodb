@@ -1,23 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#317EFB">
-  <!-- <link rel="shortcut icon" href="assets/icons/icon-192x192.png" type="image/x-icon"> -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#317EFB">
+	<!-- <link rel="shortcut icon" href="assets/icons/icon-192x192.png" type="image/x-icon"> -->
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="./assets/css/styles.css">
-  <!-- <link rel="manifest" href="manifest.json" /> -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="./assets/css/styles.css"> -->
+	<!-- <link rel="manifest" href="manifest.json" /> -->
 
-  <title>Board Gaming</title>
+	<title>Board Gaming</title>
 </head>
+
 <body>
+	<div class="container" id="boardContainer">
+		<form>
+			<div class="form-group">
+				<label for="exampleFormControlInput1">Email address</label>
+				<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+			</div>
+			<div class="form-group">
+				<label for="exampleFormControlSelect1">Example select</label>
+				<select class="form-control" id="exampleFormControlSelect1">
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="exampleFormControlSelect2">Example multiple select</label>
+				<select multiple class="form-control" id="exampleFormControlSelect2">
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="exampleFormControlTextarea1">Example textarea</label>
+				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+			</div>
+		</form>
 
+	</div>
 
-  <script src="./assets/js/dbUpdates.js"></script>
-  <script src="./assets/js/game.js"></script>
-  
+	<script src="../assets/js/dbUpdates.js"></script>
+	<script src="../assets/js/game.js"></script>
+
 </body>
+
 </html>

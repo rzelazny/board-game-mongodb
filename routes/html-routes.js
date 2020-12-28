@@ -11,7 +11,7 @@ router.get("/", function(req, res) {
 });
 
 //go to the main boardgame page
-router.get("/gameboard", isAuthenticated, function(req, res) {
+router.get("/gameboard/:id", isAuthenticated, function(req, res) {
     res.sendFile(path.join(__dirname, "../public/gameboard.html"));
 });
 

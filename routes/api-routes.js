@@ -23,24 +23,26 @@ router.post("/api/login", passport.authenticate("local"), function (req, res) {
 	res.json(req.user);
 });
 
-// Route for logging user out
+//logout functionality
 router.get("/logout", function (req, res) {
 	req.logout();
-	// localStorage.removeItem("user");
 	res.redirect("/");
 });
 
-// router.post("/api/signup", async (req, res) => {
-// 	console.log("Signing up " + req.body.email);
-//     try {
-//         var user = new db.User(req.body);
-//         var result = await user.save();
-//         res.send(result);
-//     } catch (err) {
-// 		console.log(err)
-//         res.status(500).send(err);
-//     }
-// });
+//create a new game
+router.post("/api/newGame", ({ body }, res) => {
+	console.log("Creating a new game");
+
+	db.Game.create(body)
+		.then(dbGame => {
+			console.log(dbGame);
+			res.json(dbGame);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json(err);
+		});
+});
 
 //get the current game state
 router.get("/api/gameState/:id", (req, res) => {
@@ -50,6 +52,20 @@ router.get("/api/gameState/:id", (req, res) => {
 		.then(gameData => {
 			console.log("GameData: ", gameData);
 			res.json(gameData);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json(err);
+		});
+});
+
+//get a player's data
+router.get("/api/playerState/:id", (req, res) => {
+	db.Player.findById(req.params.id)
+		.populate("constructedBuildings")
+		.then(playerData => {
+			console.log("Player Data: ", playerData);
+			res.json(playerData);
 		})
 		.catch(err => {
 			console.log(err);
@@ -119,34 +135,5 @@ router.post("/api/updateBoard/:id", (req, res) => {
 			res.status(404).json(err);
 		});
 });
-// router.post("/api/transaction", ({body}, res) => {
-//   Game.create(body)
-//     .then(dbTransaction => {
-//       res.json(dbTransaction);
-//     })
-//     .catch(err => {
-//       res.status(404).json(err);
-//     });
-// });
-
-// router.post("/api/transaction/bulk", ({body}, res) => {
-//   Game.insertMany(body)
-//     .then(dbTransaction => {
-//       res.json(dbTransaction);
-//     })
-//     .catch(err => {
-//       res.status(404).json(err);
-//     });
-// });
-
-// router.get("/api/transaction", (req, res) => {
-//   Game.find({}).sort({date: -1})
-//     .then(dbTransaction => {
-//       res.json(dbTransaction);
-//     })
-//     .catch(err => {
-//       res.status(404).json(err);
-//     });
-// });
 
 module.exports = router;
