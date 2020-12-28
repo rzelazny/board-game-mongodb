@@ -15,12 +15,17 @@ const gameSchema = new Schema(
                 ref: "Player"
             }
         ],
-        gameBoard: [
+        turnOrder: [
             {
-                type: Schema.Types.ObjectId,
-                ref: "GameBoard"
+                type: Number
             }
         ],
+        nextEnemy: {
+            name: String,
+            power: Number,
+            penalty: String,
+            reward: String
+        },
         curPlayer: {
             type: Number,
             default: 1

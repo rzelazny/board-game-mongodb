@@ -1,7 +1,17 @@
 $(document).ready(function () {
 
+    const Game = require('./lib/game_server');
+    
     // Create a new gaming table on click
     $("#newGame").on("click", function (event) {
+
+        var game = Game.create();
+        // Server side game loop. This runs at 60 frames per second.
+        setInterval(() => {
+            game.update();
+            game.sendState();
+        }, 1000 / 60);
+
         let newGameData = {
             name: "New Game",
             players: ["5fe7d983cdf2912048481cfd",
@@ -17,18 +27,18 @@ $(document).ready(function () {
                 "Content-Type": "application/json"
             }
         })
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            if (data.errors) {
-                errorEl.textContent = "Missing Information";
-            }
-            else {
-                console.log("Data: ", data);
-                window.location.assign("/gameboard/" + data._id)
-            }
-        })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                if (data.errors) {
+                    errorEl.textContent = "Missing Information";
+                }
+                else {
+                    console.log("Data: ", data);
+                    window.location.assign("/gameboard/" + data._id)
+                }
+            })
     })
 
 });
