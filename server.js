@@ -43,26 +43,19 @@ const io = require('socket.io')(http);
  * game based on the input it receives. Everything here runs asynchronously.
  */
 io.on('connection', (socket) => {
-	// let counter = 0;
-	// setInterval(() => {
-	// 	socket.emit('hello', ++counter);
-	// }, 1000);
 
-	socket.on("start-game", data => {
+	socket.on('hey', data => {
 		console.log('hey', data);
 	});
 
-	io.sockets.on('connection', function (socket) {
-		console.log('client connected');
+	socket.on('start-game', data => {
+		console.log('Starting game', data);
 		game.initGame(io, socket, db);
 	});
-	// socket.on('player-join', () => {
-	// 	game.addNewPlayer(socket);
-	// });
 
-	// socket.on('player-action', (data) => {
-	// 	game.updatePlayerOnInput(socket.id, data);
-	// });
+	io.sockets.on('connection', function (data) {
+		console.log('client connected');
+	});
 
 	socket.on('disconnect', () => {
 		//game.removePlayer(socket.id);
