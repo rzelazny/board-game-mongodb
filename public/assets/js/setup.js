@@ -16,7 +16,6 @@ function getTables(){
             var cardBody = $("<div>").addClass("card-body");
             cardBody.attr("id", "resultCardBody");
 
-            console.log(curGames);
             //create stats to append
             var id = $("<h4>").addClass("card-text").text("Table: " + curGames[i].name);
             
@@ -30,7 +29,6 @@ function getTables(){
             var user3 = $("<p>").addClass("card-text").text("Player 3: " + userNameArray[2]);
             var user4 = $("<p>").addClass("card-text").text("Player 4: " + userNameArray[3]);
             var user5 = $("<p>").addClass("card-text").text("Player 5: " + userNameArray[4]);
-            
             
             var joinBtn = $('<button/>', {
                 text: "Join Table",
