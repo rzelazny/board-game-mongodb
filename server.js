@@ -44,23 +44,30 @@ const io = require('socket.io')(http);
  */
 io.on('connection', (socket) => {
 
-	socket.on('hey', data => {
-		console.log('hey', data);
+	//have the user join the room for the individual game
+	socket.on('join-room', room => {
+		console.log('joining room ', room);
+		socket.join(room);
 	});
 
 	socket.on('start-game', data => {
 		console.log('Starting game', data);
-		game.initGame(io, socket, db);
+		game.initGame(io, socket, db, data);
 	});
 
-	io.sockets.on('connection', function (data) {
+	io.sockets.on('connection', () => {
 		//game.addPlayer(socket);
 	});
 
 	socket.on('disconnect', () => {
+		console.log("Socket "+  socket.id + " left");
 		//game.removePlayer(socket.id);
-		console.log("Someone left");
-	})
+	});
+
+	// socket.on('disconnect', () => {
+	// 	//game.removePlayer(socket.id);
+	// 	console.log("Someone left");
+	// })
 });
 
 //start web server

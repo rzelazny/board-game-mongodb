@@ -88,7 +88,6 @@ router.post("/api/newPlayer", ({ body }, res) => {
 //get the current game state
 router.get("/api/gameState/:id", (req, res) => {
 	db.Game.findById(req.params.id)
-		.populate("gameBoard")
 		.populate("players")
 		.then(gameData => {
 			console.log("GameData: ", gameData);

@@ -3,45 +3,45 @@ $(document).ready(function () {
 
 	const socket = io();
 
-	// const $events = document.getElementById('events');
-
-	// const newItem = (content) => {
-	// 	const item = document.createElement('li');
-	// 	item.innerText = content;
-	// 	return item;
-	// };
-
-
-	socket.on('connect', () => {
+	//initial setup on first opening the boardgame page
+	socket.on("connect", () => {
+		//get current user name for use in new player object
 		$.get("/api/user_data")
 		.then(function(userData){
 			console.log("User Data: ", userData);
 			let userName = {
 				name: userData.email
 			}
-			$.post("/api/newPlayer", userName)
-			.then(function(newPlayer){
+			$.post("/api/newPlayer", userName) //create the new player
+			.then(function(newPlayer){ //add the new player to the current game
 				console.log("New Player", newPlayer);
 				addPlayer(curGame, newPlayer._id);
 			})
 		})
 		
-
+		//join the room for the game
+		$.get("/api/gameState/" + curGame)
+		.then(function(gameData){
+			socket.emit("join-room", gameData.roomNumber);
+			console.log("I joined room ", gameData.roomNumber);
+		})
 		//$events.appendChild(newItem('connect'));
 		//TODO: enter chat message here
 	});
 
-	let counter = 0;
-	setInterval(() => {
-		++counter;
-		socket.emit('hey', { counter }); // the object will be serialized for you
-	}, 10000);
+	// let counter = 0;
+	// setInterval(() => {
+	// 	++counter;
+	// 	socket.emit('hey', { counter }); // the object will be serialized for you
+	// }, 10000);
 
-	socket.on('connected', ({message}) => {
+	socket.on("connected", ({message}) => {
 		console.log("message", message);
 	});
 
-
+	socket.on("update-board", ({message}) => {
+		location.reload();
+	});
 
 
 	//launch the game on click
