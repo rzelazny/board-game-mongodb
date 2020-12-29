@@ -7,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#317EFB">
     <!-- <link rel="shortcut icon" href="assets/icons/icon-192x192.png" type="image/x-icon"> -->
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- <link rel="stylesheet" href="./assets/css/styles.css"> -->
+    <link rel="stylesheet" href="./assets/css/setup.css">
     <!-- <link rel="manifest" href="manifest.json" /> -->
 
     <title>Setup Page</title>
@@ -17,7 +17,13 @@
 
 <body>
     <div class="container">
-        <button type="button" id="newGame" class="btn btn-primary">New Game</button>
+        <div class="row">
+            <div class="col-md-4" id="current-games0"></div>
+            <div class="col-md-4" id="current-games1"></div>
+            <div class="col-md-4" id="current-games2"></div>
+        </div>
+
+        <button type="button" id="new-game" class="btn btn-primary">New Game</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

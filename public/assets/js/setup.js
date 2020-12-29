@@ -1,9 +1,96 @@
 $(document).ready(function () {
 
+    function init(){
+        getTables();
+    }
     
-    
-    // Create a new gaming table on click
-    $("#newGame").on("click", function (event) {
+    init();
+
+//get the gaming tables that already exist and display them
+function getTables(){
+    $.get("api/allgames", function(curGames){
+
+        for(i=0; i < curGames.length; i++) {
+            var columnCount = i;
+            var card = $("<div>").addClass("card game-table");
+            var cardBody = $("<div>").addClass("card-body");
+            cardBody.attr("id", "resultCardBody");
+
+            console.log(curGames);
+            //create stats to append
+            var id = $("<h4>").addClass("card-text").text("Table: " + curGames[i].name);
+            var user1 = $("<p>").addClass("card-text").text("Player 1: " + curGames[i].players[0]);
+            var user2 = $("<p>").addClass("card-text").text("Player 2: " + curGames[i].players[1]);
+            var user3 = $("<p>").addClass("card-text").text("Player 3: " + curGames[i].players[2]);
+            var user4 = $("<p>").addClass("card-text").text("Player 4: " + curGames[i].players[3]);
+            var user5 = $("<p>").addClass("card-text").text("Player 5: " + curGames[i].players[4]);
+            var joinBtn = $('<button/>', {
+                text: "Join Table",
+                id: "btnJoin",
+                table: curGames[i]._id,
+                click: joinTable
+            })
+            //append stats to the card
+            cardBody.append(id, user1, user2, user3, user4, user5, joinBtn);
+            card.append(cardBody);
+
+            //there are 3 columns we append in sequence, the 4th table should be in the first column again.
+            while(columnCount > 2){
+                columnCount -= 3;
+            }
+
+            //append card to the correct column on the homepage
+            $("#current-games" + columnCount).append(card);
+        };
+    });
+}
+
+//function lets user join an existing table
+function joinTable() {
+    let tableId = $(this).attr("table")
+    //let newMessage = {};
+    //let openSeat = ""
+    //$.get("/api/gameState/" + tableId).then( function(tableData){
+        //make sure there's room at the table
+        // if(tableData[0].players[0] === "Open Seat"){
+        //     openSeat = "user1";
+        // }else if(tableData[0].players[1] === "Open Seat"){
+        //     openSeat = "user2";
+        // }else if(tableData[0].players[2] === "Open Seat"){
+        //     openSeat = "user3";
+        // }else if(tableData[0].players[3] === "Open Seat"){
+        //     openSeat = "user4";
+        // }else if(tableData[0].players[4] === "Open Seat"){
+        //     openSeat = "user5";
+        // }else{
+        //     //if the table is full refresh the page, it shouldn't show up as available anymore
+        //     location.reload();
+        //     return
+        // }
+        // $.get("/api/user_data", function(userData){
+        //     let tableUpdate = {
+        //         column: openSeat,
+        //         data: userData.email
+        //     }
+        //     //update the table with the new user
+        //     $.post("/api/table"+ tableId, tableUpdate).then(function(){
+        //         //post message that player has joined the table
+        //         newMessage = {
+        //             message: " has entered chat.",
+        //             table: tableId
+        //         }
+        //         //post the joining chat message
+        //         $.post("/api/chat/", newMessage, function(){
+        //             //join the table
+                    window.location.assign("/gameboard/" + tableId);
+                //});
+            //})
+        //})
+    //})
+}
+
+    // Create a new game on click
+    $("#new-game").on("click", function (event) {
         
         let newGameData = {
             name: "New Game",
@@ -32,5 +119,4 @@ $(document).ready(function () {
                 }
             })
     })
-
 });

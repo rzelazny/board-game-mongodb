@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const db = require("../models");
 var passport = require("../config/passport");
-const Game = require('../lib/game_server');
 
 //signup functionality
 router.post("/api/signup", ({ body }, res) => {
@@ -30,17 +29,18 @@ router.get("/logout", function (req, res) {
 	res.redirect("/");
 });
 
+router.get("/api/allgames", function (req, res) {
+	db.Game.find({})
+	.then(function (results) {
+		console.log("get tables returning data");
+		return res.send(results);
+	})
+});
+
 //create a new game
 router.post("/api/newGame", ({ body }, res) => {
-	console.log("Creating a new game");
-	var game = Game.create();
-	// Server side game loop. This runs at 60 frames per second.
-	setInterval(() => {
-		game.update();
-		game.sendState();
-	}, 1000 / 60);
+	console.log("Storing new game");
 
-	//
 	db.Game.create(body)
 		.then(dbGame => {
 			console.log(dbGame);

@@ -1,0 +1,16 @@
+.game-table{
+  /* background-image: url(../images/topdown.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; */
+  border-radius: 8%;
+  background: green;
+  color: white;
+  width: 350px;
+  height: 350px;
+  margin-bottom: 5px;
+}
+.game-table h4{
+  font-weight: bold;
+  -webkit-text-stroke-width: .5px;
+  -webkit-text-stroke-color: black;
+}

@@ -3,7 +3,8 @@ const session = require('express-session');
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const passport = require("./config/passport");
-const Game = require("./lib/game_server")
+const db = require("./models");
+const game = require("./lib/game_server")
 //const compression = require("compression");
 
 const PORT = process.env.PORT || 3000;
@@ -36,32 +37,35 @@ app.use(require("./routes/html-routes.js"));
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+//var game = Game.create();
 /**
  * Server side input handler, modifies the state of the players and the
  * game based on the input it receives. Everything here runs asynchronously.
  */
 io.on('connection', (socket) => {
-	console.log("new connection");
-	var game = Game.create();
 	// let counter = 0;
 	// setInterval(() => {
 	// 	socket.emit('hello', ++counter);
 	// }, 1000);
 
-	// socket.on('hey', data => {
-	// 	console.log('hey', data);
+	socket.on("start-game", data => {
+		console.log('hey', data);
+	});
+
+	io.sockets.on('connection', function (socket) {
+		console.log('client connected');
+		game.initGame(io, socket, db);
+	});
+	// socket.on('player-join', () => {
+	// 	game.addNewPlayer(socket);
 	// });
 
-	socket.on('player-join', () => {
-		game.addNewPlayer(socket);
-	});
-
-	socket.on('player-action', (data) => {
-		game.updatePlayerOnInput(socket.id, data);
-	});
+	// socket.on('player-action', (data) => {
+	// 	game.updatePlayerOnInput(socket.id, data);
+	// });
 
 	socket.on('disconnect', () => {
-		game.removePlayer(socket.id);
+		//game.removePlayer(socket.id);
 		console.log("Someone left");
 	})
 });
