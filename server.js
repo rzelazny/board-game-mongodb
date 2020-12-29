@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
 	});
 
 	io.sockets.on('connection', function (data) {
-		console.log('client connected');
+		//game.addPlayer(socket);
 	});
 
 	socket.on('disconnect', () => {

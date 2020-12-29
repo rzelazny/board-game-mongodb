@@ -19,11 +19,19 @@ function getTables(){
             console.log(curGames);
             //create stats to append
             var id = $("<h4>").addClass("card-text").text("Table: " + curGames[i].name);
-            var user1 = $("<p>").addClass("card-text").text("Player 1: " + curGames[i].players[0]);
-            var user2 = $("<p>").addClass("card-text").text("Player 2: " + curGames[i].players[1]);
-            var user3 = $("<p>").addClass("card-text").text("Player 3: " + curGames[i].players[2]);
-            var user4 = $("<p>").addClass("card-text").text("Player 4: " + curGames[i].players[3]);
-            var user5 = $("<p>").addClass("card-text").text("Player 5: " + curGames[i].players[4]);
+            
+            let userNameArray = ["Open Seat","Open Seat","Open Seat","Open Seat","Open Seat"]
+            for(let j=0; j<curGames[i].players.length; j++){
+                userNameArray[j] = curGames[i].players[j].name
+            }
+
+            var user1 = $("<p>").addClass("card-text").text("Player 1: " + userNameArray[0]);
+            var user2 = $("<p>").addClass("card-text").text("Player 2: " + userNameArray[1]);
+            var user3 = $("<p>").addClass("card-text").text("Player 3: " + userNameArray[2]);
+            var user4 = $("<p>").addClass("card-text").text("Player 4: " + userNameArray[3]);
+            var user5 = $("<p>").addClass("card-text").text("Player 5: " + userNameArray[4]);
+            
+            
             var joinBtn = $('<button/>', {
                 text: "Join Table",
                 id: "btnJoin",
@@ -93,9 +101,7 @@ function joinTable() {
     $("#new-game").on("click", function (event) {
         
         let newGameData = {
-            name: "New Game",
-            players: ["5fe7d983cdf2912048481cfd",
-                "5fe7d983cdf2912048481cfe"]
+            name: "New Game"
         }
         console.log(`Creating game`);
         fetch("/api/newGame/", {

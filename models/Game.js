@@ -37,6 +37,12 @@ const gameSchema = new Schema(
         curPhase: {
             type: Number,
             default: 1
+        },
+        roomNumber: {
+            type: Number,
+            default: function(){
+                return Math.floor(Math.random()*10000);
+            }
         }
     }
 );

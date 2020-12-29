@@ -5,7 +5,6 @@ var passport = require("../config/passport");
 //signup functionality
 router.post("/api/signup", ({ body }, res) => {
 	console.log("Signing up " + body.email);
-
 	db.User.create(body)
 		.then(dbUser => {
 			console.log(dbUser);
@@ -29,12 +28,31 @@ router.get("/logout", function (req, res) {
 	res.redirect("/");
 });
 
+// // Route for getting some data about our user to be used client side
+router.get("/api/user_data", function (req, res) {
+	console.log("get api user data is running")
+	if (!req.user) {
+		// The user is not logged in, send back an empty object
+		res.json({});
+	} else {
+		// Otherwise send back the user's email and id
+		// Sending back a password, even a hashed password, isn't a good idea
+		res.json({
+			email: req.user.email,
+			id: req.user.id
+		});
+	}
+});
+
+
+//get all running games for the setup page
 router.get("/api/allgames", function (req, res) {
 	db.Game.find({})
-	.then(function (results) {
-		console.log("get tables returning data");
-		return res.send(results);
-	})
+	.populate("players")
+		.then(function (results) {
+			console.log("get tables returning data");
+			return res.send(results);
+		})
 });
 
 //create a new game
@@ -42,6 +60,21 @@ router.post("/api/newGame", ({ body }, res) => {
 	console.log("Storing new game");
 
 	db.Game.create(body)
+		.then(dbGame => {
+			console.log(dbGame);
+			res.json(dbGame);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json(err);
+		});
+});
+
+//create a new player
+router.post("/api/newPlayer", ({ body }, res) => {
+	console.log("Storing new player");
+	console.log(body);
+	db.Player.create({name: body.name})
 		.then(dbGame => {
 			console.log(dbGame);
 			res.json(dbGame);

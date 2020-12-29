@@ -32,6 +32,22 @@ function updateGame(game, field, data) {
 		}
 	})
 }
+//function adds a player to the game collection
+function addPlayer(game, data) {
+
+	let gameUpdateData = { $push: {} };
+	gameUpdateData.$push["players"] = data;
+
+	console.log(`Adding player ${data} to ${game}`);
+	fetch("/api/updateGame/" + game, {
+		method: "POST",
+		body: JSON.stringify(gameUpdateData),
+		headers: {
+			Accept: "application/json, text/plain, */*",
+			"Content-Type": "application/json"
+		}
+	})
+}
 
 //function updates player collection
 function updatePlayer(player, field, data) {
@@ -68,18 +84,18 @@ function updateBoard(board, field, data) {
 }
 
 //function converts any passed function into a promisified function with a callback of err and result
-function promisify(f) {
-	return function (...args) { // return a wrapper-function (*)
-		return new Promise((resolve, reject) => {
-			function callback(err, result) { // our custom callback for f (**)
-				if (err) {
-					reject(err);
-				} else {
-					resolve(result);
-				}
-			}
-			args.push(callback); // append our custom callback to the end of f arguments
-			f.call(this, ...args); // call the original function
-		});
-	};
-}
+// function promisify(f) {
+// 	return function (...args) { // return a wrapper-function (*)
+// 		return new Promise((resolve, reject) => {
+// 			function callback(err, result) { // our custom callback for f (**)
+// 				if (err) {
+// 					reject(err);
+// 				} else {
+// 					resolve(result);
+// 				}
+// 			}
+// 			args.push(callback); // append our custom callback to the end of f arguments
+// 			f.call(this, ...args); // call the original function
+// 		});
+// 	};
+// }
