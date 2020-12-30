@@ -48,7 +48,10 @@ io.on('connection', (socket) => {
 	socket.on('join-room', userData => {
 		console.log('joining room ', userData.room);
 		socket.join(userData.room);
-		game.getSocket(userData.userId, socket.id);
+		game.getSocket(userData.userId, socket.id)
+		//alert the room that someone has joined
+		console.log("alerting room" + userData.room + "they have a new player" + userData.userId);
+		io.to(userData.room).emit("player-join", userData.userId);
 	});
 
 	socket.on('start-game', data => {

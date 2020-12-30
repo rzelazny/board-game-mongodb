@@ -2,7 +2,12 @@ $(document).ready(function () {
 	var curGame = document.defaultView.location.pathname.split("gameboard/").pop();
 	var curUser = "";
 	const socket = io();
-
+	var playerListEle = $("#player-list");
+	var playerCount = 0;
+/* ----------------------------
+ * Messages we're sending
+ * ----------------------------
+ */
 	//initial setup on first opening the boardgame page
 	socket.on("connect", () => {
 		//get current user name for use in new player object
@@ -29,14 +34,9 @@ $(document).ready(function () {
 				})
 			})
 		})
-		//$events.appendChild(newItem('connect'));
+		
 		//TODO: enter chat message here
 	});
-
-/* ----------------------------
- * Messages we're sending
- * ----------------------------
- */
 
 	//launch the game on click
 	$("#start-game").on("click", function (event) {
@@ -44,9 +44,13 @@ $(document).ready(function () {
 		socket.emit("start-game", curGame);
 	})
 
-	//resource choice made
+	//Send resource choice on click
 	$("#btn-choose-resource").on("click", function (event) {
-		socket.emit("update-player", curPlayer)
+		let updateData = {
+			player: curUser,
+			choice: $("#form-choose-resource").val()
+		}
+		socket.emit("update-player", updateData)
 	})
 
 /* ----------------------------
@@ -63,6 +67,16 @@ $(document).ready(function () {
 	socket.on("game-started", ({message}) => {
 		console.log("Got game start message");
 		$("#start-game").css("display", "none");
+	});
+
+	//When someone else starts the game
+	socket.on("player-join", (message) => {
+		console.log("Someone joined our game");
+		console.log(message);
+		playerCount++;
+		let playerEle = $("<li>")
+		playerEle.text(`Player ${playerCount}: ${message}`);
+		playerListEle.append(playerEle);
 	});
 
 	//show prompt field when server sends a prompt
