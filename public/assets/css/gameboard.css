@@ -1,3 +1,33 @@
 #board-container{
     background-color: blanchedalmond;
 }
+
+#advisor-container{
+    background-image: url("/assets/images/stone-background.png") ;
+
+}
+.card-group{
+    margin: 5px;
+}
+.card-group p{
+    font-size: 20px;
+    font-weight: bold;
+}
+.card{
+    border: 2px;
+    border-style: solid;
+    border-color: black;
+}
+#big-card{
+    width: 300px;
+}
+
+.icon{
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.card{
+    margin: 5px;
+    width: 200px;
+}
