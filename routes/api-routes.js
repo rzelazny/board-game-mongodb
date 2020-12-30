@@ -19,6 +19,7 @@ router.post("/api/signup", ({ body }, res) => {
 //login functionality
 router.post("/api/login", passport.authenticate("local"), function (req, res) {
 	console.log("Loging in ", req.body.email);
+	res.setHeader('content-type', 'text/plain');
 	res.json(req.user);
 });
 
@@ -49,10 +50,10 @@ router.get("/api/user_data", function (req, res) {
 router.get("/api/allgames", function (req, res) {
 	db.Game.find({})
 	.populate("players")
-		.then(function (results) {
-			console.log("get tables returning data");
-			return res.send(results);
-		})
+	.then(function (results) {
+		console.log("get tables returning data");
+		return res.send(results);
+	})
 });
 
 //create a new game

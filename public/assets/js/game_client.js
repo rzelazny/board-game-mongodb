@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	var curGame = document.defaultView.location.pathname.split("gameboard/").pop();
-
+	var curUser = "";
 	const socket = io();
 
 	//initial setup on first opening the boardgame page
@@ -14,16 +14,20 @@ $(document).ready(function () {
 			}
 			$.post("/api/newPlayer", userName) //create the new player
 			.then(function(newPlayer){ //add the new player to the current game
-				console.log("New Player", newPlayer);
-				addPlayer(curGame, newPlayer._id);
+				console.log("New Player", newPlayer._id);
+				curUser = newPlayer._id;
+				addPlayer(curGame, curUser);
+				//join the room for the game
+				$.get("/api/gameState/" + curGame)
+				.then(function(gameData){
+					let user = {
+						userId: curUser,
+						room: gameData.roomNumber
+					}
+					socket.emit("join-room", user);
+					console.log("I joined room ", user.room);
+				})
 			})
-		})
-		
-		//join the room for the game
-		$.get("/api/gameState/" + curGame)
-		.then(function(gameData){
-			socket.emit("join-room", gameData.roomNumber);
-			console.log("I joined room ", gameData.roomNumber);
 		})
 		//$events.appendChild(newItem('connect'));
 		//TODO: enter chat message here
@@ -39,10 +43,20 @@ $(document).ready(function () {
 		console.log("message", message);
 	});
 
+	//update the gameboard
 	socket.on("update-board", ({message}) => {
 		location.reload();
 	});
 
+	//show prompt field when server sends a prompt
+	socket.on("prompt-user", ({message}) => {
+		$("#select-resource").css("display", "block");
+	});
+
+	//show waiting field when other users have gotten a prompt
+	socket.on("waiting", ({message}) => {
+		$("#waiting").css("display", "block");
+	});
 
 	//launch the game on click
 	$("#start-game").on("click", function (event) {

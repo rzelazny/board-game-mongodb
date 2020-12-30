@@ -6,6 +6,10 @@ const PlayerSchema = new Schema({
     name: {
         type: String,
     },
+    socket:{
+        type: String,
+        default: ""
+    },
     score: {
         type: Number,
         default: 0

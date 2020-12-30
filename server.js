@@ -45,9 +45,11 @@ const io = require('socket.io')(http);
 io.on('connection', (socket) => {
 
 	//have the user join the room for the individual game
-	socket.on('join-room', room => {
-		console.log('joining room ', room);
-		socket.join(room);
+	socket.on('join-room', userData => {
+		console.log('joining room ', userData.room);
+		socket.join(userData.room);
+		console.log(userData);
+		game.getSocket(userData.userId, socket.id);
 	});
 
 	socket.on('start-game', data => {
