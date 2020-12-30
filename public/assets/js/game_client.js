@@ -50,11 +50,13 @@ $(document).ready(function () {
 
 	//show prompt field when server sends a prompt
 	socket.on("prompt-user", ({message}) => {
+		console.log("prompt message recieved")
 		$("#select-resource").css("display", "block");
 	});
 
 	//show waiting field when other users have gotten a prompt
 	socket.on("waiting", ({message}) => {
+		console.log("wait message recieved")
 		$("#waiting").css("display", "block");
 	});
 
