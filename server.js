@@ -48,20 +48,19 @@ io.on('connection', (socket) => {
 	socket.on('join-room', userData => {
 		console.log('joining room ', userData.room);
 		socket.join(userData.room);
-		console.log(userData);
 		game.getSocket(userData.userId, socket.id);
 	});
 
 	socket.on('start-game', data => {
 		console.log('Starting game', data);
-		game.twoOutputs(data, db, function(sockets){
-			console.log("sending messages");
-			console.log("IDs: " + sockets.id1 + " " + sockets.id2)
-			io.to(sockets.id1).emit("prompt-user", "id1 message");
-			io.to(sockets.id2).emit("prompt-user", "id2 message");
-		})
+		// game.twoOutputs(data, db, function(sockets){
+		// 	console.log("sending messages");
+		// 	console.log("IDs: " + sockets.id1 + " " + sockets.id2)
+		// 	io.to(sockets.id1).emit("prompt-user", "id1 message");
+		// 	io.to(sockets.id2).emit("prompt-user", "id2 message");
+		// })
 		
-		//game.initGame(/*io, socket,*/ db, data);
+		game.initGame(io, socket, db, data);
 	});
 
 	socket.on('disconnect', () => {
