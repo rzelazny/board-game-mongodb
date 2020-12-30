@@ -20,12 +20,12 @@ $(document).ready(function () {
 				//join the room for the game
 				$.get("/api/gameState/" + curGame)
 				.then(function(gameData){
-					let user = {
+					let joinData = {
 						userId: curUser,
 						room: gameData.roomNumber
 					}
-					socket.emit("join-room", user);
-					console.log("I joined room ", user.room);
+					socket.emit("join-room", joinData);
+					console.log("I joined room ", joinData.room);
 				})
 			})
 		})
@@ -33,13 +33,36 @@ $(document).ready(function () {
 		//TODO: enter chat message here
 	});
 
+/* ----------------------------
+ * Messages we're sending
+ * ----------------------------
+ */
+
+	//launch the game on click
+	$("#start-game").on("click", function (event) {
+		console.log("Hit start button");
+		socket.emit("start-game", curGame);
+	})
+
+	//resource choice made
+	$("#btn-choose-resource").on("click", function (event) {
+		socket.emit("update-player", curPlayer)
+	})
+
+/* ----------------------------
+ * Messages we're listening for
+ * ----------------------------
+ */
+
+	//Connected successfully
 	socket.on("connected", ({message}) => {
 		console.log("message", message);
 	});
 
-	//update the gameboard
-	socket.on("update-board", ({message}) => {
-		location.reload();
+	//When someone else starts the game
+	socket.on("game-started", ({message}) => {
+		console.log("Got game start message");
+		$("#start-game").css("display", "none");
 	});
 
 	//show prompt field when server sends a prompt
@@ -54,15 +77,10 @@ $(document).ready(function () {
 		$("#waiting").css("display", "block");
 	});
 
-	//launch the game on click
-	$("#start-game").on("click", function (event) {
-		console.log("Hit start button");
-		$("#start-game").css("display", "none");
-		socket.emit("start-game", curGame);
-	})
+	//update the gameboard
+	socket.on("update-board", ({message}) => {
+		//location.reload();
+		//will need to get correct socket from player.socket
+	});
 
-	//resource choice made
-	$("#btn-choose-resource").on("click", function (event) {
-		socket.emit("update-player", curPlayer)
-	})
 });

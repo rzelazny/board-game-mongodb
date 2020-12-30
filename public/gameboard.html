@@ -14,7 +14,7 @@
 <body>
 	<div class="container-fluid" id="board-container">
 
-		<div class="container-fluid" id="advisor-container">
+		<div class="container-fluid" id="advisor-container" style="display:none">
 			<div class="row justify-content-md-center">
 				<div class="card-group">
 					<div class="card" id="big-card">
@@ -242,10 +242,8 @@
 			</div>
 		</div>
 
-		<button type="button" id="start-game" class="btn btn-primary">Start Game</button>
-
 		<div class="container" id="dice-select-container">
-			<form id="select-dice" style="display:block">
+			<form id="select-dice" style="display:none">
 				<div class="form-group">
 					<label for="form-choose-resource">Select Dice</label>
 					<select class="form-control" id="form-choose-dice">
@@ -280,6 +278,12 @@
 				<button type="button" class="btn btn-default" id="btn-choose-resource">Done</button>
 			</form>
 		</div>
+
+		<div class="text-center" id="start-game" style="display:block;">
+			
+			<button type="button" id="btn-start-game" class="btn btn-primary">Start Game</button>
+		</div>
+		
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

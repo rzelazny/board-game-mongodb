@@ -1,5 +1,6 @@
 #board-container{
     background-color: blanchedalmond;
+    min-height: 500px;
 }
 
 #advisor-container{
@@ -27,7 +28,9 @@
     max-height: 30px;
 }
 
-.card{
-    margin: 5px;
-    width: 200px;
+
+#start-game{
+    padding-top: 90px;
+    background-color: grey;
+    min-height: 200px;
 }

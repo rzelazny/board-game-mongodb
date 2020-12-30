@@ -18,11 +18,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-// We need to use sessions to keep track of our user's login status
+//Session and passport setup for authentication
 app.use(session({ secret: "games rule", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Database connection
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/boardgame", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -37,7 +38,6 @@ app.use(require("./routes/html-routes.js"));
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-//var game = Game.create();
 /**
  * Server side input handler, modifies the state of the players and the
  * game based on the input it receives. Everything here runs asynchronously.
