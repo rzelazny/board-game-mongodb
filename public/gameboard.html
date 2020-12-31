@@ -277,24 +277,34 @@
 			</form>
 		</div>
 
+		<div class="container" id="waiting" style="display:none">
+			<div>
+				<p>Waiting for other players.</p>
+			</div>
+		</div>
+
 		<div class="container" id="prompt-user-container" style="display:none">
+			<div id="waiting" style="display:none">
+				<p>Waiting for other players.</p>
+			</div>
 			<div class="text-center">
 				<p id="prompt-message"></p>
 			</div>
+
 			<form id="select-resource" style="display:none">
 				<div class="row">
 					<div class="col-lg-4">
-						<button class="res-button">
+						<button class="btn-res-choice">
 							<img src="../assets/images/res1-icon.png" class="btn-icon" alt="Resource 1">
 						</button>
 					</div>
 					<div class="col-lg-4">
-						<button class="res-button">
+						<button class="btn-res-choice">
 							<img src="../assets/images/res2-icon.png" class="btn-icon" alt="Resource 2">
 						</button>
 					</div>
 					<div class="col-lg-4">
-						<button class="res-button">
+						<button class="btn-res-choice">
 							<img src="../assets/images/res3-icon.png" class="btn-icon" alt="Resource 3">
 						</button>
 					</div>

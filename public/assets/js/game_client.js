@@ -5,6 +5,9 @@ $(document).ready(function () {
 	const socket = io();
 	var playerListEle = $("#player-list");
 	var playerCount = 0;
+	var promptEle = $("#prompt-user-container");
+	var resEle = $("#select-resource");
+	var waitEle = $("#waiting");
 /* ----------------------------
  * Messages we're sending
  * ----------------------------
@@ -54,12 +57,20 @@ $(document).ready(function () {
 	})
 
 	//Send resource choice on click
-	$("#btn-choose-resource").on("click", function (event) {
+	$(".btn-res-choice").on("click", function (event) {
+		console.log("resource choice made");
+		event.preventDefault();
+		
+		//hide choice, show waiting text
+		promptEle.css("display", "none");
+		waitEle.css("display", "block");
+
 		let updateData = {
 			player: curUser,
+			choiceType: "resource",
 			choice: $("#form-choose-resource").val()
 		}
-		socket.emit("update-player", updateData)
+		socket.emit("player-choice", updateData)
 	})
 
 /* ----------------------------
@@ -133,7 +144,7 @@ $(document).ready(function () {
 		
 		//display various prompts based on the message
 		switch(message){
-			case "You recieve the king's aid.":
+			case "You recieve the king's aid. Pick a bonus resource:":
 				$("#select-resource").css("display", "block");
 				break;
 			default:
