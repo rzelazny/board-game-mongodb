@@ -1,6 +1,7 @@
 $(document).ready(function () {
 	var curGame = document.defaultView.location.pathname.split("gameboard/").pop();
 	var curUser = "";
+	var curRoom = 0;
 	const socket = io();
 	var playerListEle = $("#player-list");
 	var playerCount = 0;
@@ -25,9 +26,10 @@ $(document).ready(function () {
 				//join the room for the game
 				$.get("/api/gameState/" + curGame)
 				.then(function(gameData){
+					curRoom = gameData.roomNumber;
 					let joinData = {
 						userId: curUser,
-						room: gameData.roomNumber
+						room: curRoom
 					}
 					socket.emit("join-room", joinData);
 					console.log("I joined room ", joinData.room);
@@ -41,7 +43,11 @@ $(document).ready(function () {
 	//launch the game on click
 	$("#start-game").on("click", function (event) {
 		console.log("Hit start button");
-		socket.emit("start-game", curGame);
+		let gameData = {
+			game: curGame,
+			room: curRoom
+		}
+		socket.emit("start-game", gameData);
 	})
 
 	//Send resource choice on click
@@ -63,13 +69,14 @@ $(document).ready(function () {
 		console.log("message", message);
 	});
 
-	//When someone else starts the game
-	socket.on("game-started", ({message}) => {
+	//When someone starts the game
+	socket.on("game-started", () => {
 		console.log("Got game start message");
 		$("#start-game").css("display", "none");
+		$("#advisor-container").css("display", "block");
 	});
 
-	//When someone else starts the game
+	//When someone joins the game
 	socket.on("player-join", (message) => {
 		console.log("Someone joined our game");
 		console.log(message);

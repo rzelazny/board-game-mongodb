@@ -18,16 +18,18 @@
     border: 2px;
     border-style: solid;
     border-color: black;
+    padding: 5px;
+    margin: 5px;
+    width: 230px;
 }
 #big-card{
-    width: 300px;
+    width: 400px;
 }
 
 .icon{
     max-width: 30px;
     max-height: 30px;
 }
-
 
 #start-game{
     padding-top: 10px;
