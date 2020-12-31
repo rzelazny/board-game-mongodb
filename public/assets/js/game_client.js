@@ -4,7 +4,6 @@ $(document).ready(function () {
 	var curRoom = 0;
 	const socket = io();
 	var playerListEle = $("#player-list");
-	var promptMsgEle = document.getElementById("prompt-message");
 	var playerCount = 0;
 /* ----------------------------
  * Messages we're sending
@@ -12,6 +11,9 @@ $(document).ready(function () {
  */
 	//initial setup on first opening the boardgame page
 	socket.on("connect", () => {
+	//TODO: check for existing/reconnect before making new player
+		//TODO: On reconnect get game stats
+
 		//get current user name for use in new player object
 		$.get("/api/user_data")
 		.then(function(userData){
@@ -90,10 +92,13 @@ $(document).ready(function () {
 	
 	//update the board for the next phase
 	socket.on("next-phase", (phase) => {
-		console.log("Next phase message recieved")
-		switch (phase) {
+		console.log("Next phase message recieved ", phase)
+		let parsePhase = parseInt(phase);
+		updateNavBar(parsePhase);
+
+		switch (parsePhase) {
 			case 1:
-				$("#select-resource").css("display", "block");
+				//$("#select-resource").css("display", "block");
 				break;
 			case 2:
 				break;
@@ -119,10 +124,23 @@ $(document).ready(function () {
 	//show prompt field when server sends a prompt
 	socket.on("prompt-user", (message) => {
 		console.log("prompt message recieved")
-		
-		$("#select-resource").css("display", "block");
-		console.log(promptMsgEle);
+		let promptMsgEle = document.getElementById("prompt-message");
+
+		//always show the prompt container on message
+		$("#prompt-user-container").css("display", "block");
+
 		promptMsgEle.innerHTML = message;
+		
+		//display various prompts based on the message
+		switch(message){
+			case "You recieve the king's aid.":
+				$("#select-resource").css("display", "block");
+				break;
+			default:
+				console.log("Unknown message prompt: ", message);
+		}
+	
+		
 	});
 
 	//show waiting field when other users have gotten a prompt
@@ -136,5 +154,20 @@ $(document).ready(function () {
 		//location.reload();
 		//will need to get correct socket from player.socket
 	});
+
+/* ----------------------------
+ * Functions for displaying the client data
+ * ----------------------------
+ */
+	//Update the nav bar css to highlight the current phase
+	function updateNavBar (phase){
+		console.log("Updating navbar");
+		let navBarEleList = document.getElementsByClassName("nav-phase");
+
+		for(let i=0; i<navBarEleList.length; i++){
+			if((i+1) === phase) navBarEleList[i].style.color="red";
+			else navBarEleList[i].style.color="black";
+		}
+	}
 
 });

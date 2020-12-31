@@ -1,12 +1,22 @@
 #board-container{
-    background-color: blanchedalmond;
+    background-image: url("/assets/images/wood-background.png") ;
+    background-size: 100%;
     min-height: 500px;
 }
-
 #advisor-container{
     background-image: url("/assets/images/stone-background.png") ;
-
 }
+#start-game{
+    padding-top: 10px;
+    min-height: 200px;
+}
+.container{
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: blanchedalmond;
+    padding: 5px;
+}
+
 .card-group{
     margin: 5px;
 }
@@ -31,8 +41,21 @@
     max-height: 30px;
 }
 
-#start-game{
-    padding-top: 10px;
-    background-color: lightgrey;
-    min-height: 200px;
+.btn-icon{
+    width: 50px;
+    height: 50px;
+}
+
+
+.big-button{
+    display: flex;
+    width: 100%;
+}
+
+.res-button{
+    background-color: #bbb;
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
 }

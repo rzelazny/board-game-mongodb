@@ -14,14 +14,14 @@
 <body>
 	<nav class="navbar navbar-light bg-light">
 		<span id="nav-year" class="navbar-brand mb-0 h1">Year: 1</span>
-		<span id="nav-phase" class="navbar-brand">1) King's Aid</span>
-		<span id="nav-phase" class="navbar-brand">2) Spring</span>
-		<span id="nav-phase" class="navbar-brand">3) King's Reward</span>
-		<span id="nav-phase" class="navbar-brand">4) Summer</span>
-		<span id="nav-phase" class="navbar-brand">5) King's Envoy</span>
-		<span id="nav-phase" class="navbar-brand">6) Autumn</span>
-		<span id="nav-phase" class="navbar-brand">7) Rally Troops</span>
-		<span id="nav-phase" class="navbar-brand">8) Winter</span>
+		<span class="navbar-brand nav-phase">1) King's Aid</span>
+		<span class="navbar-brand nav-phase">2) Spring</span>
+		<span class="navbar-brand nav-phase">3) King's Reward</span>
+		<span class="navbar-brand nav-phase">4) Summer</span>
+		<span class="navbar-brand nav-phase">5) King's Envoy</span>
+		<span class="navbar-brand nav-phase">6) Autumn</span>
+		<span class="navbar-brand nav-phase">7) Rally Troops</span>
+		<span class="navbar-brand nav-phase">8) Winter</span>
 		<a class="nav-item nav-link" href="#">Quit</a>
 	</nav>
 
@@ -255,8 +255,9 @@
 				</div>
 			</div>
 		</div>
+		<br />
 
-		<div class="container" id="dice-select-container">
+		<div class="container" id="dice-select-container" style="display:none">
 			<form id="select-dice" style="display:none">
 				<div class="form-group">
 					<label for="form-choose-resource">Select Dice</label>
@@ -276,25 +277,41 @@
 			</form>
 		</div>
 
-		<div class="container" id="prompt-user-container">
-			<div id="waiting" style="display:none">
-				Waiting for other players
+		<div class="container" id="prompt-user-container" style="display:none">
+			<div class="text-center">
+				<p id="prompt-message"></p>
 			</div>
 			<form id="select-resource" style="display:none">
-				<p id="prompt-message"></p>
-				<div class="form-group">
+				<div class="row">
+					<div class="col-lg-4">
+						<button class="res-button">
+							<img src="../assets/images/res1-icon.png" class="btn-icon" alt="Resource 1">
+						</button>
+					</div>
+					<div class="col-lg-4">
+						<button class="res-button">
+							<img src="../assets/images/res2-icon.png" class="btn-icon" alt="Resource 2">
+						</button>
+					</div>
+					<div class="col-lg-4">
+						<button class="res-button">
+							<img src="../assets/images/res3-icon.png" class="btn-icon" alt="Resource 3">
+						</button>
+					</div>
+				</div>
+				<!-- <div class="form-group">
 					<label for="form-choose-resource">Choose a resource</label>
 					<select class="form-control" id="form-choose-resource">
 						<option>Gold</option>
 						<option>Wood</option>
 						<option>Stone</option>
 					</select>
-				</div>
-				<button type="button" class="btn btn-primary" id="btn-choose-resource">Done</button>
+				</div> 
+				<button type="button" class="btn btn-primary" id="btn-choose-resource">Done</button> -->
 			</form>
 		</div>
 
-		<div id="start-game" style="display:block;">
+		<div class="container" id="start-game">
 			<ul id="player-list"></ul>
 			<div class="text-center">
 				<button type="button" id="btn-start-game" class="btn btn-primary ">Start Game</button>
