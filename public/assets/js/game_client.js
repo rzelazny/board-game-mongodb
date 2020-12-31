@@ -4,6 +4,7 @@ $(document).ready(function () {
 	var curRoom = 0;
 	const socket = io();
 	var playerListEle = $("#player-list");
+	var promptMsgEle = document.getElementById("prompt-message");
 	var playerCount = 0;
 /* ----------------------------
  * Messages we're sending
@@ -86,10 +87,42 @@ $(document).ready(function () {
 		playerListEle.append(playerEle);
 	});
 
+	
+	//update the board for the next phase
+	socket.on("next-phase", (phase) => {
+		console.log("Next phase message recieved")
+		switch (phase) {
+			case 1:
+				$("#select-resource").css("display", "block");
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				break;
+			default:
+				console.log("Phase not found");
+				break;
+		}
+		
+	});
+
 	//show prompt field when server sends a prompt
-	socket.on("prompt-user", ({message}) => {
+	socket.on("prompt-user", (message) => {
 		console.log("prompt message recieved")
+		
 		$("#select-resource").css("display", "block");
+		console.log(promptMsgEle);
+		promptMsgEle.innerHTML = message;
 	});
 
 	//show waiting field when other users have gotten a prompt
