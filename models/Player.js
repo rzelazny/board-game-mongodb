@@ -6,9 +6,16 @@ const PlayerSchema = new Schema({
     name: {
         type: String,
     },
-    socket:{
+    socket: {
         type: String,
         default: ""
+    },
+    color: {
+        type: String,
+        default: "red"
+    },
+    turnOrder:{
+        type: Number,
     },
     score: {
         type: Number,

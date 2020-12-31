@@ -5,9 +5,16 @@ $(document).ready(function () {
 	const socket = io();
 	var playerListEle = $("#player-list");
 	var playerCount = 0;
-	var promptEle = $("#prompt-user-container");
-	var resEle = $("#select-resource");
-	var waitEle = $("#waiting");
+	let promptEle = $("#prompt-user-container");
+	let resEle = $("#select-resource");
+	let waitEle = $("#waiting");
+	let sidebarTurnOrderEle = $("#sidebar-turn-order")
+	let sidebarVPEle = $("#sidebar-vp")
+	let sidebarBuildingsEle = $("#sidebar-buildings")
+	let sidebarRes1Ele= $("#sidebar-res1")
+	let sidebarRes2Ele = $("#sidebar-res2")
+	let sidebarRes3Ele = $("#sidebar-res3")
+	let sidebar2TokenEle = $("#sidebar-2token")
 /* ----------------------------
  * Messages we're sending
  * ----------------------------
@@ -68,7 +75,7 @@ $(document).ready(function () {
 		let updateData = {
 			player: curUser,
 			choiceType: "resource",
-			choice: $("#form-choose-resource").val()
+			choice: this.getAttribute("choice")
 		}
 		socket.emit("player-choice", updateData)
 	})
@@ -100,7 +107,6 @@ $(document).ready(function () {
 		playerListEle.append(playerEle);
 	});
 
-	
 	//update the board for the next phase
 	socket.on("next-phase", (phase) => {
 		console.log("Next phase message recieved ", phase)
@@ -129,7 +135,28 @@ $(document).ready(function () {
 				console.log("Phase not found");
 				break;
 		}
-		
+	});
+
+	//update the sidebar when prompted to
+	socket.on("update-sidebar", (sidebarData) => {
+		let {turnOrder, vp, buildings, res1, res2, res3, twoToken } = sidebarData;
+
+		//clear and recreate the turn order
+		sidebarTurnOrder.empty();
+		for(let i=0; i<turnOrder.length; i++){
+			let turn = $("<li>");
+			turn.text(turnOrder[i]);
+			turn.attr("color", turnOrder[i].color);
+			sidebarTurnOrderEle.append(turn);
+		}
+
+		//set the player stats
+		sidebarVPEle.text(vp);
+		sidebarBuildingsEle.text(buildings);
+		sidebarRes1Ele.text(res1);
+		sidebarRes2Ele.text(res2);
+		sidebarRes3Ele.text(res3);
+		sidebar2TokenEle.text(twoToken);
 	});
 
 	//show prompt field when server sends a prompt
@@ -145,7 +172,7 @@ $(document).ready(function () {
 		//display various prompts based on the message
 		switch(message){
 			case "You recieve the king's aid. Pick a bonus resource:":
-				$("#select-resource").css("display", "block");
+				resEle.css("display", "block");
 				break;
 			default:
 				console.log("Unknown message prompt: ", message);

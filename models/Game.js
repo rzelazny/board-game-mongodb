@@ -15,11 +15,6 @@ const gameSchema = new Schema(
                 ref: "Player"
             }
         ],
-        turnOrder: [
-            {
-                type: Number
-            }
-        ],
         nextEnemy: {
             name: String,
             power: Number,

@@ -42,11 +42,11 @@ const io = require('socket.io')(http);
  * Server side input handler, modifies the state of the players and the
  * game based on the input it receives. Everything here runs asynchronously.
  */
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {
 
 	//have the user join the room for the individual game
-	socket.on('join-room', userData => {
-		console.log('joining room ', userData.room);
+	socket.on("join-room", userData => {
+		console.log("joining room ", userData.room);
 		socket.join(userData.room);
 		game.getSocket(userData.userId, socket.id)
 		//alert the room that someone has joined
@@ -54,8 +54,8 @@ io.on('connection', (socket) => {
 		io.to(userData.room).emit("player-join", userData.userId);
 	});
 
-	socket.on('start-game', data => {
-		console.log('Starting game', data.game);
+	socket.on("start-game", data => {
+		console.log("Starting game", data.game);
 		// game.twoOutputs(data, db, function(sockets){
 		// 	console.log("sending messages");
 		// 	console.log("IDs: " + sockets.id1 + " " + sockets.id2)
@@ -70,7 +70,12 @@ io.on('connection', (socket) => {
 		io.to(data.room).emit("game-started");
 	});
 
-	socket.on('disconnect', () => {
+	socket.on("player-choice", (choiceData) => {
+		console.log(choiceData.curUser + " made a choice");
+		game.sendChoice(choiceData);
+	});
+
+	socket.on("disconnect", () => {
 		console.log("Socket "+  socket.id + " left");
 		//game.removePlayer(socket.id);
 	});
