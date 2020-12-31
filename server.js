@@ -55,15 +55,19 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('start-game', data => {
-		console.log('Starting game', data);
+		console.log('Starting game', data.game);
 		// game.twoOutputs(data, db, function(sockets){
 		// 	console.log("sending messages");
 		// 	console.log("IDs: " + sockets.id1 + " " + sockets.id2)
 		// 	io.to(sockets.id1).emit("prompt-user", "id1 message");
 		// 	io.to(sockets.id2).emit("prompt-user", "id2 message");
 		// })
-		
-		game.initGame(io, socket, db, data);
+
+		//start the game logic
+		game.initGame(io, socket, db, data.game);
+
+		//alert the room that the game has started
+		io.to(data.room).emit("game-started");
 	});
 
 	socket.on('disconnect', () => {
