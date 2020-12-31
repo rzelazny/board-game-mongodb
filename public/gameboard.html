@@ -25,309 +25,326 @@
 		<a class="nav-item nav-link" href="#">Quit</a>
 	</nav>
 
-	<div class="container-fluid" id="board-container">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-1 px-1 position-fixed" id="sticky-sidebar">
+				<div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
+					<h4>Turn Order</h4>
+					<p id="turn-order">1, 2, 3</p>
+					<p id="sidebar-res1">Res1: </p>
+					<p id="sidebar-res2">Res2:</p>
+					<p id="sidebar-res3">Res3:</p>
+					<p id="sidebar-2token">+2 Tokens:</p>
+					<a href="./" class="nav-link">Link</a>
+				</div>
+			</div>
+			<div class="col-11 offset-1" id="main">
+				<div class="container-fluid" id="board-container">
 
-		<div class="container-fluid" id="advisor-container" style="display:none">
-			<div class="row justify-content-md-center">
-				<div class="card-group">
-					<div class="card" id="big-card">
-						<img class="card-img-top" src="..." alt="Queen">
-						<div class="card-body">
-							<h5 class="card-title">Queen</h5>
-							<p class="card-text">
-								<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
-								<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
-								<img src="../assets/images/VP-icon.png" class="icon" alt="Victory Point">
-								<img src="../assets/images/VP-icon.png" class="icon" alt="Victory Point">
-								<img src="../assets/images/VP-icon.png" class="icon" alt="Victory Point">
-								<img src="../assets/images/enemy-icon.png" class="icon" alt="Enemy">
-							</p>
+					<div class="container-fluid" id="advisor-container" style="display:none">
+						<div class="row justify-content-md-center">
+							<div class="card-group">
+								<div class="card" id="big-card">
+									<img class="card-img-top" src="..." alt="Queen">
+									<div class="card-body">
+										<h5 class="card-title">Queen</h5>
+										<p class="card-text">
+											<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
+											<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
+											<img src="../assets/images/VP-icon.png" class="icon" alt="Victory Point">
+											<img src="../assets/images/VP-icon.png" class="icon" alt="Victory Point">
+											<img src="../assets/images/VP-icon.png" class="icon" alt="Victory Point">
+											<img src="../assets/images/enemy-icon.png" class="icon" alt="Enemy">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="King">
+									<div class="card-body">
+										<h5 class="card-title">King</h5>
+										<p class="card-text">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+											<img src="../assets/images/str-icon.png" class="icon" alt="Strength">
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row justify-content-md-center">
+							<div class="card-group">
+								<div class="card big-card" id="big-card">
+									<img class="card-img-top" src="..." alt="Champion">
+									<div class="card-body">
+										<h5 class="card-title">Champion</h5>
+										<p class="card-text">
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Smuggler">
+									<div class="card-body">
+										<h5 class="card-title">Smuggler</h5>
+										<p class="card-text">
+											<img src="../assets/images/VP-icon.png" class="icon" alt="Victory Point">
+											<img src="../assets/images/arrow-icon.png" class="icon" alt="Arrow">
+											<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
+											<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
+											<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Inventor">
+									<div class="card-body">
+										<h5 class="card-title">Inventor</h5>
+										<p class="card-text">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Wizard">
+									<div class="card-body">
+										<h5 class="card-title">Wizard</h5>
+										<p class="card-text">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row justify-content-md-center">
+							<div class="card-group">
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Astronomer">
+									<div class="card-body">
+										<h5 class="card-title">Astronomer</h5>
+										<p class="card-text">
+											<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
+											<img src="../assets/images/2token-icon.png" class="icon" alt="+2 Token">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Treasurer">
+									<div class="card-body">
+										<h5 class="card-title">Treasurer</h5>
+										<p class="card-text">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Master Hunter">
+									<div class="card-body">
+										<h5 class="card-title">Master Hunter</h5>
+										<p class="card-text">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
+											/
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+											<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="General">
+									<div class="card-body">
+										<h5 class="card-title">General</h5>
+										<p class="card-text">
+											<img src="../assets/images/str-icon.png" class="icon" alt="Strength">
+											<img src="../assets/images/str-icon.png" class="icon" alt="Strength">
+											<img src="../assets/images/enemy-icon.png" class="icon" alt="Enemy">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Swordsmith">
+									<div class="card-body">
+										<h5 class="card-title">Swordsmith</h5>
+										<p class="card-text">
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											/
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+											<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Duchess">
+									<div class="card-body">
+										<h5 class="card-title">Duchess</h5>
+										<p class="card-text">
+											<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
+											<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
+											<img src="../assets/images/2token-icon.png" class="icon" alt="+2 Token">
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row justify-content-md-center">
+							<div class="card-group">
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Jester">
+									<div class="card-body">
+										<h5 class="card-title">Jester</h5>
+										<p class="card-text">
+											<img src="../assets/images/VP-icon.png" class="icon" alt="Victory Point">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Squire">
+									<div class="card-body">
+										<h5 class="card-title">Squire</h5>
+										<p class="card-text">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Architect">
+									<div class="card-body">
+										<h5 class="card-title">Architect</h5>
+										<p class="card-text">
+											<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Merchant">
+									<div class="card-body">
+										<h5 class="card-title">Merchant</h5>
+										<p class="card-text">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											/
+											<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Sergeant">
+									<div class="card-body">
+										<h5 class="card-title">Sergeant</h5>
+										<p class="card-text">
+											<img src="../assets/images/str-icon.png" class="icon" alt="Strength">
+										</p>
+									</div>
+								</div>
+								<div class="card">
+									<img class="card-img-top" src="..." alt="Alchemist">
+									<div class="card-body">
+										<h5 class="card-title">Alchemist</h5>
+										<p class="card-text">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											<img src="../assets/images/arrow-icon.png" class="icon" alt="Arrow">
+											<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+											/
+											<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
+											<img src="../assets/images/arrow-icon.png" class="icon" alt="Arrow">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+											/
+											<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
+											<img src="../assets/images/arrow-icon.png" class="icon" alt="Arrow">
+											<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
+											<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
+										</p>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="King">
-						<div class="card-body">
-							<h5 class="card-title">King</h5>
-							<p class="card-text">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-								<img src="../assets/images/str-icon.png" class="icon" alt="Strength">
-							</p>
+					<br />
+			
+					<div class="container" id="dice-select-container" style="display:none">
+						<form id="select-dice" style="display:none">
+							<div class="form-group">
+								<label for="form-choose-resource">Select Dice</label>
+								<select class="form-control" id="form-choose-dice">
+									<option>Gold</option>
+									<option>Wood</option>
+									<option>Stone</option>
+								</select>
+								<label for="form-choose-resource">Choose Dice Bonus</label>
+								<select class="form-control" id="form-choose-die-bonus">
+									<option>None</option>
+									<option>+2</option>
+									<option>White Die value</option>
+								</select>
+							</div>
+							<button type="button" class="btn btn-default" id="btn-choose-dice">Done</button>
+						</form>
+					</div>
+			
+					<div class="container" id="waiting" style="display:none">
+						<div>
+							<p>Waiting for other players.</p>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row justify-content-md-center">
-				<div class="card-group">
-					<div class="card big-card" id="big-card">
-						<img class="card-img-top" src="..." alt="Champion">
-						<div class="card-body">
-							<h5 class="card-title">Champion</h5>
-							<p class="card-text">
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-							</p>
+			
+					<div class="container" id="prompt-user-container" style="display:none">
+						<div id="waiting" class="text-center" style="display:none">
+							<p>Waiting for other players.</p>
+						</div>
+						<div class="text-center">
+							<p id="prompt-message"></p>
+						</div>
+			
+						<form id="select-resource" style="display:none">
+							<div class="row">
+								<div class="col-lg-4">
+									<button class="btn-res-choice">
+										<img src="../assets/images/res1-icon.png" class="btn-icon" alt="Resource 1">
+									</button>
+								</div>
+								<div class="col-lg-4">
+									<button class="btn-res-choice">
+										<img src="../assets/images/res2-icon.png" class="btn-icon" alt="Resource 2">
+									</button>
+								</div>
+								<div class="col-lg-4">
+									<button class="btn-res-choice">
+										<img src="../assets/images/res3-icon.png" class="btn-icon" alt="Resource 3">
+									</button>
+								</div>
+							</div>
+							<!-- <div class="form-group">
+								<label for="form-choose-resource">Choose a resource</label>
+								<select class="form-control" id="form-choose-resource">
+									<option>Gold</option>
+									<option>Wood</option>
+									<option>Stone</option>
+								</select>
+							</div> 
+							<button type="button" class="btn btn-primary" id="btn-choose-resource">Done</button> -->
+						</form>
+					</div>
+			
+					<div class="container" id="start-game">
+						<ul id="player-list"></ul>
+						<div class="text-center">
+							<button type="button" id="btn-start-game" class="btn btn-primary ">Start Game</button>
 						</div>
 					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Smuggler">
-						<div class="card-body">
-							<h5 class="card-title">Smuggler</h5>
-							<p class="card-text">
-								<img src="../assets/images/VP-icon.png" class="icon" alt="Victory Point">
-								<img src="../assets/images/arrow-icon.png" class="icon" alt="Arrow">
-								<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
-								<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
-								<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Inventor">
-						<div class="card-body">
-							<h5 class="card-title">Inventor</h5>
-							<p class="card-text">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Wizard">
-						<div class="card-body">
-							<h5 class="card-title">Wizard</h5>
-							<p class="card-text">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row justify-content-md-center">
-				<div class="card-group">
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Astronomer">
-						<div class="card-body">
-							<h5 class="card-title">Astronomer</h5>
-							<p class="card-text">
-								<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
-								<img src="../assets/images/2token-icon.png" class="icon" alt="+2 Token">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Treasurer">
-						<div class="card-body">
-							<h5 class="card-title">Treasurer</h5>
-							<p class="card-text">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Master Hunter">
-						<div class="card-body">
-							<h5 class="card-title">Master Hunter</h5>
-							<p class="card-text">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
-								/
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-								<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="General">
-						<div class="card-body">
-							<h5 class="card-title">General</h5>
-							<p class="card-text">
-								<img src="../assets/images/str-icon.png" class="icon" alt="Strength">
-								<img src="../assets/images/str-icon.png" class="icon" alt="Strength">
-								<img src="../assets/images/enemy-icon.png" class="icon" alt="Enemy">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Swordsmith">
-						<div class="card-body">
-							<h5 class="card-title">Swordsmith</h5>
-							<p class="card-text">
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								/
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-								<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Duchess">
-						<div class="card-body">
-							<h5 class="card-title">Duchess</h5>
-							<p class="card-text">
-								<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
-								<img src="../assets/images/resAny-icon.png" class="icon" alt="Any Resource">
-								<img src="../assets/images/2token-icon.png" class="icon" alt="+2 Token">
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row justify-content-md-center">
-				<div class="card-group">
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Jester">
-						<div class="card-body">
-							<h5 class="card-title">Jester</h5>
-							<p class="card-text">
-								<img src="../assets/images/VP-icon.png" class="icon" alt="Victory Point">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Squire">
-						<div class="card-body">
-							<h5 class="card-title">Squire</h5>
-							<p class="card-text">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Architect">
-						<div class="card-body">
-							<h5 class="card-title">Architect</h5>
-							<p class="card-text">
-								<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Merchant">
-						<div class="card-body">
-							<h5 class="card-title">Merchant</h5>
-							<p class="card-text">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								/
-								<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Sergeant">
-						<div class="card-body">
-							<h5 class="card-title">Sergeant</h5>
-							<p class="card-text">
-								<img src="../assets/images/str-icon.png" class="icon" alt="Strength">
-							</p>
-						</div>
-					</div>
-					<div class="card">
-						<img class="card-img-top" src="..." alt="Alchemist">
-						<div class="card-body">
-							<h5 class="card-title">Alchemist</h5>
-							<p class="card-text">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								<img src="../assets/images/arrow-icon.png" class="icon" alt="Arrow">
-								<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-								/
-								<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
-								<img src="../assets/images/arrow-icon.png" class="icon" alt="Arrow">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-								/
-								<img src="../assets/images/res3-icon.png" class="icon" alt="Resource 3">
-								<img src="../assets/images/arrow-icon.png" class="icon" alt="Arrow">
-								<img src="../assets/images/res1-icon.png" class="icon" alt="Resource 1">
-								<img src="../assets/images/res2-icon.png" class="icon" alt="Resource 2">
-							</p>
-						</div>
-					</div>
+			
 				</div>
 			</div>
 		</div>
-		<br />
-
-		<div class="container" id="dice-select-container" style="display:none">
-			<form id="select-dice" style="display:none">
-				<div class="form-group">
-					<label for="form-choose-resource">Select Dice</label>
-					<select class="form-control" id="form-choose-dice">
-						<option>Gold</option>
-						<option>Wood</option>
-						<option>Stone</option>
-					</select>
-					<label for="form-choose-resource">Choose Dice Bonus</label>
-					<select class="form-control" id="form-choose-die-bonus">
-						<option>None</option>
-						<option>+2</option>
-						<option>White Die value</option>
-					</select>
-				</div>
-				<button type="button" class="btn btn-default" id="btn-choose-dice">Done</button>
-			</form>
-		</div>
-
-		<div class="container" id="waiting" style="display:none">
-			<div>
-				<p>Waiting for other players.</p>
-			</div>
-		</div>
-
-		<div class="container" id="prompt-user-container" style="display:none">
-			<div id="waiting" style="display:none">
-				<p>Waiting for other players.</p>
-			</div>
-			<div class="text-center">
-				<p id="prompt-message"></p>
-			</div>
-
-			<form id="select-resource" style="display:none">
-				<div class="row">
-					<div class="col-lg-4">
-						<button class="btn-res-choice">
-							<img src="../assets/images/res1-icon.png" class="btn-icon" alt="Resource 1">
-						</button>
-					</div>
-					<div class="col-lg-4">
-						<button class="btn-res-choice">
-							<img src="../assets/images/res2-icon.png" class="btn-icon" alt="Resource 2">
-						</button>
-					</div>
-					<div class="col-lg-4">
-						<button class="btn-res-choice">
-							<img src="../assets/images/res3-icon.png" class="btn-icon" alt="Resource 3">
-						</button>
-					</div>
-				</div>
-				<!-- <div class="form-group">
-					<label for="form-choose-resource">Choose a resource</label>
-					<select class="form-control" id="form-choose-resource">
-						<option>Gold</option>
-						<option>Wood</option>
-						<option>Stone</option>
-					</select>
-				</div> 
-				<button type="button" class="btn btn-primary" id="btn-choose-resource">Done</button> -->
-			</form>
-		</div>
-
-		<div class="container" id="start-game">
-			<ul id="player-list"></ul>
-			<div class="text-center">
-				<button type="button" id="btn-start-game" class="btn btn-primary ">Start Game</button>
-			</div>
-		</div>
-
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

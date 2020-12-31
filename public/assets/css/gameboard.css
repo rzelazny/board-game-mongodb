@@ -1,3 +1,8 @@
+#sticky-sidebar{
+    background-color: lightgray;
+    color: black !important;
+}
+
 #board-container{
     background-image: url("/assets/images/wood-background.png") ;
     background-size: 100%;
