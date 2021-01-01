@@ -4,7 +4,8 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const passport = require("./config/passport");
 const db = require("./models");
-const game = require("./lib/game_server")
+const game = require("./lib/game_server");
+const { compare } = require("bcryptjs");
 //const compression = require("compression");
 
 const PORT = process.env.PORT || 3000;
@@ -71,7 +72,7 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("player-choice", (choiceData) => {
-		console.log(choiceData.curUser + " made a choice");
+		console.log(choiceData.player + " made a choice");
 		game.sendChoice(choiceData);
 	});
 

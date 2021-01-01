@@ -8,13 +8,7 @@ $(document).ready(function () {
 	let promptEle = $("#prompt-user-container");
 	let resEle = $("#select-resource");
 	let waitEle = $("#waiting");
-	let sidebarTurnOrderEle = $("#sidebar-turn-order")
-	let sidebarVPEle = $("#sidebar-vp")
-	let sidebarBuildingsEle = $("#sidebar-buildings")
-	let sidebarRes1Ele= $("#sidebar-res1")
-	let sidebarRes2Ele = $("#sidebar-res2")
-	let sidebarRes3Ele = $("#sidebar-res3")
-	let sidebar2TokenEle = $("#sidebar-2token")
+	//let sidebarTurnOrderEle = $("#sidebar-turn-order")
 /* ----------------------------
  * Messages we're sending
  * ----------------------------
@@ -139,24 +133,33 @@ $(document).ready(function () {
 
 	//update the sidebar when prompted to
 	socket.on("update-sidebar", (sidebarData) => {
-		let {turnOrder, vp, buildings, res1, res2, res3, twoToken } = sidebarData;
-
+		console.log("recieved sidebar update message", sidebarData);
+		
+		let {score, constructedBuildings, resource1, resource2, resource3, twoToken } = sidebarData;
+		let sidebarVPEle = document.getElementById("sidebar-vp");
+		let sidebarBuildingsEle = document.getElementById("sidebar-buildings");
+		let sidebarRes1Ele= document.getElementById("sidebar-res1");
+		let sidebarRes2Ele = document.getElementById("sidebar-res2");
+		let sidebarRes3Ele = document.getElementById("sidebar-res3");
+		let sidebar2TokenEle = document.getElementById("sidebar-2token");
+	
+		//console.log(sidebarVPEle);
 		//clear and recreate the turn order
-		sidebarTurnOrder.empty();
-		for(let i=0; i<turnOrder.length; i++){
-			let turn = $("<li>");
-			turn.text(turnOrder[i]);
-			turn.attr("color", turnOrder[i].color);
-			sidebarTurnOrderEle.append(turn);
-		}
-
+		// sidebarTurnOrder.empty();
+		// for(let i=0; i<turnOrder.length; i++){
+		// 	let turn = $("<li>");
+		// 	turn.text(turnOrder[i]);
+		// 	turn.attr("color", turnOrder[i].color);
+		// 	sidebarTurnOrderEle.append(turn);
+		// }
+		let textSpace = " : ";
 		//set the player stats
-		sidebarVPEle.text(vp);
-		sidebarBuildingsEle.text(buildings);
-		sidebarRes1Ele.text(res1);
-		sidebarRes2Ele.text(res2);
-		sidebarRes3Ele.text(res3);
-		sidebar2TokenEle.text(twoToken);
+		sidebarVPEle.textContent = textSpace + score;
+		sidebarBuildingsEle.textContent = textSpace + (constructedBuildings.length);
+		sidebarRes1Ele.textContent = textSpace + resource1;
+		sidebarRes2Ele.textContent = textSpace + resource2;
+		sidebarRes3Ele.textContent = textSpace + resource3;
+		sidebar2TokenEle.textContent = textSpace + twoToken;
 	});
 
 	//show prompt field when server sends a prompt

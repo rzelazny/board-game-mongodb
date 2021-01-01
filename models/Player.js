@@ -17,6 +17,7 @@ const PlayerSchema = new Schema({
     turnOrder:{
         type: Number,
     },
+    dice:[],
     score: {
         type: Number,
         default: 0
@@ -30,6 +31,10 @@ const PlayerSchema = new Schema({
         default: 0
     },
     resource3: {
+        type: Number,
+        default: 0
+    },
+    twoToken: {
         type: Number,
         default: 0
     },
