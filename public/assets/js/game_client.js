@@ -7,6 +7,7 @@ $(document).ready(function () {
 	var playerCount = 0;
 	let promptEle = $("#prompt-user-container");
 	let resEle = $("#select-resource");
+	let yesNoEle = $("#select-yesno");
 	let waitEle = $("#waiting");
 	//let sidebarTurnOrderEle = $("#sidebar-turn-order")
 /* ----------------------------
@@ -176,6 +177,12 @@ $(document).ready(function () {
 		switch(message){
 			case "You recieve the king's aid. Pick a bonus resource:":
 				resEle.css("display", "block");
+				break;
+			case "Would you like to use your Statue?":
+				yesNoEle.css("display", "block");
+				break;
+			case "Would you like to use your Market?":
+				YesNoEle.css("display", "block");
 				break;
 			default:
 				console.log("Unknown message prompt: ", message);
