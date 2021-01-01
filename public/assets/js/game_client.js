@@ -9,7 +9,7 @@ $(document).ready(function () {
 	let resEle = $("#select-resource");
 	let yesNoEle = $("#select-yesno");
 	let waitEle = $("#waiting");
-	//let sidebarTurnOrderEle = $("#sidebar-turn-order")
+
 /* ----------------------------
  * Messages we're sending
  * ----------------------------
@@ -144,15 +144,6 @@ $(document).ready(function () {
 		let sidebarRes3Ele = document.getElementById("sidebar-res3");
 		let sidebar2TokenEle = document.getElementById("sidebar-2token");
 	
-		//console.log(sidebarVPEle);
-		//clear and recreate the turn order
-		// sidebarTurnOrder.empty();
-		// for(let i=0; i<turnOrder.length; i++){
-		// 	let turn = $("<li>");
-		// 	turn.text(turnOrder[i]);
-		// 	turn.attr("color", turnOrder[i].color);
-		// 	sidebarTurnOrderEle.append(turn);
-		// }
 		let textSpace = " : ";
 		//set the player stats
 		sidebarVPEle.textContent = textSpace + score;
@@ -161,6 +152,25 @@ $(document).ready(function () {
 		sidebarRes2Ele.textContent = textSpace + resource2;
 		sidebarRes3Ele.textContent = textSpace + resource3;
 		sidebar2TokenEle.textContent = textSpace + twoToken;
+	});
+
+	//update the turn order when prompted to
+	socket.on("update-order", (turnData) => {
+		console.log("recieved turnOrder update message", turnData);
+		
+		//document.getElementById("sidebar-vp");
+		let sidebarTurnOrderEle = $("#sidebar-turn-order")
+
+		console.log(sidebarTurnOrderEle);
+		//clear and recreate the turn order
+		sidebarTurnOrderEle.empty();
+		for(let i=0; i<turnData.length; i++){
+			let turn = $("<li>");
+			turn.text(turnData[i].name);
+			turn.attr("style", "color: " + turnData[i].color);
+			sidebarTurnOrderEle.append(turn);
+		}
+
 	});
 
 	//show prompt field when server sends a prompt
