@@ -4,12 +4,12 @@
 }
 
 #board-container{
-    background-image: url("/assets/images/wood-background.png") ;
+    background-image: url("/assets/images/backgrounds/wood-background.png") ;
     background-size: 100%;
     min-height: 500px;
 }
 #advisor-container{
-    background-image: url("/assets/images/stone-background.png") ;
+    background-image: url("/assets/images/backgrounds/stone-background.png") ;
 }
 #start-game{
     padding-top: 10px;
