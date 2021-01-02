@@ -80,21 +80,6 @@ $(document).ready(function () {
 		socket.emit("player-choice", updateData)
 	})
 
-	//Send resource choice on click
-	$(".btn-res-choice").on("click", function (event) {
-		console.log("dice button");
-		event.preventDefault();
-		
-		console.log(this);
-
-		let updateData = {
-			player: curUser,
-			choiceType: "resource",
-			choice: this.getAttribute("choice")
-		}
-		socket.emit("player-choice", updateData)
-	})
-
 	//Calcing dice total on click
 	$(".btn-die-choice").on("click", function (event) {
 		console.log("dice choice made");
@@ -208,10 +193,9 @@ $(document).ready(function () {
 	socket.on("update-order", (turnData) => {
 		console.log("recieved turnOrder update message", turnData);
 		
-		//document.getElementById("sidebar-vp");
 		let sidebarTurnOrderEle = $("#sidebar-turn-order")
+		myDice = turnData[0].dice.slice();
 
-		console.log(sidebarTurnOrderEle);
 		//clear and recreate the turn order on the sidebar
 		sidebarTurnOrderEle.empty();
 		for(let i=0; i<turnData.length; i++){
