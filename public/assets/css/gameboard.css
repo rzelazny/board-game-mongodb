@@ -1,16 +1,29 @@
+html,
+body{
+    background-color: lightblue;
+    height: 100%;
+}
+
+footer{
+    margin-top: 5px;
+}
 #sticky-sidebar{
-    margin-top: 50px;
+    margin-top: 55px;
     background-color: lightgray;
     color: black !important;
 }
 
 #board-container{
+    margin-top: 55px;
     background-image: url("/assets/images/backgrounds/wood-background.png") ;
     background-size: 100%;
     min-height: 500px;
+    max-height: 700px;
+    overflow: hidden; 
+    overflow-y: scroll;
 }
+
 #advisor-container{
-    min-height: 1500px;
     background-image: url("/assets/images/backgrounds/stone-background.png") ;
 }
 #start-game{
@@ -85,7 +98,7 @@ button[disabled]{
     border: 2px solid white;
 }
 
-.board-dice{
+.dice-advisor1{
     position:absolute;
     width:55%;
     left: 10%;  
