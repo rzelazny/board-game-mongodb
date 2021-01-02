@@ -14,6 +14,7 @@ $(document).ready(function () {
 	let waitEle = $("#waiting");
 	let diceEle = document.getElementsByClassName("dice-btn"); 
 	let diceTotalEle = document.getElementById("dice-total"); 
+	let selectedDice = document.getElementsByClassName("clicked"); 
 
 /* ----------------------------
  * Messages we're sending
@@ -105,10 +106,18 @@ $(document).ready(function () {
 		console.log("dice choice submitted");
 		event.preventDefault();
 
+		console.log("I'm sending:", selectedDice);
+
+		let diceNumber = [];
+
+		for(let i=0; i<selectedDice.length; i++){
+			diceNumber.push(selectedDice[i].getAttribute("choice"));
+		}
+		
 		let updateData = {
 			player: curUser,
 			choiceType: "advisor",
-			choice: myTotal
+			choice: diceNumber
 		}
 		socket.emit("player-choice", updateData)
 	})
