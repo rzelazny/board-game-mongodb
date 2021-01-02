@@ -41,6 +41,11 @@
     width: 400px;
 }
 
+.card-img-top{
+    max-width: 300px;
+    max-height: 150px;
+}
+
 .icon{
     max-width: 30px;
     max-height: 30px;
