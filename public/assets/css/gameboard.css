@@ -51,13 +51,10 @@
     height: 50px;
 }
 
-
-.big-button{
-    display: flex;
-    width: 100%;
-}
-
-.btn-res-choice{
+.btn-res-choice,
+.btn-yes-choice,
+.btn-die-choice
+{
     background-color: #bbb;
     display: block;
     margin: 10px 0;

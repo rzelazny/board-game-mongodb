@@ -2,13 +2,17 @@ $(document).ready(function () {
 	var curGame = document.defaultView.location.pathname.split("gameboard/").pop();
 	var curUser = "";
 	var curRoom = 0;
+	var myDice = [];
 	const socket = io();
 	var playerListEle = $("#player-list");
 	var playerCount = 0;
 	let promptEle = $("#prompt-user-container");
 	let resEle = $("#select-resource");
 	let yesNoEle = $("#select-yesno");
+	let chooseAdvisorEle = $("#select-advisor");
 	let waitEle = $("#waiting");
+	let diceEle = document.getElementsByClassName("dice-btn"); 
+	let diceTotalEle = document.getElementById("die-total"); 
 
 /* ----------------------------
  * Messages we're sending
@@ -65,6 +69,7 @@ $(document).ready(function () {
 		
 		//hide choice, show waiting text
 		promptEle.css("display", "none");
+		resEle.css("display", "none");
 		waitEle.css("display", "block");
 
 		let updateData = {
@@ -75,6 +80,47 @@ $(document).ready(function () {
 		socket.emit("player-choice", updateData)
 	})
 
+	//Send resource choice on click
+	$(".btn-res-choice").on("click", function (event) {
+		console.log("dice button");
+		event.preventDefault();
+		
+		console.log(this);
+
+		let updateData = {
+			player: curUser,
+			choiceType: "resource",
+			choice: this.getAttribute("choice")
+		}
+		socket.emit("player-choice", updateData)
+	})
+
+	//Calcing dice total on click
+	$(".btn-die-choice").on("click", function (event) {
+		console.log("dice choice made");
+		event.preventDefault();
+		
+		let total = 0;
+		console.log(this);
+
+		diceTotalEle.textContent = total;
+	})
+
+	//Sending dice total on click
+	$(".btn-send-dice").on("click", function (event) {
+		console.log("dice choice made");
+		event.preventDefault();
+		
+		console.log(this);
+
+		let updateData = {
+			player: curUser,
+			choiceType: "resource",
+			choice: this.getAttribute("choice")
+		}
+		//socket.emit("player-choice", updateData)
+	})
+	
 /* ----------------------------
  * Messages we're listening for
  * ----------------------------
@@ -136,7 +182,11 @@ $(document).ready(function () {
 	socket.on("update-sidebar", (sidebarData) => {
 		console.log("recieved sidebar update message", sidebarData);
 		
-		let {score, constructedBuildings, resource1, resource2, resource3, twoToken } = sidebarData;
+		let {score, constructedBuildings, resource1, resource2, resource3, twoToken, dice} = sidebarData;
+		myDice.push(dice);
+		console.log(dice);
+		console.log(myDice);
+
 		let sidebarVPEle = document.getElementById("sidebar-vp");
 		let sidebarBuildingsEle = document.getElementById("sidebar-buildings");
 		let sidebarRes1Ele= document.getElementById("sidebar-res1");
@@ -162,7 +212,7 @@ $(document).ready(function () {
 		let sidebarTurnOrderEle = $("#sidebar-turn-order")
 
 		console.log(sidebarTurnOrderEle);
-		//clear and recreate the turn order
+		//clear and recreate the turn order on the sidebar
 		sidebarTurnOrderEle.empty();
 		for(let i=0; i<turnData.length; i++){
 			let turn = $("<li>");
@@ -187,12 +237,26 @@ $(document).ready(function () {
 		switch(message){
 			case "You recieve the king's aid. Pick a bonus resource:":
 				resEle.css("display", "block");
+				waitEle.css("display", "none");
 				break;
 			case "Would you like to use your Statue?":
+			case "Would you like to use your Chapel?":
 				yesNoEle.css("display", "block");
+				waitEle.css("display", "none");
 				break;
-			case "Would you like to use your Market?":
-				YesNoEle.css("display", "block");
+			case "Use your dice to influence an advisor.":
+				chooseAdvisorEle.css("display", "block");
+				waitEle.css("display", "none");
+				//set dice icons
+				for(let i=0; i < 3; i++){
+					diceEle[i].src = ("../assets/images/die-" + myDice[i] + ".png");
+				}
+				if ("king's die"){
+					diceEle[3].src = ("../assets/images/die-" + myDice[3] + ".png");
+				}
+				
+
+
 				break;
 			default:
 				console.log("Unknown message prompt: ", message);
@@ -204,7 +268,7 @@ $(document).ready(function () {
 	//show waiting field when other users have gotten a prompt
 	socket.on("waiting", ({message}) => {
 		console.log("wait message recieved")
-		$("#waiting").css("display", "block");
+		waitEle.css("display", "block");
 	});
 
 	//update the gameboard
