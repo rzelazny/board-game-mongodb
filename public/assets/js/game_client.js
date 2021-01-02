@@ -217,8 +217,11 @@ $(document).ready(function () {
 		sidebarTurnOrderEle.empty();
 		for(let i=0; i<turnData.length; i++){
 			let turn = $("<li>");
-			turn.text(turnData[i].name);
-			turn.attr("style", "color: " + turnData[i].color);
+			turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[0]}.png" />`)
+			turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[1]}.png" />`)
+			turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[2]}.png" />`)
+			// turn.text(turnData[i].name);
+			// turn.attr("style", "color: " + turnData[i].color);
 			sidebarTurnOrderEle.append(turn);
 		}
 
@@ -250,7 +253,7 @@ $(document).ready(function () {
 				waitEle.css("display", "none");
 				//set dice icons
 				for(let i=0; i < 3; i++){
-					diceEle[i].src = ("../assets/dice-"+ myColor+ "images/die-" + myDice[i] + ".png");
+					diceEle[i].src = (`../assets/images/dice-${myColor}/die-${myDice[i]}.png`);
 				}
 				// if ("king's die"){
 				// 	diceEle[3].src = ("../assets/images/die-" + myDice[3] + ".png");
