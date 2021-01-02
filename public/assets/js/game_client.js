@@ -270,9 +270,13 @@ $(document).ready(function () {
 	});
 
 	//display dice on the advisor board
-	socket.on("mark-dice", ({message}) => {
-		console.log("mark dice message recieved")
-		
+	socket.on("mark-dice", (message) => {
+		//{dice, color, advisor}
+		console.log("mark dice message recieved", message);
+		let advEle = $("#adv-" + message.advisor);
+		for(let i=0; i<message.dice.length; i++){
+			advEle.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${message.color}/die-${message.dice[i]}.png" />`)
+		}
 	});
 
 	//show waiting field when other users have gotten a prompt
