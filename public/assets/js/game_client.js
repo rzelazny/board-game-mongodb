@@ -106,20 +106,20 @@ $(document).ready(function () {
 		console.log("dice choice submitted");
 		event.preventDefault();
 
-		console.log("I'm sending:", selectedDice);
-
 		let diceNumber = [];
 
 		for(let i=0; i<selectedDice.length; i++){
 			diceNumber.push(selectedDice[i].getAttribute("choice"));
 		}
-		
-		let updateData = {
+
+		console.log("I'm sending:", diceNumber);
+
+		let myChoice = {
 			player: curUser,
 			choiceType: "advisor",
 			choice: diceNumber
 		}
-		socket.emit("player-choice", updateData)
+		socket.emit("player-choice", myChoice);
 	})
 	
 /* ----------------------------
@@ -155,28 +155,28 @@ $(document).ready(function () {
 		let parsePhase = parseInt(phase);
 		updateNavBar(parsePhase);
 
-		switch (parsePhase) {
-			case 1:
-				//$("#select-resource").css("display", "block");
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			case 4:
-				break;
-			case 5:
-				break;
-			case 6:
-				break;
-			case 7:
-				break;
-			case 8:
-				break;
-			default:
-				console.log("Phase not found");
-				break;
-		}
+		// switch (parsePhase) {
+		// 	case 1:
+		// 		//$("#select-resource").css("display", "block");
+		// 		break;
+		// 	case 2:
+		// 		break;
+		// 	case 3:
+		// 		break;
+		// 	case 4:
+		// 		break;
+		// 	case 5:
+		// 		break;
+		// 	case 6:
+		// 		break;
+		// 	case 7:
+		// 		break;
+		// 	case 8:
+		// 		break;
+		// 	default:
+		// 		console.log("Phase not found");
+		// 		break;
+		// }
 	});
 
 	//update the sidebar when prompted to
@@ -260,6 +260,12 @@ $(document).ready(function () {
 				console.log("Unknown message prompt: ", message);
 		}
 	
+		
+	});
+
+	//display dice on the advisor board
+	socket.on("mark-dice", ({message}) => {
+		console.log("mark dice message recieved")
 		
 	});
 
