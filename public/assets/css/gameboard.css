@@ -1,4 +1,5 @@
 #sticky-sidebar{
+    margin-top: 50px;
     background-color: lightgray;
     color: black !important;
 }
@@ -9,9 +10,11 @@
     min-height: 500px;
 }
 #advisor-container{
+    min-height: 1500px;
     background-image: url("/assets/images/backgrounds/stone-background.png") ;
 }
 #start-game{
+    margin-top: 50px;
     padding-top: 10px;
     min-height: 200px;
 }
@@ -36,6 +39,8 @@
     padding: 5px;
     margin: 5px;
     width: 230px;
+    position:relative;
+    overflow:hidden;
 }
 #big-card{
     width: 400px;
@@ -78,4 +83,11 @@ button[disabled]{
 .clicked{
     background-color: blue;
     border: 2px solid white;
+}
+
+.board-dice{
+    position:absolute;
+    width:55%;
+    left: 10%;  
+    top: 10%;
 }
