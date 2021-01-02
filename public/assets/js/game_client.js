@@ -3,6 +3,7 @@ $(document).ready(function () {
 	var curUser = "";
 	var curRoom = 0;
 	var myDice = [];
+	var myColor = "blue";
 	var myTotal = 0;
 	const socket = io();
 	var playerListEle = $("#player-list");
@@ -249,7 +250,7 @@ $(document).ready(function () {
 				waitEle.css("display", "none");
 				//set dice icons
 				for(let i=0; i < 3; i++){
-					diceEle[i].src = ("../assets/images/die-" + myDice[i] + ".png");
+					diceEle[i].src = ("../assets/dice-"+ myColor+ "images/die-" + myDice[i] + ".png");
 				}
 				// if ("king's die"){
 				// 	diceEle[3].src = ("../assets/images/die-" + myDice[3] + ".png");

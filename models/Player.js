@@ -12,7 +12,7 @@ const PlayerSchema = new Schema({
     },
     color: {
         type: String,
-        default: "red"
+        default: "blue"
     },
     turnOrder:{
         type: Number,
