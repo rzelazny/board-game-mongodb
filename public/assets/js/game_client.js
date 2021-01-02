@@ -3,6 +3,7 @@ $(document).ready(function () {
 	var curUser = "";
 	var curRoom = 0;
 	var myDice = [];
+	var myTotal = 0;
 	const socket = io();
 	var playerListEle = $("#player-list");
 	var playerCount = 0;
@@ -12,7 +13,7 @@ $(document).ready(function () {
 	let chooseAdvisorEle = $("#select-advisor");
 	let waitEle = $("#waiting");
 	let diceEle = document.getElementsByClassName("dice-btn"); 
-	let diceTotalEle = document.getElementById("die-total"); 
+	let diceTotalEle = document.getElementById("dice-total"); 
 
 /* ----------------------------
  * Messages we're sending
@@ -82,28 +83,34 @@ $(document).ready(function () {
 
 	//Calcing dice total on click
 	$(".btn-die-choice").on("click", function (event) {
-		console.log("dice choice made");
+		console.log("dice button");
 		event.preventDefault();
 		
-		let total = 0;
-		console.log(this);
+		//If clicked add to the total, if clicked again remove it
+		if(this.classList.contains("clicked")){
+			myTotal -= myDice[this.getAttribute("choice")];
+		}
+		else{
+			myTotal += myDice[this.getAttribute("choice")];
+		}
 
-		diceTotalEle.textContent = total;
+		this.classList.toggle("clicked");
+		
+		//display the new total
+		diceTotalEle.textContent = myTotal;
 	})
 
 	//Sending dice total on click
-	$(".btn-send-dice").on("click", function (event) {
-		console.log("dice choice made");
+	$(".btn-send-choice").on("click", function (event) {
+		console.log("dice choice submitted");
 		event.preventDefault();
-		
-		console.log(this);
 
 		let updateData = {
 			player: curUser,
-			choiceType: "resource",
-			choice: this.getAttribute("choice")
+			choiceType: "advisor",
+			choice: myTotal
 		}
-		//socket.emit("player-choice", updateData)
+		socket.emit("player-choice", updateData)
 	})
 	
 /* ----------------------------
@@ -167,10 +174,7 @@ $(document).ready(function () {
 	socket.on("update-sidebar", (sidebarData) => {
 		console.log("recieved sidebar update message", sidebarData);
 		
-		let {score, constructedBuildings, resource1, resource2, resource3, twoToken, dice} = sidebarData;
-		myDice.push(dice);
-		console.log(dice);
-		console.log(myDice);
+		let {score, constructedBuildings, resource1, resource2, resource3, twoToken} = sidebarData;
 
 		let sidebarVPEle = document.getElementById("sidebar-vp");
 		let sidebarBuildingsEle = document.getElementById("sidebar-buildings");
@@ -194,7 +198,10 @@ $(document).ready(function () {
 		console.log("recieved turnOrder update message", turnData);
 		
 		let sidebarTurnOrderEle = $("#sidebar-turn-order")
+		
+		//set dice variables we'll need shortly
 		myDice = turnData[0].dice.slice();
+		myTotal = 0;
 
 		//clear and recreate the turn order on the sidebar
 		sidebarTurnOrderEle.empty();
@@ -235,11 +242,9 @@ $(document).ready(function () {
 				for(let i=0; i < 3; i++){
 					diceEle[i].src = ("../assets/images/die-" + myDice[i] + ".png");
 				}
-				if ("king's die"){
-					diceEle[3].src = ("../assets/images/die-" + myDice[3] + ".png");
-				}
-				
-
+				// if ("king's die"){
+				// 	diceEle[3].src = ("../assets/images/die-" + myDice[3] + ".png");
+				// }
 
 				break;
 			default:

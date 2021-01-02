@@ -53,11 +53,24 @@
 
 .btn-res-choice,
 .btn-yes-choice,
-.btn-die-choice
+.btn-die-choice,
+.btn-send-choice
 {
     background-color: #bbb;
     display: block;
     margin: 10px 0;
     padding: 10px;
     width: 100%;
+}
+
+button:disabled,
+button[disabled]{
+    border: 1px solid white;
+    background-color: #ebebeb;
+    color: #9c9c9c;
+}
+
+.clicked{
+    background-color: blue;
+    border: 2px solid white;
 }

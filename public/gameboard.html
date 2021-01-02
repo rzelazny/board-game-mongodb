@@ -348,49 +348,49 @@
 						</form>
 
 						<form id="select-advisor" style="display:none">
-							<div id="die-total" class="text-center">
-								<p>Current Dice Total: </p>
+							<div class="text-center">
+								<p>Current Dice Total: <span id="dice-total">0</span></p>
 							</div>
 							<div class="row">
 								<div class="col-lg-4">
-									<button class="btn-die-choice" choice="1">
+									<button class="btn-die-choice" clicked=false choice=0>
 										<img src="" class="btn-icon dice-btn" alt="Die 1">
 									</button>
 								</div>
 								<div class="col-lg-4">
-									<button class="btn-die-choice" choice="2">
-										<img src="" class="btn-icon dice-btn" alt="Die 2">
+									<button class="btn-die-choice" clicked=false choice=1>
+										<img src="" class="btn-icon dice-btn" alt="Die 1">
 									</button>
 								</div>
 								<div class="col-lg-4">
-									<button class="btn-die-choice" choice="3">
-										<img src="" class="btn-icon dice-btn" alt="Die 3">
+									<button class="btn-die-choice" clicked=false choice=2>
+										<img src="" class="btn-icon dice-btn" alt="Die 2">
 									</button>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-3">
-									<button class="btn-die-choice disabled" choice="1">
-										<img src="../assets/images/die-3.png" class="btn-icon dice-btn" alt="King's Die">
+									<button disabled class="btn-die-choice" clicked=false choice=4>
+										<img src="../assets/images/die-3-dis.png" class="btn-icon dice-btn" alt="King's Die">
 									</button>
 								</div>
 								<div class="col-lg-3">
-									<button class="btn-die-choice disabled" choice="2">
+									<button disabled class="btn-die-choice" clicked=false choice="twotoken">
 										<img src="../assets/images/2token-icon.png" class="btn-icon" alt="+2 Token">
 									</button>
 								</div>
 								<div class="col-lg-3">
-									<button class="btn-die-choice disabled" choice="3">
+									<button disabled class="btn-die-choice" clicked=false choice="market-minus">
 										<img src="../assets/images/building-icon.png" class="btn-icon" alt="Market -1"> -1
 									</button>
 								</div>
 								<div class="col-lg-3">
-									<button class="btn-die-choice disabled" choice="4">
+									<button disabled class="btn-die-choice" clicked=false choice="market-plus">
 										<img src="../assets/images/building-icon.png" class="btn-icon" alt="Market +1"> +1
 									</button>
 								</div>
 							</div>
-							<button type="button" class="btn-die-choice" id="btn-send-dice">Done</button>
+							<button type="button" class="btn-send-choice" id="btn-send-dice">Done</button>
 						</form>
 
 					</div>
