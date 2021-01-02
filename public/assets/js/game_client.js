@@ -121,6 +121,8 @@ $(document).ready(function () {
 			choice: diceNumber
 		}
 		socket.emit("player-choice", myChoice);
+		promptEle.css("display", "none");
+		waitEle.css("display", "block");
 	})
 	
 /* ----------------------------
