@@ -46,6 +46,12 @@
 			</div>
 			<div class="col-11 offset-1" id="main">
 				<div class="container-fluid" id="board-container">
+					<div class="container" id="start-game">
+						<ul id="player-list"></ul>
+						<div class="text-center">
+							<button type="button" id="btn-start-game" class="btn btn-primary ">Start Game</button>
+						</div>
+					</div>
 
 					<div class="container-fluid" id="advisor-container" style="display:none">
 						<div class="row justify-content-md-center">
@@ -293,15 +299,9 @@
 							</div>
 						</div>
 					</div>
-					
-					<div class="container" id="start-game">
-						<ul id="player-list"></ul>
-						<div class="text-center">
-							<button type="button" id="btn-start-game" class="btn btn-primary ">Start Game</button>
-						</div>
-					</div>
-			
+
 				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -341,65 +341,53 @@
 				<!-- <button type="button" class="btn btn-primary" id="btn-choose-resource">Done</button> -->
 			</form>
 
-			<form id="select-yesno" style="display:none">
-				<div class="row">
-					<div class="col-lg-6">
-						<button class="btn-yes-choice" choice="Yes">
-							Yes
-						</button>
-					</div>
-					<div class="col-lg-6">
-						<button class="btn-no-choice" choice="No">
-							No
-						</button>
-					</div>
-				</div>
-			</form>
-
 			<form id="select-advisor" style="display:none">
 				<div class="text-center">
 					<p>Current Dice Total: <span id="dice-total">0</span></p>
 				</div>
 				<div class="row">
 					<div class="col-lg-4">
-						<button class="btn-die-choice" choice=0>
+						<button class="btn-choice" choice=0>
 							<img src="" class="btn-icon dice-btn" alt="Die 1">
 						</button>
 					</div>
 					<div class="col-lg-4">
-						<button class="btn-die-choice" choice=1>
+						<button class="btn-choice" choice=1>
 							<img src="" class="btn-icon dice-btn" alt="Die 1">
 						</button>
 					</div>
 					<div class="col-lg-4">
-						<button class="btn-die-choice" choice=2>
+						<button class="btn-choice" choice=2>
 							<img src="" class="btn-icon dice-btn" alt="Die 2">
 						</button>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-lg-3">
-						<button disabled class="btn-die-choice" choice=4>
+						<button disabled class="btn-choice" choice=4>
 							<img src="../assets/images/icons/die-3-dis.png" class="btn-icon dice-btn" alt="King's Die">
 						</button>
 					</div>
 					<div class="col-lg-3">
-						<button disabled class="btn-die-choice" choice="twotoken">
+						<button disabled class="btn-choice" choice="twotoken">
 							<img src="../assets/images/icons/2token-icon-dis.png" class="btn-icon" alt="+2 Token">
 						</button>
 					</div>
 					<div class="col-lg-3">
-						<button disabled class="btn-die-choice" choice="market-minus">
+						<button disabled class="btn-choice" choice="market-minus">
 							<img src="../assets/images/icons/building-icon-dis.png" class="btn-icon" alt="Market -1"> -1
 						</button>
 					</div>
 					<div class="col-lg-3">
-						<button disabled class="btn-die-choice" choice="market-plus">
+						<button disabled class="btn-choice" choice="market-plus">
 							<img src="../assets/images/icons/building-icon-dis.png" class="btn-icon" alt="Market +1"> +1
 						</button>
 					</div>
 				</div>
-				<button type="button" class="btn-send-choice" id="btn-send-dice">Done</button>
+				<button type="button" class="btn-choice" id="btn-send-dice">Done</button>
+			</form>
+
+			<form class="container-fluid" id="use-buildings" style="display:none">
 			</form>
 
 		</div>

@@ -11,11 +11,14 @@ $(document).ready(function () {
 	let promptEle = $("#prompt-user-container");
 	let resEle = $("#select-resource");
 	let yesNoEle = $("#select-yesno");
+	let advisorEle = $("#advisor-container")
 	let chooseAdvisorEle = $("#select-advisor");
+	let buildingEle = $("#use-buildings");
 	let waitEle = $("#waiting");
 	let diceEle = document.getElementsByClassName("dice-btn");
 	let diceTotalEle = document.getElementById("dice-total");
 	let selectedDice = document.getElementsByClassName("clicked");
+	let promptMsgEle = document.getElementById("prompt-message");
 
 	/* ----------------------------
 	 * Messages we're sending
@@ -139,7 +142,7 @@ $(document).ready(function () {
 	socket.on("game-started", () => {
 		console.log("Got game start message");
 		$("#start-game").css("display", "none");
-		$("#advisor-container").css("display", "block");
+		advisorEle.css("display", "block");
 	});
 
 	//When someone joins the game
@@ -222,11 +225,9 @@ $(document).ready(function () {
 		sidebarTurnOrderEle.empty();
 		for (let i = 0; i < turnData.length; i++) {
 			let turn = $("<li>");
-			turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[0]}.png" />`)
-			turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[1]}.png" />`)
-			turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[2]}.png" />`)
-			// turn.text(turnData[i].name);
-			// turn.attr("style", "color: " + turnData[i].color);
+			for(let ii=0; i<myDice.length; i++){
+				turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[ii]}.png" />`)
+			}
 			sidebarTurnOrderEle.append(turn);
 		}
 
@@ -235,7 +236,7 @@ $(document).ready(function () {
 	//show prompt field when server sends a prompt
 	socket.on("prompt-user", (message) => {
 		console.log("prompt message recieved", message);
-		let promptMsgEle = document.getElementById("prompt-message");
+		
 
 		//always show the prompt container and hide the wait message
 		$("#prompt-user-container").css("display", "block");
@@ -285,21 +286,64 @@ $(document).ready(function () {
 
 	//display the use building section
 	socket.on("use-buildings", (data) => {
+		console.log("use buildings recieved")
 		console.log(data);
-		console.log("wait message recieved")
+
+		//always show the prompt container and hide the wait message
+		$("#prompt-user-container").css("display", "block");
+		waitEle.css("display", "none");
+		promptMsgEle.innerHTML = "You have buildings that may be used."
 		buildingEle.css("display", "block");
 
-		for(let i=0; i<data.buildings.length; i++){
-			let building = $("<div>");
-			building.append(`<img alt="player dice" class="icon" src="../assets/images/buildings/${data.building[i]}.png" />`)
-			building.append("<button>");
-			// turn.text(turnData[i].name);
-			// turn.attr("style", "color: " + turnData[i].color);
+		//create the building div
+		for(let i=0; i<data[0].building.length; i++){
+			//general layout
+			let building = $("<div>").attr("class", "use-building"),
+			row = $("<div>").attr("class", "row"),
+			col1 = $("<div>").attr("class", "col-md-2"),
+			col2 = $("<div>").attr("class", "col-md-2"),
+			col3 = $("<div>").attr("class", "col-md-4"),
+			col4 = $("<div>").attr("class", "col-md-4");
+
+			//create data elements
+			let name = data[0].building[i];
+			let img = `<img alt="player dice" class="btn-icon" src="../assets/images/buildings/${data[0].building[i]}.png" />`;
+			let description = "If your dice total is under 8 you may reroll all dice." //TODO add to database somewhere
+			var useBtn = $('<button/>', {
+				text: "Use "+ name,
+				id: "btnUse" + name,
+				class: "btn-choice",
+				click: useBuilding
+			})
+			col1.append(name);
+			col2.append(img);
+			col3.append(description);
+			col4.append(useBtn);
+
+			row.append(col1, col2, col3, col4);
+			building.append(row);
+
+			//show dice for the buildings it matters for
+			if(data[0].building[i] === "Chapel" || data[0].building[i] === "Statue"){
+				let row2 = $("<div>"),
+				diceCol = $("<div>").attr("class", "col-md-12 text-center");
+
+				for(let ii=0; ii<data[0].dice[0].length;ii++){
+				diceCol.append(`<img alt="player dice" class="btn-icon" src="../assets/images/dice-${myColor}/die-${data[0].dice[0][ii]}.png" />`);
+				};
+				row2.append(diceCol);
+				building.append(row2);
+			}
 			buildingEle.prepend(building);
 		};
 	});
 
 
+function useBuilding(){
+	console.log("use building button");
+	event.preventDefault();
+	this.classList.toggle("clicked");
+}
 	/* ----------------------------
 	 * Functions for displaying the client data
 	 * ----------------------------

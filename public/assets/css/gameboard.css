@@ -75,9 +75,7 @@ footer{
 }
 
 .btn-res-choice,
-.btn-yes-choice,
-.btn-die-choice,
-.btn-send-choice
+.btn-choice
 {
     background-color: #bbb;
     display: block;
@@ -103,4 +101,17 @@ button[disabled]{
     width:55%;
     left: 10%;  
     top: 10%;
+}
+
+.use-building{
+    border: 2px solid black;
+    border-radius: 10px;
+    font-weight: bolder;
+    background-color: burlywood;
+}
+
+.use-building .col-md-2{
+    text-align: center;
+    
+    font-size: 30px;
 }
