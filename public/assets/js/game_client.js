@@ -283,10 +283,20 @@ $(document).ready(function () {
 		waitEle.css("display", "block");
 	});
 
-	socket.on("prompt-building", (data) => {
+	//display the use building section
+	socket.on("use-buildings", (data) => {
 		console.log(data);
+		console.log("wait message recieved")
+		buildingEle.css("display", "block");
 
-		socket.emit("prompt-building", "hello from client");
+		for(let i=0; i<data.buildings.length; i++){
+			let building = $("<div>");
+			building.append(`<img alt="player dice" class="icon" src="../assets/images/buildings/${data.building[i]}.png" />`)
+			building.append("<button>");
+			// turn.text(turnData[i].name);
+			// turn.attr("style", "color: " + turnData[i].color);
+			buildingEle.prepend(building);
+		};
 	});
 
 
