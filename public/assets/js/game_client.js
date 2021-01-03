@@ -13,45 +13,45 @@ $(document).ready(function () {
 	let yesNoEle = $("#select-yesno");
 	let chooseAdvisorEle = $("#select-advisor");
 	let waitEle = $("#waiting");
-	let diceEle = document.getElementsByClassName("dice-btn"); 
-	let diceTotalEle = document.getElementById("dice-total"); 
-	let selectedDice = document.getElementsByClassName("clicked"); 
+	let diceEle = document.getElementsByClassName("dice-btn");
+	let diceTotalEle = document.getElementById("dice-total");
+	let selectedDice = document.getElementsByClassName("clicked");
 
-/* ----------------------------
- * Messages we're sending
- * ----------------------------
- */
+	/* ----------------------------
+	 * Messages we're sending
+	 * ----------------------------
+	 */
 	//initial setup on first opening the boardgame page
 	socket.on("connect", () => {
-	//TODO: check for existing/reconnect before making new player
+		//TODO: check for existing/reconnect before making new player
 		//TODO: On reconnect get game stats
 
 		//get current user name for use in new player object
 		$.get("/api/user_data")
-		.then(function(userData){
-			console.log("User Data: ", userData);
-			let userName = {
-				name: userData.email
-			}
-			$.post("/api/newPlayer", userName) //create the new player
-			.then(function(newPlayer){ //add the new player to the current game
-				console.log("New Player", newPlayer._id);
-				curUser = newPlayer._id;
-				addPlayer(curGame, curUser);
-				//join the room for the game
-				$.get("/api/gameState/" + curGame)
-				.then(function(gameData){
-					curRoom = gameData.roomNumber;
-					let joinData = {
-						userId: curUser,
-						room: curRoom
-					}
-					socket.emit("join-room", joinData);
-					console.log("I joined room ", joinData.room);
-				})
+			.then(function (userData) {
+				console.log("User Data: ", userData);
+				let userName = {
+					name: userData.email
+				}
+				$.post("/api/newPlayer", userName) //create the new player
+					.then(function (newPlayer) { //add the new player to the current game
+						console.log("New Player", newPlayer._id);
+						curUser = newPlayer._id;
+						addPlayer(curGame, curUser);
+						//join the room for the game
+						$.get("/api/gameState/" + curGame)
+							.then(function (gameData) {
+								curRoom = gameData.roomNumber;
+								let joinData = {
+									userId: curUser,
+									room: curRoom
+								}
+								socket.emit("join-room", joinData);
+								console.log("I joined room ", joinData.room);
+							})
+					})
 			})
-		})
-		
+
 		//TODO: enter chat message here
 	});
 
@@ -69,7 +69,7 @@ $(document).ready(function () {
 	$(".btn-res-choice").on("click", function (event) {
 		console.log("resource choice made");
 		event.preventDefault();
-		
+
 		//hide choice, show waiting text
 		promptEle.css("display", "none");
 		resEle.css("display", "none");
@@ -77,7 +77,7 @@ $(document).ready(function () {
 
 		let updateData = {
 			player: curUser,
-			choiceType: "resource",
+			choiceType: "aidResource",
 			choice: this.getAttribute("choice")
 		}
 		socket.emit("player-choice", updateData)
@@ -87,17 +87,17 @@ $(document).ready(function () {
 	$(".btn-die-choice").on("click", function (event) {
 		console.log("dice button");
 		event.preventDefault();
-		
+
 		//If clicked add to the total, if clicked again remove it
-		if(this.classList.contains("clicked")){
+		if (this.classList.contains("clicked")) {
 			myTotal -= myDice[this.getAttribute("choice")];
 		}
-		else{
+		else {
 			myTotal += myDice[this.getAttribute("choice")];
 		}
 
 		this.classList.toggle("clicked");
-		
+
 		//display the new total
 		diceTotalEle.textContent = myTotal;
 	})
@@ -109,7 +109,7 @@ $(document).ready(function () {
 
 		let diceNumber = [];
 
-		for(let i=0; i<selectedDice.length; i++){
+		for (let i = 0; i < selectedDice.length; i++) {
 			diceNumber.push(selectedDice[i].getAttribute("choice"));
 		}
 
@@ -124,14 +124,14 @@ $(document).ready(function () {
 		promptEle.css("display", "none");
 		waitEle.css("display", "block");
 	})
-	
-/* ----------------------------
- * Messages we're listening for
- * ----------------------------
- */
+
+	/* ----------------------------
+	 * Messages we're listening for
+	 * ----------------------------
+	 */
 
 	//Connected successfully
-	socket.on("connected", ({message}) => {
+	socket.on("connected", ({ message }) => {
 		console.log("message", message);
 	});
 
@@ -158,43 +158,46 @@ $(document).ready(function () {
 		let parsePhase = parseInt(phase);
 		updateNavBar(parsePhase);
 
-		// switch (parsePhase) {
-		// 	case 1:
-		// 		//$("#select-resource").css("display", "block");
-		// 		break;
-		// 	case 2:
-		// 		break;
-		// 	case 3:
-		// 		break;
-		// 	case 4:
-		// 		break;
-		// 	case 5:
-		// 		break;
-		// 	case 6:
-		// 		break;
-		// 	case 7:
-		// 		break;
-		// 	case 8:
-		// 		break;
-		// 	default:
-		// 		console.log("Phase not found");
-		// 		break;
-		// }
+		//hide elements from earlier phases, this is usually due to a timeout
+		switch (parsePhase) {
+			case 1:
+				//$("#select-resource").css("display", "block");
+				break;
+			case 2:
+				promptEle.css("display", "none");
+				resEle.css("display", "none");
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				break;
+			default:
+				console.log("Phase not found");
+				break;
+		}
 	});
 
 	//update the sidebar when prompted to
 	socket.on("update-sidebar", (sidebarData) => {
 		console.log("recieved sidebar update message", sidebarData);
-		
-		let {score, constructedBuildings, resource1, resource2, resource3, twoToken} = sidebarData;
+
+		let { score, constructedBuildings, resource1, resource2, resource3, twoToken } = sidebarData;
 
 		let sidebarVPEle = document.getElementById("sidebar-vp");
 		let sidebarBuildingsEle = document.getElementById("sidebar-buildings");
-		let sidebarRes1Ele= document.getElementById("sidebar-res1");
+		let sidebarRes1Ele = document.getElementById("sidebar-res1");
 		let sidebarRes2Ele = document.getElementById("sidebar-res2");
 		let sidebarRes3Ele = document.getElementById("sidebar-res3");
 		let sidebar2TokenEle = document.getElementById("sidebar-2token");
-	
+
 		let textSpace = " : ";
 		//set the player stats
 		sidebarVPEle.textContent = textSpace + score;
@@ -208,16 +211,16 @@ $(document).ready(function () {
 	//update the turn order when prompted to
 	socket.on("update-order", (turnData) => {
 		console.log("recieved turnOrder update message", turnData);
-		
+
 		let sidebarTurnOrderEle = $("#sidebar-turn-order")
-		
+
 		//set dice variables we'll need shortly
 		myDice = turnData[0].dice.slice();
 		myTotal = 0;
 
 		//clear and recreate the turn order on the sidebar
 		sidebarTurnOrderEle.empty();
-		for(let i=0; i<turnData.length; i++){
+		for (let i = 0; i < turnData.length; i++) {
 			let turn = $("<li>");
 			turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[0]}.png" />`)
 			turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[1]}.png" />`)
@@ -231,30 +234,27 @@ $(document).ready(function () {
 
 	//show prompt field when server sends a prompt
 	socket.on("prompt-user", (message) => {
-		console.log("prompt message recieved")
+		console.log("prompt message recieved", message);
 		let promptMsgEle = document.getElementById("prompt-message");
 
-		//always show the prompt container on message
+		//always show the prompt container and hide the wait message
 		$("#prompt-user-container").css("display", "block");
-
 		promptMsgEle.innerHTML = message;
-		
+		waitEle.css("display", "none");
+
 		//display various prompts based on the message
-		switch(message){
+		switch (message) {
 			case "You recieve the king's aid. Pick a bonus resource:":
 				resEle.css("display", "block");
-				waitEle.css("display", "none");
 				break;
 			case "Would you like to use your Statue?":
 			case "Would you like to use your Chapel?":
 				yesNoEle.css("display", "block");
-				waitEle.css("display", "none");
 				break;
 			case "Use your dice to influence an advisor.":
 				chooseAdvisorEle.css("display", "block");
-				waitEle.css("display", "none");
 				//set dice icons
-				for(let i=0; i < 3; i++){
+				for (let i = 0; i < 3; i++) {
 					diceEle[i].src = (`../assets/images/dice-${myColor}/die-${myDice[i]}.png`);
 				}
 				// if ("king's die"){
@@ -265,8 +265,6 @@ $(document).ready(function () {
 			default:
 				console.log("Unknown message prompt: ", message);
 		}
-	
-		
 	});
 
 	//display dice on the advisor board
@@ -274,35 +272,36 @@ $(document).ready(function () {
 		//{dice, color, advisor}
 		console.log("mark dice message recieved", message);
 		let advEle = $("#adv-" + message.advisor);
-		for(let i=0; i<message.dice.length; i++){
+		for (let i = 0; i < message.dice.length; i++) {
 			advEle.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${message.color}/die-${message.dice[i]}.png" />`)
 		}
 	});
 
 	//show waiting field when other users have gotten a prompt
-	socket.on("waiting", ({message}) => {
+	socket.on("waiting", ({ message }) => {
 		console.log("wait message recieved")
 		waitEle.css("display", "block");
 	});
 
-	//update the gameboard
-	socket.on("update-board", ({message}) => {
-		//location.reload();
-		//will need to get correct socket from player.socket
+	socket.on("prompt-building", (data) => {
+		console.log(data);
+
+		socket.emit("prompt-building", "hello from client");
 	});
 
-/* ----------------------------
- * Functions for displaying the client data
- * ----------------------------
- */
+
+	/* ----------------------------
+	 * Functions for displaying the client data
+	 * ----------------------------
+	 */
 	//Update the nav bar css to highlight the current phase
-	function updateNavBar (phase){
-		console.log("Updating navbar");
+	function updateNavBar(phase) {
+		console.log("Updating top navbar");
 		let navBarEleList = document.getElementsByClassName("nav-phase");
 
-		for(let i=0; i<navBarEleList.length; i++){
-			if((i+1) === phase) navBarEleList[i].style.color="red";
-			else navBarEleList[i].style.color="black";
+		for (let i = 0; i < navBarEleList.length; i++) {
+			if ((i + 1) === phase) navBarEleList[i].style.color = "red";
+			else navBarEleList[i].style.color = "black";
 		}
 	}
 

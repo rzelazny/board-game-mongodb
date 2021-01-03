@@ -65,16 +65,15 @@ io.on("connection", (socket) => {
 		io.to(data.room).emit("game-started");
 	});
 
-	socket.on("player-choice", (choiceData) => {
-		console.log(choiceData.player + " made a choice");
-		game.sendChoice(choiceData);
-	});
+	// socket.on("player-choice", (choiceData) => {
+	// 	console.log("server received choice from", choiceData.player);
+	// 	game.receiveChoice(choiceData);
+	// });
 
 	socket.on("disconnect", () => {
 		console.log("Socket "+  socket.id + " left");
 		//game.removePlayer(socket.id);
 	});
-
 	// socket.on('disconnect', () => {
 	// 	//game.removePlayer(socket.id);
 	// 	console.log("Someone left");
