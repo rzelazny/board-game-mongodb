@@ -10,7 +10,7 @@ $(document).ready(function () {
 	var playerCount = 0;
 	let promptEle = $("#prompt-user-container");
 	let resEle = $("#select-resource");
-	let yesNoEle = $("#select-yesno");
+	let selectDiceEle = $("#select-dice");
 	let advisorEle = $("#advisor-container")
 	let chooseAdvisorEle = $("#select-advisor");
 	let buildingEle = $("#use-buildings");
@@ -106,7 +106,7 @@ $(document).ready(function () {
 	})
 
 	//Sending dice total on click
-	$(".btn-send-choice").on("click", function (event) {
+	$("#btn-send-dice").on("click", function (event) {
 		console.log("dice choice submitted");
 		event.preventDefault();
 
@@ -124,9 +124,35 @@ $(document).ready(function () {
 			choice: diceNumber
 		}
 		socket.emit("player-choice", myChoice);
-		promptEle.css("display", "none");
+		//promptEle.css("display", "none");
+		selectDiceEle.css("display", "none");
 		waitEle.css("display", "block");
 	})
+
+	//Sending building total on click
+	function sendBuilding() {
+		console.log("building choice submitted");
+		event.preventDefault();
+
+		let selectedBuildings = document.getElementsByClassName("building-clicked");
+		let choice = [];
+
+		for(let i=0;i<selectedBuildings.length; i++){
+			choice.push(selectedBuildings[i].getAttribute("building"));
+		}
+
+		let myChoice = {
+			player: curUser,
+			choiceType: "building",
+			choice: choice
+		}
+		console.log("I'm sending:", choice);
+
+		socket.emit("player-choice", myChoice);
+		promptEle.css("display", "none");
+		buildingEle.css("display", "none");
+		waitEle.css("display", "block");
+	}
 
 	/* ----------------------------
 	 * Messages we're listening for
@@ -225,7 +251,7 @@ $(document).ready(function () {
 		sidebarTurnOrderEle.empty();
 		for (let i = 0; i < turnData.length; i++) {
 			let turn = $("<li>");
-			for(let ii=0; i<myDice.length; i++){
+			for(let ii=0; ii<myDice.length; ii++){
 				turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[ii]}.png" />`)
 			}
 			sidebarTurnOrderEle.append(turn);
@@ -254,6 +280,7 @@ $(document).ready(function () {
 				break;
 			case "Use your dice to influence an advisor.":
 				chooseAdvisorEle.css("display", "block");
+				selectDiceEle.css("display", "block");
 				//set dice icons
 				for (let i = 0; i < 3; i++) {
 					diceEle[i].src = (`../assets/images/dice-${myColor}/die-${myDice[i]}.png`);
@@ -313,6 +340,7 @@ $(document).ready(function () {
 				text: "Use "+ name,
 				id: "btnUse" + name,
 				class: "btn-choice",
+				building: name,
 				click: useBuilding
 			})
 			col1.append(name);
@@ -334,6 +362,15 @@ $(document).ready(function () {
 				row2.append(diceCol);
 				building.append(row2);
 			}
+			//clear existing then add the new buildings
+			buildingEle.empty();
+			let btnDone = $('<button/>', {
+				text: "Done",
+				id: "btn-send-building",
+				class: "btn-choice",
+				click: sendBuilding
+			})
+			buildingEle.append(btnDone);
 			buildingEle.prepend(building);
 		};
 	});
@@ -342,7 +379,7 @@ $(document).ready(function () {
 function useBuilding(){
 	console.log("use building button");
 	event.preventDefault();
-	this.classList.toggle("clicked");
+	this.classList.toggle("building-clicked");
 }
 	/* ----------------------------
 	 * Functions for displaying the client data

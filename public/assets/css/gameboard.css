@@ -75,6 +75,7 @@ footer{
 }
 
 .btn-res-choice,
+.btn-die-choice,
 .btn-choice
 {
     background-color: #bbb;
@@ -82,6 +83,7 @@ footer{
     margin: 10px 0;
     padding: 10px;
     width: 100%;
+    font-weight: bold;
 }
 
 button:disabled,
@@ -91,9 +93,11 @@ button[disabled]{
     color: #9c9c9c;
 }
 
-.clicked{
+.clicked,
+.building-clicked{
     background-color: blue;
     border: 2px solid white;
+    color: white;
 }
 
 .advisor-dice{
@@ -108,6 +112,7 @@ button[disabled]{
     border-radius: 10px;
     font-weight: bolder;
     background-color: burlywood;
+    padding: 5px;
 }
 
 .use-building .col-md-2{
