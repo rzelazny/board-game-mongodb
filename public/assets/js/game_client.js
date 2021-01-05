@@ -2,7 +2,6 @@ $(document).ready(function () {
 	var curGame = document.defaultView.location.pathname.split("gameboard/").pop();
 	var curUser = "";
 	var curRoom = 0;
-	var myDice = [];
 	var myColor = "blue";
 	var myTotal = 0;
 	const socket = io();
@@ -93,10 +92,11 @@ $(document).ready(function () {
 
 		//If clicked add to the total, if clicked again remove it
 		if (this.classList.contains("clicked")) {
-			myTotal -= myDice[this.getAttribute("choice")];
+			myTotal -= this.value;
 		}
 		else {
-			myTotal += myDice[this.getAttribute("choice")];
+			myTotal += this.value;
+			//myTotal += myDice[this.getAttribute("choice")];
 		}
 
 		this.classList.toggle("clicked");
@@ -124,7 +124,7 @@ $(document).ready(function () {
 			choice: diceNumber
 		}
 		socket.emit("player-choice", myChoice);
-		//promptEle.css("display", "none");
+		promptMsgEle.css("display", "none");
 		selectDiceEle.css("display", "none");
 		waitEle.css("display", "block");
 	})
@@ -243,15 +243,11 @@ $(document).ready(function () {
 
 		let sidebarTurnOrderEle = $("#sidebar-turn-order")
 
-		//set dice variables we'll need shortly
-		myDice = turnData[0].dice.slice();
-		myTotal = 0;
-
 		//clear and recreate the turn order on the sidebar
 		sidebarTurnOrderEle.empty();
 		for (let i = 0; i < turnData.length; i++) {
 			let turn = $("<li>");
-			for(let ii=0; ii<myDice.length; ii++){
+			for(let ii=0; ii<turnData[i].dice.slice().length; ii++){
 				turn.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${turnData[i].color}/die-${turnData[i].dice[ii]}.png" />`)
 			}
 			sidebarTurnOrderEle.append(turn);
@@ -279,21 +275,38 @@ $(document).ready(function () {
 				yesNoEle.css("display", "block");
 				break;
 			case "Use your dice to influence an advisor.":
+			case "Invalid choice. Use your dice to influence an advisor.":
 				chooseAdvisorEle.css("display", "block");
 				selectDiceEle.css("display", "block");
-				//set dice icons
-				for (let i = 0; i < 3; i++) {
-					diceEle[i].src = (`../assets/images/dice-${myColor}/die-${myDice[i]}.png`);
-				}
-				// if ("king's die"){
-				// 	diceEle[3].src = ("../assets/images/die-" + myDice[3] + ".png");
-				// }
-
 				break;
 			default:
 				console.log("Unknown message prompt: ", message);
 		}
 	});
+
+	//update my dice buttons
+	socket.on("update-dice", ({color, dice}) => {
+		console.log("update dice message recieved", color, dice)
+
+		//set dice icons and value
+		for (let i = 0; i < dice.length; i++) {
+			diceEle[i].src = (`../assets/images/dice-${color}/die-${dice[i]}.png`);
+			diceEle[i].setAttribute("value", dice[i]);
+			diceEle[i].disabled = false;
+			diceEle[i].classList.remove("clicked");
+		}
+		//disable buttons for used dice
+		console.log("mydice length", dice.length);
+		for (let i = dice.length; i < 3; i++) {
+			diceEle[i].src = (`../assets/images/icons/die-3-dis.png`);
+			diceEle[i].disabled = true;
+			diceEle[i].classList.remove("clicked");
+		}
+		// if ("king's die"){
+		// 	diceEle[3].src = ("../assets/images/die-" + myDice[3] + ".png");
+		// }
+	});
+
 
 	//display dice on the advisor board
 	socket.on("mark-dice", (message) => {
@@ -395,5 +408,4 @@ function useBuilding(){
 			else navBarEleList[i].style.color = "black";
 		}
 	}
-
 });
