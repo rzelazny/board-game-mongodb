@@ -14,7 +14,8 @@ $(document).ready(function () {
 	let chooseAdvisorEle = $("#select-advisor");
 	let buildingEle = $("#use-buildings");
 	let waitEle = $("#waiting");
-	let diceEle = document.getElementsByClassName("dice-btn");
+	let diceImg = document.getElementsByClassName("dice-btn");
+	let diceEle = document.getElementsByClassName("btn-die-choice");
 	let diceTotalEle = document.getElementById("dice-total");
 	let selectedDice = document.getElementsByClassName("clicked");
 	let promptMsgEle = document.getElementById("prompt-message");
@@ -124,7 +125,7 @@ $(document).ready(function () {
 			choice: diceNumber
 		}
 		socket.emit("player-choice", myChoice);
-		promptMsgEle.css("display", "none");
+		promptMsgEle.style.display = "none";
 		selectDiceEle.css("display", "none");
 		waitEle.css("display", "block");
 	})
@@ -278,6 +279,7 @@ $(document).ready(function () {
 			case "Invalid choice. Use your dice to influence an advisor.":
 				chooseAdvisorEle.css("display", "block");
 				selectDiceEle.css("display", "block");
+				promptMsgEle.style.display = "block";
 				break;
 			default:
 				console.log("Unknown message prompt: ", message);
@@ -290,15 +292,15 @@ $(document).ready(function () {
 
 		//set dice icons and value
 		for (let i = 0; i < dice.length; i++) {
-			diceEle[i].src = (`../assets/images/dice-${color}/die-${dice[i]}.png`);
-			diceEle[i].setAttribute("value", dice[i]);
+			diceImg[i].src = (`../assets/images/dice-${color}/die-${dice[i]}.png`);
+			diceImg[i].setAttribute("value", dice[i]);
 			diceEle[i].disabled = false;
 			diceEle[i].classList.remove("clicked");
 		}
 		//disable buttons for used dice
 		console.log("mydice length", dice.length);
 		for (let i = dice.length; i < 3; i++) {
-			diceEle[i].src = (`../assets/images/icons/die-3-dis.png`);
+			diceImg[i].src = (`../assets/images/icons/die-3-dis.png`);
 			diceEle[i].disabled = true;
 			diceEle[i].classList.remove("clicked");
 		}
