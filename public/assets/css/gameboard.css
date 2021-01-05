@@ -46,6 +46,7 @@ footer{
     font-weight: bold;
 }
 .card{
+    background-image: url("/assets/images/backgrounds/marble-background.png") ;
     border: 2px;
     border-style: solid;
     border-color: black;
