@@ -125,9 +125,10 @@ $(document).ready(function () {
 			choice: diceNumber
 		}
 		socket.emit("player-choice", myChoice);
-		promptMsgEle.style.display = "none";
+		$("#prompt-user-container").css("display", "none");
 		selectDiceEle.css("display", "none");
 		waitEle.css("display", "block");
+		promptMsgEle.style.display = "none";
 	})
 
 	//Sending building total on click
@@ -322,8 +323,9 @@ $(document).ready(function () {
 
 	//show waiting field when other users have gotten a prompt
 	socket.on("waiting", ({ message }) => {
-		console.log("wait message recieved")
+		console.log("wait message recieved");
 		waitEle.css("display", "block");
+		$("#prompt-user-container").css("display", "block");
 	});
 
 	//display the use building section
