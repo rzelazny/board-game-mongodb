@@ -15,6 +15,12 @@ const gameSchema = new Schema(
                 ref: "Player"
             }
         ],
+        advisors: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Advisor"
+            }
+        ],
         nextEnemy: {
             name: String,
             power: Number,

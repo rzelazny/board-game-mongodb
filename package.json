@@ -19,6 +19,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "setAdvisors": "node seeder/advisorSeed.js",
     "setBuildings": "node seeder/buildingSeed.js",
     "seedGame": "node seeder/defaultGameSeed.js"
   },

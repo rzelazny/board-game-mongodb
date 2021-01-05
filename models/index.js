@@ -1,6 +1,7 @@
 // Exporting an object containing all of our models
 
 module.exports = {
+    Advisor: require("./Advisor"),
     Game: require("./Game"),
     Player: require("./Player"),
     Building: require("./Building"),
