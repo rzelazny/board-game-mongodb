@@ -356,8 +356,8 @@ $(document).ready(function () {
 				let row2 = $("<div>"),
 				diceCol = $("<div>").attr("class", "col-md-12 text-center");
 
-				for(let ii=0; ii<data[0].dice[0].length;ii++){
-				diceCol.append(`<img alt="player dice" class="btn-icon" src="../assets/images/dice-${myColor}/die-${data[0].dice[0][ii]}.png" />`);
+				for(let ii=0; ii<data[0].dice.length;ii++){
+				diceCol.append(`<img alt="player dice" class="btn-icon" src="../assets/images/dice-${myColor}/die-${data[0].dice[ii]}.png" />`);
 				};
 				row2.append(diceCol);
 				building.append(row2);
