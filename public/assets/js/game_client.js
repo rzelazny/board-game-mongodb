@@ -308,6 +308,11 @@ $(document).ready(function () {
 		// if ("king's die"){
 		// 	diceEle[3].src = ("../assets/images/die-" + myDice[3] + ".png");
 		// }
+
+		//if there are no dice don't show the section anymore
+		if(dice.length === 0){
+			selectDiceEle.css("display", "none");
+		}
 	});
 
 
@@ -398,6 +403,70 @@ function useBuilding(){
 	event.preventDefault();
 	this.classList.toggle("building-clicked");
 }
+	//display the use advisors section
+	socket.on("use-advisors", (data) => {
+		console.log("use advisors recieved")
+		console.log(data);
+
+		// //always show the prompt container and hide the wait message
+		// $("#prompt-user-container").css("display", "block");
+		// waitEle.css("display", "none");
+		// promptMsgEle.innerHTML = "You have buildings that may be used."
+		// buildingEle.css("display", "block");
+
+		// //create the building div
+		// for(let i=0; i<data[0].building.length; i++){
+		// 	//general layout
+		// 	let building = $("<div>").attr("class", "use-building"),
+		// 	row = $("<div>").attr("class", "row"),
+		// 	col1 = $("<div>").attr("class", "col-md-2"),
+		// 	col2 = $("<div>").attr("class", "col-md-2"),
+		// 	col3 = $("<div>").attr("class", "col-md-4"),
+		// 	col4 = $("<div>").attr("class", "col-md-4");
+
+		// 	//create data elements
+		// 	let name = data[0].building[i];
+		// 	let img = `<img alt="player dice" class="btn-icon" src="../assets/images/buildings/${data[0].building[i]}.png" />`;
+		// 	let description = "If your dice total is under 8 you may reroll all dice." //TODO add to database somewhere
+		// 	var useBtn = $('<button/>', {
+		// 		text: "Use "+ name,
+		// 		id: "btnUse" + name,
+		// 		class: "btn-choice",
+		// 		building: name,
+		// 		click: useBuilding
+		// 	})
+		// 	col1.append(name);
+		// 	col2.append(img);
+		// 	col3.append(description);
+		// 	col4.append(useBtn);
+
+		// 	row.append(col1, col2, col3, col4);
+		// 	building.append(row);
+
+		// 	//show dice for the buildings it matters for
+		// 	if(data[0].building[i] === "Chapel" || data[0].building[i] === "Statue"){
+		// 		let row2 = $("<div>"),
+		// 		diceCol = $("<div>").attr("class", "col-md-12 text-center");
+
+		// 		for(let ii=0; ii<data[0].dice.length;ii++){
+		// 		diceCol.append(`<img alt="player dice" class="btn-icon" src="../assets/images/dice-${myColor}/die-${data[0].dice[ii]}.png" />`);
+		// 		};
+		// 		row2.append(diceCol);
+		// 		building.append(row2);
+		// 	}
+		// 	//clear existing then add the new buildings
+		// 	buildingEle.empty();
+		// 	let btnDone = $('<button/>', {
+		// 		text: "Done",
+		// 		id: "btn-send-building",
+		// 		class: "btn-choice",
+		// 		click: sendBuilding
+		// 	})
+		// 	buildingEle.append(btnDone);
+		// 	buildingEle.prepend(building);
+		// };
+	});
+
 	/* ----------------------------
 	 * Functions for displaying the client data
 	 * ----------------------------
