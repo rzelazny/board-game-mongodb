@@ -161,6 +161,30 @@ $(document).ready(function () {
 		waitEle.css("display", "block");
 	}
 
+	//Sending advisor choices on click
+	function sendAdvisors() {
+		console.log("advisor choices submitted");
+		event.preventDefault();
+
+		let selectedBuildings = document.getElementsByClassName("advisor-clicked");
+		let choice = [];
+
+		for(let i=0;i<selectedBuildings.length; i++){
+			choice.push(selectedBuildings[i].getAttribute("building"));
+		}
+
+		let myChoice = {
+			player: curUser,
+			choiceType: "building",
+			choice: choice
+		}
+		console.log("I'm sending:", choice);
+
+		// socket.emit("player-choice", myChoice);
+		// promptEle.css("display", "none");
+		// buildingEle.css("display", "none");
+		// waitEle.css("display", "block");
+	}
 	/* ----------------------------
 	 * Messages we're listening for
 	 * ----------------------------
@@ -408,68 +432,101 @@ function useBuilding(){
 	event.preventDefault();
 	this.classList.toggle("building-clicked");
 }
+
+function useAdvisor(){
+	console.log("use building button");
+	event.preventDefault();
+	this.classList.toggle("advisor-clicked");
+}
+
 	//display the use advisors section
-	socket.on("use-advisors", (data) => {
+	socket.on("use-advisors", (advisorData) => {
+		//{name, img:{url}, img:{alt}, choice1, choice2, choice3}
 		console.log("use advisors recieved")
-		console.log(data);
+		console.log(advisorData);
 
 		//always show the prompt container and hide the wait message
 		$("#prompt-user-container").css("display", "block");
 		waitEle.css("display", "none");
+		promptMsgEle.style.display = "block";
 		promptMsgEle.innerHTML = "You have influenced these advisors:"
 		useAdvisorContainer.css("display", "block");
 
-		// //create the building div
-		// for(let i=0; i<data[0].building.length; i++){
-		// 	//general layout
-		// 	let building = $("<div>").attr("class", "use-building"),
-		// 	row = $("<div>").attr("class", "row"),
-		// 	col1 = $("<div>").attr("class", "col-md-2"),
-		// 	col2 = $("<div>").attr("class", "col-md-2"),
-		// 	col3 = $("<div>").attr("class", "col-md-4"),
-		// 	col4 = $("<div>").attr("class", "col-md-4");
+		//delete existing data before generating new divs
+		useAdvisorContainer.empty();
 
-		// 	//create data elements
-		// 	let name = data[0].building[i];
-		// 	let img = `<img alt="player dice" class="btn-icon" src="../assets/images/buildings/${data[0].building[i]}.png" />`;
-		// 	let description = "If your dice total is under 8 you may reroll all dice." //TODO add to database somewhere
-		// 	var useBtn = $('<button/>', {
-		// 		text: "Use "+ name,
-		// 		id: "btnUse" + name,
-		// 		class: "btn-choice",
-		// 		building: name,
-		// 		click: useBuilding
-		// 	})
-		// 	col1.append(name);
-		// 	col2.append(img);
-		// 	col3.append(description);
-		// 	col4.append(useBtn);
+		//create the advisor div
+		for(let i=0; i<advisorData.length; i++){
+			//general layout
+			let advisor = $("<div>").attr("class", "use-advisor"),
+			row = $("<div>").attr("class", "row"),
+			col1 = $("<div>").attr("class", "col-md-2"),
+			col2 = $("<div>").attr("class", "col-md-2"),
+			col3 = $("<div>").attr("class", "col-md-8");
 
-		// 	row.append(col1, col2, col3, col4);
-		// 	building.append(row);
+		 	//create data elements
+			let name = advisorData[i].name;
+			let imgage = `<img alt=${advisorData[i].img.alt} class="btn-icon" src="${advisorData[i].img.url}" />`;
+			
+			col1.append(name);
+			col2.append(imgage);
 
-		// 	//show dice for the buildings it matters for
-		// 	if(data[0].building[i] === "Chapel" || data[0].building[i] === "Statue"){
-		// 		let row2 = $("<div>"),
-		// 		diceCol = $("<div>").attr("class", "col-md-12 text-center");
+			//figure out how many choices need to be made for this advisor, always need at least one.
+			let rowsNeeded = 1;
+			if(advisorData[i].choice2.optNum > 0) rowsNeeded++;
+			if(advisorData[i].choice3.optNum > 0) rowsNeeded++;
 
-		// 		for(let ii=0; ii<data[0].dice.length;ii++){
-		// 		diceCol.append(`<img alt="player dice" class="btn-icon" src="../assets/images/dice-${myColor}/die-${data[0].dice[ii]}.png" />`);
-		// 		};
-		// 		row2.append(diceCol);
-		// 		building.append(row2);
-		// 	}
-		// 	//clear existing then add the new buildings
-		// 	buildingEle.empty();
-		// 	let btnDone = $('<button/>', {
-		// 		text: "Done",
-		// 		id: "btn-send-building",
-		// 		class: "btn-choice",
-		// 		click: sendBuilding
-		// 	})
-		// 	buildingEle.append(btnDone);
-		// 	buildingEle.prepend(building);
-		// };
+			//create as many button rows as the advisor requires
+			for(let j=0;j<rowsNeeded;j++){
+				let btnRow = $("<div>").attr("class", "row");
+				col3.append(btnRow);
+
+				//create as many buttons per row as the advisor requires, always need at least one
+				var useBtn = $('<button/>', {
+					text: advisorData[i].option1,
+					id: name + "-choice-" + i + j,
+					class: "btn-choice",
+					advisor: name,
+					click: useAdvisor
+				})
+				btnRow.append(useBtn);
+
+				if(advisorData[i].choice2.optNum > 0){
+					var useBtn = $('<button/>', {
+						text: advisorData[i].option2,
+						id: name + "-choice-" + i + j,
+						class: "btn-choice",
+						advisor: name,
+						click: useAdvisor
+					})
+				}
+				btnRow.append(useBtn);
+
+				if(advisorData[i].choice3.optNum > 0){
+					var useBtn = $('<button/>', {
+						text: advisorData[i].option3,
+						id: name + "-choice-" + i + j,
+						class: "btn-choice",
+						advisor: name,
+						click: useAdvisor
+					})
+				}
+				btnRow.append(useBtn);
+			}
+
+			row.append(col1, col2, col3);
+			advisor.append(row);
+			
+			useAdvisorContainer.append(advisor);
+			
+		};
+		let btnDone = $('<button/>', {
+			text: "Done",
+			id: "btn-send-advisor",
+			class: "btn-choice",
+			click: sendAdvisors
+		})
+		useAdvisorContainer.append(btnDone);
 	});
 
 	/* ----------------------------

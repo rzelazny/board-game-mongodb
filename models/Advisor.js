@@ -13,25 +13,12 @@ const AdvisorSchema = new Schema({
         url: String,
         alt: String
     },
-    choice1: {
+    choice: [{
         option1: String,
         option2: String,
         option3: String,
         optNum: Number
-    },
-    choice2: {
-        option1: String,
-        option2: String,
-        option3: String,
-        optNum: Number
-        
-    },
-    choice3: {
-        option1: String,
-        option2: String,
-        option3: String,
-        optNum: Number
-    },
+    }],
 });
 
 const Advisor = mongoose.model("Advisor", AdvisorSchema);
