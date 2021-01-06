@@ -7,18 +7,23 @@ $(document).ready(function () {
 	const socket = io();
 	var playerListEle = $("#player-list");
 	var playerCount = 0;
-	let promptEle = $("#prompt-user-container");
-	let resEle = $("#select-resource");
-	let selectDiceEle = $("#select-dice");
-	let advisorEle = $("#advisor-container")
-	let chooseAdvisorEle = $("#select-advisor");
-	let buildingEle = $("#use-buildings");
-	let waitEle = $("#waiting");
-	let diceImg = document.getElementsByClassName("dice-btn");
-	let diceEle = document.getElementsByClassName("btn-die-choice");
-	let diceTotalEle = document.getElementById("dice-total");
-	let selectedDice = document.getElementsByClassName("clicked");
-	let promptMsgEle = document.getElementById("prompt-message");
+
+	//elements we adjust
+	let promptEle = $("#prompt-user-container"),
+	resEle = $("#select-resource"),
+	selectDiceEle = $("#select-dice"),
+	advisorEle = $("#advisor-container"),
+	chooseAdvisorEle = $("#select-advisor"),
+	buildingEle = $("#use-buildings"),
+	useAdvisorContainer = $("#use-advisors"),
+	waitEle = $("#waiting"),
+	diceImg = document.getElementsByClassName("dice-btn"),
+	diceEle = document.getElementsByClassName("btn-die-choice"),
+	diceTotalEle = document.getElementById("dice-total"),
+	selectedDice = document.getElementsByClassName("clicked"),
+	promptMsgEle = document.getElementById("prompt-message");
+
+	
 
 	/* ----------------------------
 	 * Messages we're sending
@@ -93,10 +98,10 @@ $(document).ready(function () {
 
 		//If clicked add to the total, if clicked again remove it
 		if (this.classList.contains("clicked")) {
-			myTotal -= this.value;
+			myTotal -= parseInt(this.getAttribute("pips"));
 		}
 		else {
-			myTotal += this.value;
+			myTotal += parseInt(this.getAttribute("pips"));
 			//myTotal += myDice[this.getAttribute("choice")];
 		}
 
@@ -294,7 +299,7 @@ $(document).ready(function () {
 		//set dice icons and value
 		for (let i = 0; i < dice.length; i++) {
 			diceImg[i].src = (`../assets/images/dice-${color}/die-${dice[i]}.png`);
-			diceImg[i].setAttribute("value", dice[i]);
+			diceEle[i].setAttribute("pips", dice[i]);
 			diceEle[i].disabled = false;
 			diceEle[i].classList.remove("clicked");
 		}
@@ -408,11 +413,11 @@ function useBuilding(){
 		console.log("use advisors recieved")
 		console.log(data);
 
-		// //always show the prompt container and hide the wait message
-		// $("#prompt-user-container").css("display", "block");
-		// waitEle.css("display", "none");
-		// promptMsgEle.innerHTML = "You have buildings that may be used."
-		// buildingEle.css("display", "block");
+		//always show the prompt container and hide the wait message
+		$("#prompt-user-container").css("display", "block");
+		waitEle.css("display", "none");
+		promptMsgEle.innerHTML = "You have influenced these advisors:"
+		useAdvisorContainer.css("display", "block");
 
 		// //create the building div
 		// for(let i=0; i<data[0].building.length; i++){

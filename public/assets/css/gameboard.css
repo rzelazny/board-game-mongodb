@@ -95,7 +95,8 @@ button[disabled]{
 }
 
 .clicked,
-.building-clicked{
+.building-clicked,
+.advisor-clicked{
     background-color: blue;
     border: 2px solid white;
     color: white;
@@ -108,6 +109,7 @@ button[disabled]{
     top: 10%;
 }
 
+.use-advisor,
 .use-building{
     border: 2px solid black;
     border-radius: 10px;
