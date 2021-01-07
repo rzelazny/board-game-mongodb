@@ -75,6 +75,11 @@ footer{
     height: 50px;
 }
 
+.adv-icon{
+    width: 150px;
+    height: 75px;
+}
+
 .btn-res-choice,
 .btn-die-choice,
 .btn-choice
@@ -98,7 +103,7 @@ button[disabled]{
 .building-clicked,
 .advisor-clicked,
 .advisor-clicked-locked{
-    background-color: rgb(101, 101, 101);
+    background-color: rgb(40, 73, 218);
     border: 2px solid beige;
     color: white;
 }

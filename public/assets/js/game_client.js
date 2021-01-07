@@ -436,8 +436,21 @@ function useBuilding(){
 function useAdvisor(){
 	console.log("use building button");
 	event.preventDefault();
-	this.classList.toggle("advisor-clicked");
-	let myChoice = document.getElementsByClassName();
+
+	//find other buttons that are part of this choice
+	let thisChoiceBtns = document.getElementsByClassName(this.id.slice(0,-2)); 
+	let thisBtn = this.id;
+	//if this button isn't selected select it
+	if(!this.classList.contains("advisor-clicked") && !this.classList.contains("advisor-clicked-locked")) {
+		this.classList.add("advisor-clicked");
+	}
+	
+	//then deselect the other buttons in this choice
+	for(let i=0; i<thisChoiceBtns.length; i++){
+		if(thisChoiceBtns[i].id !== thisBtn){
+			thisChoiceBtns[i].classList.remove("advisor-clicked");
+		}
+	}
 }
 
 	//display the use advisors section
@@ -461,16 +474,16 @@ function useAdvisor(){
 			//general layout
 			let advisor = $("<div>").attr("class", "use-advisor"),
 			row = $("<div>").attr("class", "row"),
-			col1 = $("<div>").attr("class", "col-md-2"),
-			col2 = $("<div>").attr("class", "col-md-1"),
+			col1 = $("<div>").attr("class", "col-md-1"),
+			col2 = $("<div>").attr("class", "col-md-2"),
 			col3 = $("<div>").attr("class", "col-md-9");
 
 		 	//create data elements
 			let name = advisorData[i].name;
-			let imgage = `<img alt=${advisorData[i].img.alt} class="btn-icon" src="${advisorData[i].img.url}" />`;
+			let image = `<img alt=${advisorData[i].img.alt} class="adv-icon" src="${advisorData[i].img.url}" />`;
 			
 			col1.append(name);
-			col2.append(imgage);
+			col2.append(image);
 
 			//figure out how many choices need to be made for this advisor
 			let rowsNeeded = advisorData[i].choice.length;
@@ -478,8 +491,8 @@ function useAdvisor(){
 
 			//create as many button rows as the advisor requires
 			for(let j=0;j<rowsNeeded;j++){
-				let btnRow = $("<div>").attr("class", "row");
-				let btnCol = $("<div>").attr("class", ("col-md-"+12/advisorData[i].choice[j].optNum)),
+				let btnRow = $("<div>").attr("class", "row"),
+				btnCol = $("<div>").attr("class", ("col-md-"+12/advisorData[i].choice[j].optNum)),
 				btnCol2 = $("<div>").attr("class", ("col-md-"+12/advisorData[i].choice[j].optNum)),
 				btnCol3 = $("<div>").attr("class", ("col-md-"+12/advisorData[i].choice[j].optNum));
 
@@ -497,7 +510,7 @@ function useAdvisor(){
 							else if(k===0){ //otherwise select the first option by default
 								return `btn-choice advisor-clicked ${name}-choice-${i}`;
 							}
-							else return "btn-choice";
+							else return `btn-choice ${name}-choice-${i}`;
 						},
 						html: ()=>{ //display the icons on the buttons
 							let advText = "";
