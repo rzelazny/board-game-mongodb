@@ -105,7 +105,7 @@ let advisorSetup = [
             optNum: 3
         },
         {
-            option1: "2oken",
+            option1: "2token",
             option2: "",
             option3: "",
             optNum: 1

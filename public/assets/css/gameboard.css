@@ -96,7 +96,8 @@ button[disabled]{
 
 .clicked,
 .building-clicked,
-.advisor-clicked{
+.advisor-clicked,
+.advisor-clicked-locked{
     background-color: blue;
     border: 2px solid white;
     color: white;

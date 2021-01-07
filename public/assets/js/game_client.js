@@ -437,6 +437,7 @@ function useAdvisor(){
 	console.log("use building button");
 	event.preventDefault();
 	this.classList.toggle("advisor-clicked");
+	let myChoice = document.getElementsByClassName()
 }
 
 	//display the use advisors section
@@ -461,8 +462,8 @@ function useAdvisor(){
 			let advisor = $("<div>").attr("class", "use-advisor"),
 			row = $("<div>").attr("class", "row"),
 			col1 = $("<div>").attr("class", "col-md-2"),
-			col2 = $("<div>").attr("class", "col-md-2"),
-			col3 = $("<div>").attr("class", "col-md-8");
+			col2 = $("<div>").attr("class", "col-md-1"),
+			col3 = $("<div>").attr("class", "col-md-9");
 
 		 	//create data elements
 			let name = advisorData[i].name;
@@ -478,48 +479,58 @@ function useAdvisor(){
 			//create as many button rows as the advisor requires
 			for(let j=0;j<rowsNeeded;j++){
 				let btnRow = $("<div>").attr("class", "row");
-				let btnCol = $("<div>").attr("class", "col-md-12");
+				let btnCol = $("<div>").attr("class", ("col-md-"+12/advisorData[i].choice[j].optNum)),
+				btnCol2 = $("<div>").attr("class", ("col-md-"+12/advisorData[i].choice[j].optNum)),
+				btnCol3 = $("<div>").attr("class", ("col-md-"+12/advisorData[i].choice[j].optNum));
 
 				//create as many buttons as each choice requires
 				for(let k=0; k<advisorData[i].choice[j].optNum; k++){
+
 					var useBtn = $('<button/>', {
 						id: `${name}-choice-${i}-${k}`,
-						class: "btn-choice",
-						advisor: name,
 						click: useAdvisor,
-						html: ()=>{
+						class: ()=>{
+							//if there's only one choice automatically select it
+							if(advisorData[i].choice[j].optNum === 1){
+								return `btn-choice advisor-clicked-locked ${name}-choice-${i}`;
+							}
+							else return "btn-choice";
+						},
+						html: ()=>{ //display the icons on the buttons
 							let advText = "";
-							console.log("k in loop", k);
 							if(k===0){
-								console.log(advisorData[i].choice[j]);
 								advText = textToIcon(advisorData[i].choice[j].option1);
 							}
 							else if(k===1){
-								console.log(advisorData[i].choice[j]);
 								advText = textToIcon(advisorData[i].choice[j].option2);
 							}
 							else{
-								console.log(advisorData[i].choice[j]);
 								advText = textToIcon(advisorData[i].choice[j].option3);
 							}
-
 							return advText
 						}
 					})
-					btnCol.append(useBtn);
+					if(k===0){
+						btnCol.append(useBtn);
+						btnRow.append(btnCol);
+					}
+					else if(k===1){
+						btnCol2.append(useBtn);
+						btnRow.append(btnCol2);
+					}
+					else{
+						btnCol3.append(useBtn);
+						btnRow.append(btnCol3);
+					}					
 				}
 
 				//append the set of buttons
-				btnCol.append(useBtn);
-				btnRow.append(btnCol);
 				col3.append(btnRow);
 			}
 
 			row.append(col1, col2, col3);
 			advisor.append(row);
-			
 			useAdvisorContainer.append(advisor);
-			
 		};
 		let btnDone = $('<button/>', {
 			text: "Done",
