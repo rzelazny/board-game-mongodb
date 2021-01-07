@@ -437,7 +437,7 @@ function useAdvisor(){
 	console.log("use building button");
 	event.preventDefault();
 	this.classList.toggle("advisor-clicked");
-	let myChoice = document.getElementsByClassName()
+	let myChoice = document.getElementsByClassName();
 }
 
 	//display the use advisors section
@@ -493,6 +493,9 @@ function useAdvisor(){
 							//if there's only one choice automatically select it
 							if(advisorData[i].choice[j].optNum === 1){
 								return `btn-choice advisor-clicked-locked ${name}-choice-${i}`;
+							}
+							else if(k===0){ //otherwise select the first option by default
+								return `btn-choice advisor-clicked ${name}-choice-${i}`;
 							}
 							else return "btn-choice";
 						},

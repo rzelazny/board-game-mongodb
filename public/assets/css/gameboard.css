@@ -98,8 +98,8 @@ button[disabled]{
 .building-clicked,
 .advisor-clicked,
 .advisor-clicked-locked{
-    background-color: blue;
-    border: 2px solid white;
+    background-color: rgb(101, 101, 101);
+    border: 2px solid beige;
     color: white;
 }
 
