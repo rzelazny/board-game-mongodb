@@ -471,47 +471,48 @@ function useAdvisor(){
 			col1.append(name);
 			col2.append(imgage);
 
-			//figure out how many choices need to be made for this advisor, always need at least one.
-			let rowsNeeded = 1;
-			if(advisorData[i].choice2.optNum > 0) rowsNeeded++;
-			if(advisorData[i].choice3.optNum > 0) rowsNeeded++;
+			//figure out how many choices need to be made for this advisor
+			let rowsNeeded = advisorData[i].choice.length;
+			console.log("rowsNeeded", rowsNeeded);
 
 			//create as many button rows as the advisor requires
 			for(let j=0;j<rowsNeeded;j++){
 				let btnRow = $("<div>").attr("class", "row");
+				let btnCol = $("<div>").attr("class", "col-md-12");
+
+				//create as many buttons as each choice requires
+				for(let k=0; k<advisorData[i].choice[j].optNum; k++){
+					var useBtn = $('<button/>', {
+						id: `${name}-choice-${i}-${k}`,
+						class: "btn-choice",
+						advisor: name,
+						click: useAdvisor,
+						html: ()=>{
+							let advText = "";
+							console.log("k in loop", k);
+							if(k===0){
+								console.log(advisorData[i].choice[j]);
+								advText = textToIcon(advisorData[i].choice[j].option1);
+							}
+							else if(k===1){
+								console.log(advisorData[i].choice[j]);
+								advText = textToIcon(advisorData[i].choice[j].option2);
+							}
+							else{
+								console.log(advisorData[i].choice[j]);
+								advText = textToIcon(advisorData[i].choice[j].option3);
+							}
+
+							return advText
+						}
+					})
+					btnCol.append(useBtn);
+				}
+
+				//append the set of buttons
+				btnCol.append(useBtn);
+				btnRow.append(btnCol);
 				col3.append(btnRow);
-
-				//create as many buttons per row as the advisor requires, always need at least one
-				var useBtn = $('<button/>', {
-					text: advisorData[i].option1,
-					id: name + "-choice-" + i + j,
-					class: "btn-choice",
-					advisor: name,
-					click: useAdvisor
-				})
-				btnRow.append(useBtn);
-
-				if(advisorData[i].choice2.optNum > 0){
-					var useBtn = $('<button/>', {
-						text: advisorData[i].option2,
-						id: name + "-choice-" + i + j,
-						class: "btn-choice",
-						advisor: name,
-						click: useAdvisor
-					})
-				}
-				btnRow.append(useBtn);
-
-				if(advisorData[i].choice3.optNum > 0){
-					var useBtn = $('<button/>', {
-						text: advisorData[i].option3,
-						id: name + "-choice-" + i + j,
-						class: "btn-choice",
-						advisor: name,
-						click: useAdvisor
-					})
-				}
-				btnRow.append(useBtn);
 			}
 
 			row.append(col1, col2, col3);
@@ -542,5 +543,18 @@ function useAdvisor(){
 			if ((i + 1) === phase) navBarEleList[i].style.color = "red";
 			else navBarEleList[i].style.color = "black";
 		}
+	}
+
+	//function converts icon names into images
+	function textToIcon(textIn){
+
+		let splitText = textIn.split(", ");
+		let imageResult = "";
+
+		for(let i=0; i<splitText.length; i++){
+			imageResult += `<img alt="${splitText[i]}" class="btn-icon" src="../assets/images/icons/${splitText[i]}-icon.png" />`;
+		}
+
+		return imageResult;
 	}
 });
