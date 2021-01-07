@@ -500,17 +500,17 @@ function useAdvisor(){
 				for(let k=0; k<advisorData[i].choice[j].optNum; k++){
 
 					var useBtn = $('<button/>', {
-						id: `${name}-choice-${i}-${k}`,
+						id: `${name}-choice-${j}-${k}`,
 						click: useAdvisor,
 						class: ()=>{
 							//if there's only one choice automatically select it
 							if(advisorData[i].choice[j].optNum === 1){
-								return `btn-choice advisor-clicked-locked ${name}-choice-${i}`;
+								return `btn-choice advisor-clicked-locked ${name}-choice-${j}`;
 							}
 							else if(k===0){ //otherwise select the first option by default
-								return `btn-choice advisor-clicked ${name}-choice-${i}`;
+								return `btn-choice advisor-clicked ${name}-choice-${j}`;
 							}
-							else return `btn-choice ${name}-choice-${i}`;
+							else return `btn-choice ${name}-choice-${j}`;
 						},
 						html: ()=>{ //display the icons on the buttons
 							let advText = "";
