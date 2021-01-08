@@ -166,24 +166,26 @@ $(document).ready(function () {
 		console.log("advisor choices submitted");
 		event.preventDefault();
 
-		let selectedBuildings = document.getElementsByClassName("advisor-clicked");
+		//get the chosen advisor options
+		let selAdvChoices = document.querySelectorAll(".advisor-clicked-locked, .advisor-clicked");
 		let choice = [];
 
-		for(let i=0;i<selectedBuildings.length; i++){
-			choice.push(selectedBuildings[i].getAttribute("building"));
+		//only need to send the adviser-choice-num class
+		for(let i=0; i<selAdvChoices.length; i++) {
+			choice.push(selAdvChoices[i].id,);
 		}
 
 		let myChoice = {
 			player: curUser,
-			choiceType: "building",
+			choiceType: "use-advisor",
 			choice: choice
 		}
-		console.log("I'm sending:", choice);
+		console.log("I'm sending:", myChoice);
 
-		// socket.emit("player-choice", myChoice);
-		// promptEle.css("display", "none");
-		// buildingEle.css("display", "none");
-		// waitEle.css("display", "block");
+		socket.emit("player-choice", myChoice);
+		promptEle.css("display", "none");
+		useAdvisorContainer.css("display", "none");
+		waitEle.css("display", "block");
 	}
 	/* ----------------------------
 	 * Messages we're listening for
@@ -434,7 +436,7 @@ function useBuilding(){
 }
 
 function useAdvisor(){
-	console.log("use building button");
+	console.log("use advisor button");
 	event.preventDefault();
 
 	//find other buttons that are part of this choice
