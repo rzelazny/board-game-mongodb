@@ -481,10 +481,10 @@ function useAdvisor(){
 			col3 = $("<div>").attr("class", "col-md-9");
 
 		 	//create data elements
-			let name = advisorData[i].name;
+			let number = advisorData[i].number;
 			let image = `<img alt=${advisorData[i].img.alt} class="adv-icon" src="${advisorData[i].img.url}" />`;
 			
-			col1.append(name);
+			col1.append(number);
 			col2.append(image);
 
 			//figure out how many choices need to be made for this advisor
@@ -502,17 +502,17 @@ function useAdvisor(){
 				for(let k=0; k<advisorData[i].choice[j].optNum; k++){
 
 					var useBtn = $('<button/>', {
-						id: `${name}-choice-${j}-${k}`,
+						id: `${number}-choice-${j}-${k}`,
 						click: useAdvisor,
 						class: ()=>{
 							//if there's only one choice automatically select it
 							if(advisorData[i].choice[j].optNum === 1){
-								return `btn-choice advisor-clicked-locked ${name}-choice-${j}`;
+								return `btn-choice advisor-clicked-locked ${number}-choice-${j}`;
 							}
 							else if(k===0){ //otherwise select the first option by default
-								return `btn-choice advisor-clicked ${name}-choice-${j}`;
+								return `btn-choice advisor-clicked ${number}-choice-${j}`;
 							}
-							else return `btn-choice ${name}-choice-${j}`;
+							else return `btn-choice ${number}-choice-${j}`;
 						},
 						html: ()=>{ //display the icons on the buttons
 							let advText = "";
