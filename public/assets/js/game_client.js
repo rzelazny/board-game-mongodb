@@ -251,10 +251,11 @@ $(document).ready(function () {
 	socket.on("update-sidebar", (sidebarData) => {
 		console.log("recieved sidebar update message", sidebarData);
 
-		let { score, constructedBuildings, resource1, resource2, resource3, twoToken } = sidebarData;
+		let { score, constructedBuildings, resource1, resource2, resource3, strength, twoToken } = sidebarData;
 
 		let sidebarVPEle = document.getElementById("sidebar-vp");
 		let sidebarBuildingsEle = document.getElementById("sidebar-buildings");
+		let sidebarStrEle = document.getElementById("sidebar-str");
 		let sidebarRes1Ele = document.getElementById("sidebar-res1");
 		let sidebarRes2Ele = document.getElementById("sidebar-res2");
 		let sidebarRes3Ele = document.getElementById("sidebar-res3");
@@ -264,6 +265,7 @@ $(document).ready(function () {
 		//set the player stats
 		sidebarVPEle.textContent = textSpace + score;
 		sidebarBuildingsEle.textContent = textSpace + (constructedBuildings.length);
+		sidebarStrEle.textContent = textSpace + strength;
 		sidebarRes1Ele.textContent = textSpace + resource1;
 		sidebarRes2Ele.textContent = textSpace + resource2;
 		sidebarRes3Ele.textContent = textSpace + resource3;
