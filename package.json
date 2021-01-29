@@ -21,6 +21,7 @@
     "start": "node server.js",
     "setAdvisors": "node seeder/advisorSeed.js",
     "setBuildings": "node seeder/buildingSeed.js",
+    "setEnemies": "node seeder/enemySeed.js",
     "seedGame": "node seeder/defaultGameSeed.js"
   },
   "repository": {
