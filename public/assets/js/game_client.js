@@ -561,6 +561,10 @@ function useAdvisor(){
 		useAdvisorContainer.append(btnDone);
 	});
 
+	
+	socket.on("enemy-data", (enemyData) => {
+		console.log("Enemy data recieved: ", enemyData);
+	});
 	/* ----------------------------
 	 * Functions for displaying the client data
 	 * ----------------------------
