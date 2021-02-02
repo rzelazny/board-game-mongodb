@@ -13,6 +13,7 @@ $(document).ready(function () {
 	resEle = $("#select-resource"),
 	selectDiceEle = $("#select-dice"),
 	advisorEle = $("#advisor-container"),
+	chatEle = $("#chat-container"),
 	chooseAdvisorEle = $("#select-advisor"),
 	buildingEle = $("#use-buildings"),
 	useAdvisorContainer = $("#use-advisors"),
@@ -202,6 +203,7 @@ $(document).ready(function () {
 		console.log("Got game start message");
 		$("#start-game").css("display", "none");
 		advisorEle.css("display", "block");
+		chatEle.css("display", "block");
 	});
 
 	//When someone joins the game
