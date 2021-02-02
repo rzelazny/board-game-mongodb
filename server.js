@@ -5,8 +5,6 @@ const mongoose = require("mongoose");
 const passport = require("./config/passport");
 const db = require("./models");
 const game = require("./lib/game_server");
-//const { compare } = require("bcryptjs");
-//const compression = require("compression");
 
 const PORT = process.env.PORT || 3000;
 
