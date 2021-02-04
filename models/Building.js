@@ -11,11 +11,9 @@ const buildingSchema = new Schema(
         column: {
             type: Number,
         },
-        cost: [{
-            resource1: Number,
-            resource2: Number,
-            resource3: Number,
-        }],
+        cost: [
+            Number, Number, Number
+        ],
         points: {
             type: Number,
         },
