@@ -16,6 +16,7 @@ $(document).ready(function () {
 		chatEle = $("#chat-container"),
 		chooseAdvisorEle = $("#select-advisor"),
 		buildingEle = $("#use-buildings"),
+		chooseBuildingEle = $("#building-container"),
 		useAdvisorContainer = $("#use-advisors"),
 		waitEle = $("#waiting"),
 		diceImg = document.getElementsByClassName("dice-btn"),
@@ -577,10 +578,26 @@ $(document).ready(function () {
 		//scroll to the bottom
 		chatScroll.scrollTop(1000);
 	});
+
+	//display the pick buildings section
+	socket.on("choose-buildings", () => {
+		console.log("Displaying building section");
+
+		advisorEle.css("display", "none");
+		chooseBuildingEle.css("display", "block");
+		
+	});
+
 	/* ----------------------------
 	 * Functions for displaying the client data
 	 * ----------------------------
 	 */
+
+	//Populate the building sections
+	function populateBuildings(){
+
+	}
+	
 	//Update the nav bar css to highlight the current phase
 	function updateNavBar(phase) {
 		console.log("Updating top navbar");
