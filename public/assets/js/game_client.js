@@ -580,12 +580,15 @@ $(document).ready(function () {
 	});
 
 	//display the pick buildings section
-	socket.on("choose-buildings", () => {
-		console.log("Displaying building section");
+	socket.on("choose-buildings", (buildingData) => {
+		console.log("Got choose buildings");
 
+		//populate building section and display it
+		populateBuildings(buildingData);
+		waitEle.css("display", "none");
 		advisorEle.css("display", "none");
 		chooseBuildingEle.css("display", "block");
-		
+
 	});
 
 	/* ----------------------------
@@ -594,10 +597,53 @@ $(document).ready(function () {
 	 */
 
 	//Populate the building sections
-	function populateBuildings(){
+	function populateBuildings(buildingData) {
+		console.log("Displaying building section");
+		console.log(buildingData);
 
+		//clear existing then add the new buildings
+		chooseBuildingEle.empty();
+
+		//create the building div
+		for (let i = 0; i < buildingData.length; i++) {
+			//general layout
+			let building = $("<div>").attr("class", "select-building"),
+				bldRow1 = $("<div>").attr("class", "row"),
+				bldRow2 = $("<div>").attr("class", "row"),
+				bldRow3 = $("<div>").attr("class", "row"),
+				bldCol1 = $("<div>").attr("class", "col-md-2"),
+				bldCol2 = $("<div>").attr("class", "col-md-2"),
+				bldCol3 = $("<div>").attr("class", "col-md-4")
+
+			//create data elements
+			let name = buildingData[i].name;
+			let img = `<img alt="${buildingData[i].name}" class="btn-icon" src="../assets/images/buildings/${buildingData[i].name}.png" />`;
+			let description = buildingData[i].effectType;
+			let costRes1 =  buildingData[i].cost[0];
+			let costRes2 =  buildingData[i].cost[1];
+			let costRes3 =  buildingData[i].cost[2];
+			let points =  buildingData[i].points;
+
+			bldRow1.append(name);
+			bldCol1.append(`Res1: ${costRes1}, Res2:${costRes2},Res3: ${costRes3}`);
+			bldCol2.append(points);
+			bldCol3.append(img);
+			bldRow2.append(bldCol1, bldCol2, bldCol3);
+			bldRow3.append(description);
+
+			building.append(bldRow1, bldRow2, bldRow3);
+			
+			chooseBuildingEle.prepend(building);
+		};
+		let btnDone = $('<button/>', {
+			text: "Done",
+			id: "btn-create-building",
+			class: "btn-choice",
+			click: sendBuilding
+		})
+		chooseBuildingEle.append(btnDone);
 	}
-	
+
 	//Update the nav bar css to highlight the current phase
 	function updateNavBar(phase) {
 		console.log("Updating top navbar");
