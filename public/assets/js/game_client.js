@@ -624,32 +624,28 @@ $(document).ready(function () {
 		for (let i = 0; i < buildingData.length; i++) {
 			//general layout
 			let building = $("<div>").attr("class", "select-building"),
-				bldRow1 = $("<div>").attr("class", "row text-center"),
-				bldRow2 = $("<div>").attr("class", "row text-center"),
-				bldRow3 = $("<div>").attr("class", "row text-center"),
-				bldCol1 = $("<div>").attr("class", "col-md-7"),
-				bldCol2 = $("<div>").attr("class", "col-md-1"),
-				bldCol3 = $("<div>").attr("class", "col-md-4")
+				title = $("<div>").attr("class", "text-center"),
+				cost = $("<div>").attr("class", "text-center"),
+				effectRow = $("<div>").attr("class", "text-center"),
+				imgVP = $("<div>").attr("class", "text-center")
 
 			//create data elements
 			let name = buildingData[i].name;
-			let img = `<img alt="${buildingData[i].name}" class="btn-icon" src="../assets/images/buildings/${buildingData[i].name}.png" />`;
 			let description = buildingData[i].effectType;
 			let costRes1 =  buildingData[i].cost[0];
 			let costRes2 =  buildingData[i].cost[1];
 			let costRes3 =  buildingData[i].cost[2];
 			let points =  buildingData[i].points;
 
-			bldRow1.append(`<h5 style="text-align:center">${name}</h5>`);
-			bldCol1.append(`<img alt="Res1 Cost" class="icon" src="../assets/images/icons/res1-icon.png" />:${costRes1} 
+			title.append(`<h5 style="text-align:center">${name}</h5>`);
+			cost.append(`<img alt="Res1 Cost" class="icon" src="../assets/images/icons/res1-icon.png" />:${costRes1} 
 				<img alt="Res2 Cost" class="icon" src="../assets/images/icons/res2-icon.png" />:${costRes2}
 				<img alt="Res3 Cost" class="icon" src="../assets/images/icons/res3-icon.png" />: ${costRes3}`);
-			bldCol2.append(`<img alt="Res1 Cost" class="icon" src="../assets/images/icons/VP-icon.png" />: ${points}`);
-			bldCol3.append(img);
-			bldRow2.append(bldCol1, bldCol2, bldCol3);
-			bldRow3.append(description);
+			imgVP.append(`<img alt="${buildingData[i].name}" class="btn-icon" src="../assets/images/buildings/${buildingData[i].name}.png" />
+			<img alt="Res1 Cost" class="icon" src="../assets/images/icons/VP-icon.png" />: ${points}`);
+			effectRow.append(description);
 
-			building.append(bldRow1, bldRow2, bldRow3);
+			building.append(title, cost, imgVP, effectRow);
 			
 			$("#col" + rowCounter).append(building);
 			//move to a new column every 4 buildings
