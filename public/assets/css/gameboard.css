@@ -149,3 +149,10 @@ button[disabled]{
 .select-building{
     font-weight: normal;
 }
+
+.build-selected{
+    background-color: rgb(40, 138, 218);
+}
+.valid-building{
+    border: 2px solid green;
+}

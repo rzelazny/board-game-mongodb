@@ -24,7 +24,14 @@ $(document).ready(function () {
 		diceTotalEle = document.getElementById("dice-total"),
 		selectedDice = document.getElementsByClassName("clicked"),
 		promptMsgEle = document.getElementById("prompt-message");
-
+	//sidebar elements
+		let sidebarVPEle = document.getElementById("sidebar-vp"),
+		sidebarBuildingsEle = document.getElementById("sidebar-buildings"),
+		sidebarStrEle = document.getElementById("sidebar-str"),
+		sidebarRes1Ele = document.getElementById("sidebar-res1"),
+		sidebarRes2Ele = document.getElementById("sidebar-res2"),
+		sidebarRes3Ele = document.getElementById("sidebar-res3"),
+		sidebar2TokenEle = document.getElementById("sidebar-2token");
 
 
 	/* ----------------------------
@@ -132,13 +139,45 @@ $(document).ready(function () {
 			choice: diceNumber
 		}
 		socket.emit("player-choice", myChoice);
+
+		//clear current total
+		myTotal = 0;
+		diceTotalEle.textContent = 0;
+
+		//hide elements
 		$("#prompt-user-container").css("display", "none");
 		selectDiceEle.css("display", "none");
 		waitEle.css("display", "block");
 		promptMsgEle.style.display = "none";
 	})
 
-	//Sending building total on click
+	//Sending choice of buildings to create on click
+	$("#btn-create-building").on("click", function (event) {
+		console.log("create building submitted");
+		event.preventDefault();
+
+		let toBuild = [];
+		let chosenBuildings = $(".build-selected");
+
+		for (let i = 0; i < chosenBuildings.length; i++) {
+			toBuild.push(chosenBuildings[i]); //.getAttribute("choice"));
+		}
+
+		console.log("I'm sending:", toBuild);
+
+		let myChoice = {
+			player: curUser,
+			choiceType: "building",
+			choice: toBuild
+		}
+		socket.emit("player-choice", myChoice);
+		$("#prompt-user-container").css("display", "none");
+		createBuildingEle.css("display", "none");
+		waitEle.css("display", "block");
+		promptMsgEle.style.display = "none";
+	})
+
+	//Sending building usage on click
 	function sendBuilding() {
 		console.log("building choice submitted");
 		event.preventDefault();
@@ -189,6 +228,8 @@ $(document).ready(function () {
 		useAdvisorContainer.css("display", "none");
 		waitEle.css("display", "block");
 	}
+
+
 	/* ----------------------------
 	 * Messages we're listening for
 	 * ----------------------------
@@ -255,14 +296,6 @@ $(document).ready(function () {
 		console.log("recieved sidebar update message", sidebarData);
 
 		let { score, constructedBuildings, resource1, resource2, resource3, strength, twoToken } = sidebarData;
-
-		let sidebarVPEle = document.getElementById("sidebar-vp");
-		let sidebarBuildingsEle = document.getElementById("sidebar-buildings");
-		let sidebarStrEle = document.getElementById("sidebar-str");
-		let sidebarRes1Ele = document.getElementById("sidebar-res1");
-		let sidebarRes2Ele = document.getElementById("sidebar-res2");
-		let sidebarRes3Ele = document.getElementById("sidebar-res3");
-		let sidebar2TokenEle = document.getElementById("sidebar-2token");
 
 		let textSpace = " : ";
 		//set the player stats
@@ -609,13 +642,13 @@ $(document).ready(function () {
 		let rowCounter = 1;
 
 		let row = $("<div>").attr("class", "row");
-		let col1 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col1"}),
-		col2 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col2"}),
-		col3 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col3"}),
-		col4 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col4"}),
-		col5 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col5"}),
-		col6 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col6"}),
-		col7 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col7"});
+		let col1 = $("<div>").attr({ "class": "col-lg-1 sel-building-col", "id": "col1" }),
+			col2 = $("<div>").attr({ "class": "col-lg-1 sel-building-col", "id": "col2" }),
+			col3 = $("<div>").attr({ "class": "col-lg-1 sel-building-col", "id": "col3" }),
+			col4 = $("<div>").attr({ "class": "col-lg-1 sel-building-col", "id": "col4" }),
+			col5 = $("<div>").attr({ "class": "col-lg-1 sel-building-col", "id": "col5" }),
+			col6 = $("<div>").attr({ "class": "col-lg-1 sel-building-col", "id": "col6" }),
+			col7 = $("<div>").attr({ "class": "col-lg-1 sel-building-col", "id": "col7" });
 
 		row.append(col1, col2, col3, col4, col5, col6, col7);
 		chooseBuildingEle.append(row);
@@ -632,10 +665,10 @@ $(document).ready(function () {
 			//create data elements
 			let name = buildingData[i].name;
 			let description = buildingData[i].effectType;
-			let costRes1 =  buildingData[i].cost[0];
-			let costRes2 =  buildingData[i].cost[1];
-			let costRes3 =  buildingData[i].cost[2];
-			let points =  buildingData[i].points;
+			let costRes1 = buildingData[i].cost[0];
+			let costRes2 = buildingData[i].cost[1];
+			let costRes3 = buildingData[i].cost[2];
+			let points = buildingData[i].points;
 
 			title.append(`<h5 style="text-align:center">${name}</h5>`);
 			cost.append(`<img alt="Res1 Cost" class="icon" src="../assets/images/icons/res1-icon.png" />:${costRes1} 
@@ -644,16 +677,24 @@ $(document).ready(function () {
 			imgVP.append(`<img alt="${buildingData[i].name}" class="btn-icon" src="../assets/images/buildings/${buildingData[i].name}.png" />
 			<img alt="Res1 Cost" class="icon" src="../assets/images/icons/VP-icon.png" />: ${points}`);
 			effectRow.append(description);
+			
+			//the building can be chosen if the player has the resources and has build the prior buildings
+			if(sidebarRes1Ele.textContent.split(" : ").pop() >= costRes1 && 
+				sidebarRes2Ele.textContent.split(" : ").pop() >= costRes2 && 
+				sidebarRes3Ele.textContent.split(" : ").pop() >= costRes3){
+
+				building.addClass("valid-building");
+			}
 
 			building.append(title, cost, imgVP, effectRow);
-			
+
 			$("#col" + rowCounter).append(building);
 			//move to a new column every 4 buildings
 			colCounter++;
-			if(colCounter > 3){
+			if (colCounter > 3) {
 				colCounter = 0;
 				rowCounter++;
-			} 
+			}
 		};
 		let btnDone = $('<button/>', {
 			text: "Done",
@@ -662,6 +703,17 @@ $(document).ready(function () {
 			click: sendBuilding
 		})
 		chooseBuildingEle.append(btnDone);
+
+		//Select Building on click
+		$(".select-building").on("click", function (event) {
+			console.log("building clicked");
+			event.preventDefault();
+
+			//only valid choices can be selected
+			if(this.classList.contains("valid-building")){
+				this.classList.toggle("build-selected");
+			}
+		})
 	}
 
 	//Update the nav bar css to highlight the current phase
