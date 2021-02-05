@@ -601,8 +601,24 @@ $(document).ready(function () {
 		console.log("Displaying building section");
 		console.log(buildingData);
 
-		//clear existing then add the new buildings
+		//clear existing before adding new buildings
 		chooseBuildingEle.empty();
+
+		//track our rows and columns, which are pivoted for display purposes
+		let colCounter = 0;
+		let rowCounter = 1;
+
+		let row = $("<div>").attr("class", "row");
+		let col1 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col1"}),
+		col2 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col2"}),
+		col3 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col3"}),
+		col4 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col4"}),
+		col5 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col5"}),
+		col6 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col6"}),
+		col7 = $("<div>").attr({"class": "col-lg-1 sel-building-col", "id": "col7"});
+
+		row.append(col1, col2, col3, col4, col5, col6, col7);
+		chooseBuildingEle.append(row);
 
 		//create the building div
 		for (let i = 0; i < buildingData.length; i++) {
@@ -633,7 +649,13 @@ $(document).ready(function () {
 
 			building.append(bldRow1, bldRow2, bldRow3);
 			
-			chooseBuildingEle.prepend(building);
+			$("#col" + rowCounter).append(building);
+			//move to a new column every 4 buildings
+			colCounter++;
+			if(colCounter > 3){
+				colCounter = 0;
+				rowCounter++;
+			} 
 		};
 		let btnDone = $('<button/>', {
 			text: "Done",
