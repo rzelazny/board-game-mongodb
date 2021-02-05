@@ -644,7 +644,7 @@ $(document).ready(function () {
 			bldCol1.append(`<img alt="Res1 Cost" class="icon" src="../assets/images/icons/res1-icon.png" />:${costRes1} 
 				<img alt="Res2 Cost" class="icon" src="../assets/images/icons/res2-icon.png" />:${costRes2}
 				<img alt="Res3 Cost" class="icon" src="../assets/images/icons/res3-icon.png" />: ${costRes3}`);
-			bldCol2.append(`VP: ${points}`);
+			bldCol2.append(`<img alt="Res1 Cost" class="icon" src="../assets/images/icons/VP-icon.png" />: ${points}`);
 			bldCol3.append(img);
 			bldRow2.append(bldCol1, bldCol2, bldCol3);
 			bldRow3.append(description);
