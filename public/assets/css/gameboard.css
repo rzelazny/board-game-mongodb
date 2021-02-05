@@ -126,7 +126,8 @@ button[disabled]{
 }
 
 .use-advisor,
-.use-building{
+.use-building,
+.select-building{
     border: 2px solid black;
     border-radius: 10px;
     font-weight: bolder;
@@ -136,6 +137,15 @@ button[disabled]{
 
 .use-building .col-md-2{
     text-align: center;
-    
     font-size: 30px;
+}
+
+.sel-building-col{
+    flex: 0 0 14.28%;
+    max-width: 14.28%;
+    padding: 2px;
+    
+}
+.select-building{
+    font-weight: normal;
 }

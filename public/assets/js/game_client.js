@@ -624,11 +624,11 @@ $(document).ready(function () {
 		for (let i = 0; i < buildingData.length; i++) {
 			//general layout
 			let building = $("<div>").attr("class", "select-building"),
-				bldRow1 = $("<div>").attr("class", "row"),
-				bldRow2 = $("<div>").attr("class", "row"),
-				bldRow3 = $("<div>").attr("class", "row"),
-				bldCol1 = $("<div>").attr("class", "col-md-2"),
-				bldCol2 = $("<div>").attr("class", "col-md-2"),
+				bldRow1 = $("<div>").attr("class", "row text-center"),
+				bldRow2 = $("<div>").attr("class", "row text-center"),
+				bldRow3 = $("<div>").attr("class", "row text-center"),
+				bldCol1 = $("<div>").attr("class", "col-md-7"),
+				bldCol2 = $("<div>").attr("class", "col-md-1"),
 				bldCol3 = $("<div>").attr("class", "col-md-4")
 
 			//create data elements
@@ -640,9 +640,11 @@ $(document).ready(function () {
 			let costRes3 =  buildingData[i].cost[2];
 			let points =  buildingData[i].points;
 
-			bldRow1.append(name);
-			bldCol1.append(`Res1: ${costRes1}, Res2:${costRes2},Res3: ${costRes3}`);
-			bldCol2.append(points);
+			bldRow1.append(`<h5 style="text-align:center">${name}</h5>`);
+			bldCol1.append(`<img alt="Res1 Cost" class="icon" src="../assets/images/icons/res1-icon.png" />:${costRes1} 
+				<img alt="Res2 Cost" class="icon" src="../assets/images/icons/res2-icon.png" />:${costRes2}
+				<img alt="Res3 Cost" class="icon" src="../assets/images/icons/res3-icon.png" />: ${costRes3}`);
+			bldCol2.append(`VP: ${points}`);
 			bldCol3.append(img);
 			bldRow2.append(bldCol1, bldCol2, bldCol3);
 			bldRow3.append(description);
