@@ -25,7 +25,7 @@ $(document).ready(function () {
 		selectedDice = document.getElementsByClassName("clicked"),
 		promptMsgEle = document.getElementById("prompt-message");
 	//sidebar elements
-		let sidebarVPEle = document.getElementById("sidebar-vp"),
+	let sidebarVPEle = document.getElementById("sidebar-vp"),
 		sidebarBuildingsEle = document.getElementById("sidebar-buildings"),
 		sidebarStrEle = document.getElementById("sidebar-str"),
 		sidebarRes1Ele = document.getElementById("sidebar-res1"),
@@ -55,9 +55,8 @@ $(document).ready(function () {
 						console.log("New Player", newPlayer._id);
 						curUser = newPlayer._id;
 						addPlayer(curGame, curUser);
-						//join the room for the game
 						$.get("/api/gameState/" + curGame)
-							.then(function (gameData) {
+							.then(function (gameData) { //join the room for the game
 								curRoom = gameData.roomNumber;
 								let joinData = {
 									userId: curUser,
@@ -65,7 +64,9 @@ $(document).ready(function () {
 								}
 								socket.emit("join-room", joinData);
 								console.log("I joined room ", joinData.room);
+								//populate the board based on the game data
 								populateBuildings(gameData.buildings);
+								//TODO: populateAdvisors(gameData.advisors);
 							})
 					})
 			})
@@ -467,31 +468,10 @@ $(document).ready(function () {
 		};
 	});
 
-
 	function useBuilding() {
 		console.log("use building button");
 		event.preventDefault();
 		this.classList.toggle("building-clicked");
-	}
-
-	function useAdvisor() {
-		console.log("use advisor button");
-		event.preventDefault();
-
-		//find other buttons that are part of this choice
-		let thisChoiceBtns = document.getElementsByClassName(this.id.slice(0, -2));
-		let thisBtn = this.id;
-		//if this button isn't selected select it
-		if (!this.classList.contains("advisor-clicked") && !this.classList.contains("advisor-clicked-locked")) {
-			this.classList.add("advisor-clicked");
-		}
-
-		//then deselect the other buttons in this choice
-		for (let i = 0; i < thisChoiceBtns.length; i++) {
-			if (thisChoiceBtns[i].id !== thisBtn) {
-				thisChoiceBtns[i].classList.remove("advisor-clicked");
-			}
-		}
 	}
 
 	//display the use advisors section
@@ -598,7 +578,27 @@ $(document).ready(function () {
 		useAdvisorContainer.append(btnDone);
 	});
 
+	function useAdvisor() {
+		console.log("use advisor button");
+		event.preventDefault();
 
+		//find other buttons that are part of this choice
+		let thisChoiceBtns = document.getElementsByClassName(this.id.slice(0, -2));
+		let thisBtn = this.id;
+		//if this button isn't selected select it
+		if (!this.classList.contains("advisor-clicked") && !this.classList.contains("advisor-clicked-locked")) {
+			this.classList.add("advisor-clicked");
+		}
+
+		//then deselect the other buttons in this choice
+		for (let i = 0; i < thisChoiceBtns.length; i++) {
+			if (thisChoiceBtns[i].id !== thisBtn) {
+				thisChoiceBtns[i].classList.remove("advisor-clicked");
+			}
+		}
+	}
+
+	//display enemy data
 	socket.on("enemy-data", (enemyData) => {
 		console.log("Enemy data recieved: ", enemyData);
 
@@ -614,11 +614,11 @@ $(document).ready(function () {
 	});
 
 	//display the pick buildings section
-	socket.on("choose-buildings", (buildingData) => {
+	socket.on("choose-buildings", (playerData) => {
 		console.log("Got choose buildings");
 
 		//populate building section and display it
-		populateBuildings(buildingData);
+		updateBuildings(playerData);
 		waitEle.css("display", "none");
 		advisorEle.css("display", "none");
 		chooseBuildingEle.css("display", "block");
@@ -656,13 +656,6 @@ $(document).ready(function () {
 
 		//create the building div
 		for (let i = 0; i < buildingData.length; i++) {
-			//general layout
-			let building = $("<div>").attr("class", "select-building"),
-				title = $("<div>").attr("class", "text-center"),
-				cost = $("<div>").attr("class", "text-center"),
-				effectRow = $("<div>").attr("class", "text-center"),
-				imgVP = $("<div>").attr("class", "text-center")
-
 			//create data elements
 			let name = buildingData[i].name;
 			let description = buildingData[i].effectType;
@@ -671,6 +664,13 @@ $(document).ready(function () {
 			let costRes3 = buildingData[i].cost[2];
 			let points = buildingData[i].points;
 
+			//general layout
+			let building = $("<div>").attr({ "class": "select-building", "name": name }),
+				title = $("<div>").attr("class", "text-center"),
+				cost = $("<div>").attr("class", "text-center"),
+				effectRow = $("<div>").attr("class", "text-center"),
+				imgVP = $("<div>").attr("class", "text-center")
+
 			title.append(`<h5 style="text-align:center">${name}</h5>`);
 			cost.append(`<img alt="Res1 Cost" class="icon" src="../assets/images/icons/res1-icon.png" />:${costRes1} 
 				<img alt="Res2 Cost" class="icon" src="../assets/images/icons/res2-icon.png" />:${costRes2}
@@ -678,18 +678,6 @@ $(document).ready(function () {
 			imgVP.append(`<img alt="${buildingData[i].name}" class="btn-icon" src="../assets/images/buildings/${buildingData[i].name}.png" />
 			<img alt="Res1 Cost" class="icon" src="../assets/images/icons/VP-icon.png" />: ${points}`);
 			effectRow.append(description);
-
-			//see if the prior building has been created already
-			// let previousBuilt = a;
-			
-			// //the building can be chosen if the player has the resources and has built the prior buildings
-			// if(previousBuilt &&
-			// 	sidebarRes1Ele.textContent.split(" : ").pop() >= costRes1 && 
-			// 	sidebarRes2Ele.textContent.split(" : ").pop() >= costRes2 && 
-			// 	sidebarRes3Ele.textContent.split(" : ").pop() >= costRes3){
-
-			// 	building.addClass("valid-building");
-			// }
 
 			building.append(title, cost, imgVP, effectRow);
 
@@ -715,10 +703,43 @@ $(document).ready(function () {
 			event.preventDefault();
 
 			//only valid choices can be selected
-			if(this.classList.contains("valid-building")){
+			if (this.classList.contains("valid-building")) {
 				this.classList.toggle("build-selected");
 			}
 		})
+	}
+
+	//update the choose buildings tab
+	function updateBuildings(playerData) {
+		console.log("Updating building data")
+
+		let buildings = document.getElementsByClassName("select-building");
+
+		for(let i=0; i< buildings.length; i++){
+			//set already created buildings
+			if (playerData.constructedBuildings.includes(buildings[i].name)) {
+				buildings[i].addClass("constructed");
+			}
+			//see if the prior building has been created already
+			let previousBuilt = false;
+
+			//first row buildings, and buildings directly below already build buildings are valid
+			if(i%4===0){
+				previousBuilt === true;
+			}else if(buildings[i-1].classList.contains("constructed")){
+				previousBuilt === true;
+			}
+
+			//valid buildings have sufficient resources, aren't already built, and have the prior buildings built
+			if (previousBuilt && //buildings[i].classList.contains(!"constructed") &&
+				playerData.resource1 >= costRes1 &&
+				playerData.resource2 >= costRes2 &&
+				playerData.resource3 >= costRes3) {
+
+				buildings[i].addClass("valid-building");
+			}
+		};
+
 	}
 
 	//Update the nav bar css to highlight the current phase
