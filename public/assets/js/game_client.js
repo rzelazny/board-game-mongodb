@@ -680,16 +680,16 @@ $(document).ready(function () {
 			effectRow.append(description);
 
 			//see if the prior building has been created already
-			let previousBuilt = a;
+			// let previousBuilt = a;
 			
-			//the building can be chosen if the player has the resources and has built the prior buildings
-			if(previousBuilt &&
-				sidebarRes1Ele.textContent.split(" : ").pop() >= costRes1 && 
-				sidebarRes2Ele.textContent.split(" : ").pop() >= costRes2 && 
-				sidebarRes3Ele.textContent.split(" : ").pop() >= costRes3){
+			// //the building can be chosen if the player has the resources and has built the prior buildings
+			// if(previousBuilt &&
+			// 	sidebarRes1Ele.textContent.split(" : ").pop() >= costRes1 && 
+			// 	sidebarRes2Ele.textContent.split(" : ").pop() >= costRes2 && 
+			// 	sidebarRes3Ele.textContent.split(" : ").pop() >= costRes3){
 
-				building.addClass("valid-building");
-			}
+			// 	building.addClass("valid-building");
+			// }
 
 			building.append(title, cost, imgVP, effectRow);
 
@@ -701,13 +701,13 @@ $(document).ready(function () {
 				rowCounter++;
 			}
 		};
-		let btnDone = $('<button/>', {
-			text: "Done",
-			id: "btn-create-building",
-			class: "btn-choice",
-			click: sendBuilding
-		})
-		chooseBuildingEle.append(btnDone);
+		// let btnDone = $('<button/>', {
+		// 	text: "Done",
+		// 	id: "btn-create-building",
+		// 	class: "btn-choice",
+		// 	click: sendBuilding
+		// })
+		// chooseBuildingEle.append(btnDone);
 
 		//Select Building on click
 		$(".select-building").on("click", function (event) {
