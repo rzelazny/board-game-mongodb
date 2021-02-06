@@ -65,6 +65,7 @@ $(document).ready(function () {
 								}
 								socket.emit("join-room", joinData);
 								console.log("I joined room ", joinData.room);
+								populateBuildings(gameData.buildings);
 							})
 					})
 			})

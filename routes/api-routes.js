@@ -99,19 +99,11 @@ router.get("/api/advisorData/", (req, res) => {
 	})
 });
 
-
 //get the current game state
 router.get("/api/gameState/:id", (req, res) => {
-	db.Game.findById(req.params.id)
-		.populate("players")
-		.then(gameData => {
-			console.log("GameData: ", gameData);
-			res.json(gameData);
-		})
-		.catch(err => {
-			console.log(err);
-			res.status(404).json(err);
-		});
+	mongo.getGame(req.params.id, (gameData)=>{
+		res.json(gameData);
+	})
 });
 
 //get a player's data
