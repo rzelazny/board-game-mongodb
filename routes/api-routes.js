@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../models");
 var passport = require("../config/passport");
+var mongo = require("../lib/db-updates");
 
 //signup functionality
 router.post("/api/signup", ({ body }, res) => {
@@ -45,21 +46,20 @@ router.get("/api/user_data", function (req, res) {
 	}
 });
 
-
 //get all running games for the setup page
 router.get("/api/allgames", function (req, res) {
 	db.Game.find({})
-	.populate("players")
-	.then(function (results) {
-		console.log("get tables returning data");
-		return res.send(results);
-	})
+		.populate("players")
+		.then(function (results) {
+			console.log("get tables returning data");
+			return res.send(results);
+		})
 });
 
 //create a new game
 router.post("/api/newGame", ({ body }, res) => {
 	console.log("Storing new game");
-
+	console.log(body);
 	db.Game.create(body)
 		.then(dbGame => {
 			console.log(dbGame);
@@ -74,8 +74,7 @@ router.post("/api/newGame", ({ body }, res) => {
 //create a new player
 router.post("/api/newPlayer", ({ body }, res) => {
 	console.log("Storing new player");
-	console.log(body);
-	db.Player.create({name: body.name})
+	db.Player.create({ name: body.name })
 		.then(dbGame => {
 			console.log(dbGame);
 			res.json(dbGame);
@@ -85,6 +84,19 @@ router.post("/api/newPlayer", ({ body }, res) => {
 			res.status(404).json(err);
 		});
 });
+
+//get building data before creating new game
+router.get("/api/buildingData/", (req, res) => {
+	mongo.getBuildings((buildingData) => {
+		console.log("data ran", buildingData);
+		res.json(buildingData);
+	})
+	// .catch(err => {
+	// 	console.log(err);
+	// 	res.status(404).json(err);
+	// });
+});
+
 
 //get the current game state
 router.get("/api/gameState/:id", (req, res) => {

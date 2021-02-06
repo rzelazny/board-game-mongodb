@@ -677,9 +677,13 @@ $(document).ready(function () {
 			imgVP.append(`<img alt="${buildingData[i].name}" class="btn-icon" src="../assets/images/buildings/${buildingData[i].name}.png" />
 			<img alt="Res1 Cost" class="icon" src="../assets/images/icons/VP-icon.png" />: ${points}`);
 			effectRow.append(description);
+
+			//see if the prior building has been created already
+			let previousBuilt = a;
 			
-			//the building can be chosen if the player has the resources and has build the prior buildings
-			if(sidebarRes1Ele.textContent.split(" : ").pop() >= costRes1 && 
+			//the building can be chosen if the player has the resources and has built the prior buildings
+			if(previousBuilt &&
+				sidebarRes1Ele.textContent.split(" : ").pop() >= costRes1 && 
 				sidebarRes2Ele.textContent.split(" : ").pop() >= costRes2 && 
 				sidebarRes3Ele.textContent.split(" : ").pop() >= costRes3){
 
