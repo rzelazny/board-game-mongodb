@@ -674,7 +674,7 @@ $(document).ready(function () {
 			title.append(`<h5 style="text-align:center">${name}</h5>`);
 			cost.append(`<img alt="Res1 Cost" class="icon" src="../assets/images/icons/res1-icon.png" />:${costRes1} 
 				<img alt="Res2 Cost" class="icon" src="../assets/images/icons/res2-icon.png" />:${costRes2}
-				<img alt="Res3 Cost" class="icon" src="../assets/images/icons/res3-icon.png" />: ${costRes3}`);
+				<img alt="Res3 Cost" class="icon" src="../assets/images/icons/res3-icon.png" />:${costRes3}`);
 			imgVP.append(`<img alt="${buildingData[i].name}" class="btn-icon" src="../assets/images/buildings/${buildingData[i].name}.png" />
 			<img alt="Res1 Cost" class="icon" src="../assets/images/icons/VP-icon.png" />: ${points}`);
 			effectRow.append(description);
@@ -717,26 +717,25 @@ $(document).ready(function () {
 
 		for(let i=0; i< buildings.length; i++){
 			//set already created buildings
-			if (playerData.constructedBuildings.includes(buildings[i].name)) {
-				buildings[i].addClass("constructed");
+			if (playerData.constructedBuildings.includes(buildings[i].getAttribute("name"))) {
+				buildings[i].classList.add("constructed");
 			}
 			//see if the prior building has been created already
 			let previousBuilt = false;
-
 			//first row buildings, and buildings directly below already build buildings are valid
 			if(i%4===0){
-				previousBuilt === true;
+				previousBuilt = true;
 			}else if(buildings[i-1].classList.contains("constructed")){
-				previousBuilt === true;
+				previousBuilt = true;
 			}
-
+			
 			//valid buildings have sufficient resources, aren't already built, and have the prior buildings built
-			if (previousBuilt && //buildings[i].classList.contains(!"constructed") &&
-				playerData.resource1 >= costRes1 &&
-				playerData.resource2 >= costRes2 &&
-				playerData.resource3 >= costRes3) {
+			if (previousBuilt &&
+				parseInt(playerData.resource1) >= parseInt(buildings[i].children[1].innerHTML.split(":")[1].charAt(0)) &&
+				parseInt(playerData.resource2) >= parseInt(buildings[i].children[1].innerHTML.split(":")[2].charAt(0)) &&
+				parseInt(playerData.resource3) >= parseInt(buildings[i].children[1].innerHTML.split(":")[3].charAt(0))) {
 
-				buildings[i].addClass("valid-building");
+				buildings[i].classList.add("valid-building");
 			}
 		};
 
