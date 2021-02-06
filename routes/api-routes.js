@@ -88,13 +88,15 @@ router.post("/api/newPlayer", ({ body }, res) => {
 //get building data before creating new game
 router.get("/api/buildingData/", (req, res) => {
 	mongo.getBuildings((buildingData) => {
-		console.log("data ran", buildingData);
 		res.json(buildingData);
 	})
-	// .catch(err => {
-	// 	console.log(err);
-	// 	res.status(404).json(err);
-	// });
+});
+
+//get advisor data before creating new game
+router.get("/api/advisorData/", (req, res) => {
+	mongo.getAdvisors((advisorData) => {
+		res.json(advisorData);
+	})
 });
 
 

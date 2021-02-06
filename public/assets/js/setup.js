@@ -98,24 +98,35 @@ $(document).ready(function () {
     // Create a new game on click
     $("#new-game").on("click", async function (event) {
 
-        //get the buildings we'll be using for this game, TODO: also allow variable advisors promise.all
-        const response = await fetch("/api/buildingData/", {
-            method: "GET",
-            headers: {
-                Accept: "application/json, text/plain, */*",
-                "Content-Type": "application/json"
-            }
-        })
-        if (!response.ok) { //check for fetch error
-            const message = `An error has occured: ${response.status}`;
+        //get the buildings and advisors we'll be using for this game
+        const [buildResponse, advisorsResponse] = await Promise.all([
+            fetch("/api/buildingData/", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json, text/plain, */*",
+                    "Content-Type": "application/json"
+                }
+            }),
+            fetch("/api/advisorData/", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json, text/plain, */*",
+                    "Content-Type": "application/json"
+                }
+            })
+        ])
+        if (!buildResponse.ok || !advisorsResponse.ok) { //check for fetch error
+            const message = `An error has occured: build: ${buildResponse.status} advisor: ${advisorsResponse.status}`;
             throw new Error(message);
         }
         else {
-            const buildings = await response.json()
-            console.log(buildings);
+            const buildings = await buildResponse.json();
+            const advisors = await advisorsResponse.json();
+
             let newGameData = {
                 name: "New Game",
-                buildings: buildings
+                buildings: buildings,
+                advisors: advisors
             }
             console.log(`Creating game`);
             fetch("/api/newGame/", {
