@@ -719,6 +719,7 @@ $(document).ready(function () {
 			//set already created buildings
 			if (playerData.constructedBuildings.includes(buildings[i].getAttribute("name"))) {
 				buildings[i].classList.add("constructed");
+				buildings[i].classList.remove("valid-building");
 			}
 			//see if the prior building has been created already
 			let previousBuilt = false;
@@ -736,6 +737,8 @@ $(document).ready(function () {
 				parseInt(playerData.resource3) >= parseInt(buildings[i].children[1].innerHTML.split(":")[3].charAt(0))) {
 
 				buildings[i].classList.add("valid-building");
+			}else{
+				buildings[i].classList.remove("valid-building");
 			}
 		};
 
