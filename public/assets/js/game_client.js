@@ -234,6 +234,16 @@ $(document).ready(function () {
 		waitEle.css("display", "block");
 	}
 
+	//Sending acknowledgement of reward bonus point
+	$("#btn-get-reward").on("click", function (event) {
+		console.log("reward acknowledged");
+		let myChoice = {
+			player: curUser,
+			choiceType: "got-reward",
+			choice: "done"
+		}
+		socket.emit("player-choice", myChoice);
+	})
 
 	/* ----------------------------
 	 * Messages we're listening for
@@ -329,7 +339,6 @@ $(document).ready(function () {
 	socket.on("prompt-user", (message) => {
 		console.log("prompt message recieved", message);
 
-
 		//always show the prompt container and hide the wait message
 		$("#prompt-user-container").css("display", "block");
 		promptMsgEle.innerHTML = message;
@@ -353,6 +362,7 @@ $(document).ready(function () {
 			case "You've gained a victory point from the King's reward.":
 				rewardEle.css("display", "block");
 				promptMsgEle.style.display = "block";
+				break;
 			default:
 				console.log("Unknown message prompt: ", message);
 		}
@@ -636,7 +646,7 @@ $(document).ready(function () {
 
 	//Populate the building sections
 	function populateBuildings(buildingData) {
-		console.log("Displaying building section");
+		console.log("Populating building section");
 		console.log(buildingData);
 
 		//clear existing before adding new buildings
