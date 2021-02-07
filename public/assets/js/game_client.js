@@ -19,6 +19,7 @@ $(document).ready(function () {
 		chooseBuildingEle = $("#building-container"),
 		createBuildingEle = $("#select-building"),
 		useAdvisorContainer = $("#use-advisors"),
+		rewardEle = $("#get-reward"),
 		waitEle = $("#waiting"),
 		diceImg = document.getElementsByClassName("dice-btn"),
 		diceEle = document.getElementsByClassName("btn-die-choice"),
@@ -266,26 +267,20 @@ $(document).ready(function () {
 	socket.on("next-phase", (phase) => {
 		console.log("Next phase message recieved ", phase)
 		let parsePhase = parseInt(phase);
-		updateNavBar(parsePhase);
 
 		//hide elements from earlier phases, this is usually due to a timeout
 		switch (parsePhase) {
 			case 1:
+				updateNavBar(parsePhase);
 				//$("#select-resource").css("display", "block");
 				break;
-			case 2:
+			case 2: //productive season 1
+				updateNavBar(parsePhase);
 				promptEle.css("display", "none");
 				resEle.css("display", "none");
 				break;
-			case 3:
-				break;
-			case 4:
-				break;
-			case 5:
-				break;
-			case 6:
-				break;
-			case 7:
+			case 7: // reward phase
+				updateNavBar(3);
 				break;
 			case 8:
 				break;
@@ -355,6 +350,9 @@ $(document).ready(function () {
 				selectDiceEle.css("display", "block");
 				promptMsgEle.style.display = "block";
 				break;
+			case "You've gained a victory point from the King's reward.":
+				rewardEle.css("display", "block");
+				promptMsgEle.style.display = "block";
 			default:
 				console.log("Unknown message prompt: ", message);
 		}
