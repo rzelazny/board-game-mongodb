@@ -17,6 +17,7 @@ $(document).ready(function () {
 		chooseAdvisorEle = $("#select-advisor"),
 		buildingEle = $("#use-buildings"),
 		chooseBuildingEle = $("#building-container"),
+		createBuildingEle = $("#select-building"),
 		useAdvisorContainer = $("#use-advisors"),
 		waitEle = $("#waiting"),
 		diceImg = document.getElementsByClassName("dice-btn"),
@@ -161,8 +162,9 @@ $(document).ready(function () {
 		let toBuild = [];
 		let chosenBuildings = $(".build-selected");
 
-		for (let i = 0; i < chosenBuildings.length; i++) {
-			toBuild.push(chosenBuildings[i]); //.getAttribute("choice"));
+		//get the names of the buildings we've choosen to build
+		for (let i = 0; i < chosenBuildings.length; i++) {			
+			toBuild.push(chosenBuildings[i].children[0].children[0].innerHTML);
 		}
 
 		console.log("I'm sending:", toBuild);
@@ -621,6 +623,10 @@ $(document).ready(function () {
 		updateBuildings(playerData);
 		waitEle.css("display", "none");
 		advisorEle.css("display", "none");
+
+		promptMsgEle.innerHTML = "Choose a building to construct."
+		$("#prompt-user-container").css("display", "block");
+		createBuildingEle.css("display", "block");
 		chooseBuildingEle.css("display", "block");
 
 	});
@@ -741,7 +747,6 @@ $(document).ready(function () {
 				buildings[i].classList.remove("valid-building");
 			}
 		};
-
 	}
 
 	//Update the nav bar css to highlight the current phase
