@@ -242,6 +242,7 @@ $(document).ready(function () {
 			choiceType: "got-reward",
 			choice: "done"
 		}
+		rewardEle.css("display", "none");
 		socket.emit("player-choice", myChoice);
 	})
 
@@ -292,7 +293,10 @@ $(document).ready(function () {
 			case 7: // reward phase
 				updateNavBar(3);
 				break;
-			case 8:
+			case 8: //productive season 2
+				promptEle.css("display", "none");
+				resEle.css("display", "none");
+				updateNavBar(4);
 				break;
 			default:
 				console.log("Phase not found");
@@ -355,7 +359,9 @@ $(document).ready(function () {
 				break;
 			case "Use your dice to influence an advisor.":
 			case "Invalid choice. Use your dice to influence an advisor.":
+				advisorEle.css("display", "block");
 				chooseAdvisorEle.css("display", "block");
+				chooseBuildingEle.css("display", "none");
 				selectDiceEle.css("display", "block");
 				promptMsgEle.style.display = "block";
 				break;
