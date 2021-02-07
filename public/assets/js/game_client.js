@@ -163,7 +163,7 @@ $(document).ready(function () {
 		let chosenBuildings = $(".build-selected");
 
 		//get the names of the buildings we've choosen to build
-		for (let i = 0; i < chosenBuildings.length; i++) {			
+		for (let i = 0; i < chosenBuildings.length; i++) {
 			toBuild.push(chosenBuildings[i].children[0].children[0].innerHTML);
 		}
 
@@ -695,24 +695,6 @@ $(document).ready(function () {
 				rowCounter++;
 			}
 		};
-		// let btnDone = $('<button/>', {
-		// 	text: "Done",
-		// 	id: "btn-create-building",
-		// 	class: "btn-choice",
-		// 	click: sendBuilding
-		// })
-		// chooseBuildingEle.append(btnDone);
-
-		//Select Building on click
-		$(".select-building").on("click", function (event) {
-			console.log("building clicked");
-			event.preventDefault();
-
-			//only valid choices can be selected
-			if (this.classList.contains("valid-building")) {
-				this.classList.toggle("build-selected");
-			}
-		})
 	}
 
 	//update the choose buildings tab
@@ -721,7 +703,7 @@ $(document).ready(function () {
 
 		let buildings = document.getElementsByClassName("select-building");
 
-		for(let i=0; i< buildings.length; i++){
+		for (let i = 0; i < buildings.length; i++) {
 			//set already created buildings
 			if (playerData.constructedBuildings.includes(buildings[i].getAttribute("name"))) {
 				buildings[i].classList.add("constructed");
@@ -730,12 +712,12 @@ $(document).ready(function () {
 			//see if the prior building has been created already
 			let previousBuilt = false;
 			//first row buildings, and buildings directly below already build buildings are valid
-			if(i%4===0){
+			if (i % 4 === 0) {
 				previousBuilt = true;
-			}else if(buildings[i-1].classList.contains("constructed")){
+			} else if (buildings[i - 1].classList.contains("constructed")) {
 				previousBuilt = true;
 			}
-			
+
 			//valid buildings have sufficient resources, aren't already built, and have the prior buildings built
 			if (previousBuilt &&
 				parseInt(playerData.resource1) >= parseInt(buildings[i].children[1].innerHTML.split(":")[1].charAt(0)) &&
@@ -743,10 +725,30 @@ $(document).ready(function () {
 				parseInt(playerData.resource3) >= parseInt(buildings[i].children[1].innerHTML.split(":")[3].charAt(0))) {
 
 				buildings[i].classList.add("valid-building");
-			}else{
+			} else {
 				buildings[i].classList.remove("valid-building");
 			}
 		};
+
+		//Select Building on click
+		$(".select-building").on("click", function (event) {
+			console.log("building clicked");
+			event.preventDefault();
+
+			//only valid choices can be selected
+			if (this.classList.contains("valid-building")) {
+
+				//deselect all other buildings unless the player has the envoy
+				if (!playerData.hasBonus) {
+					let buildings = document.getElementsByClassName("select-building");
+					for (let i = 0; i < buildings.length; i++) {
+						buildings[i].classList.remove("build-selected");
+					}
+				}
+				//and select the current building
+				this.classList.toggle("build-selected");
+			}
+		})
 	}
 
 	//Update the nav bar css to highlight the current phase
