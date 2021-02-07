@@ -171,7 +171,7 @@ $(document).ready(function () {
 
 		let myChoice = {
 			player: curUser,
-			choiceType: "building",
+			choiceType: "construct-building",
 			choice: toBuild
 		}
 		socket.emit("player-choice", myChoice);
