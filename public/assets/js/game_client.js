@@ -293,7 +293,7 @@ $(document).ready(function () {
 			case 7: // reward phase
 				updateNavBar(3);
 				break;
-			case 8: //productive season 2
+			case 9: //productive season 2
 				promptEle.css("display", "none");
 				resEle.css("display", "none");
 				updateNavBar(4);
@@ -359,11 +359,12 @@ $(document).ready(function () {
 				break;
 			case "Use your dice to influence an advisor.":
 			case "Invalid choice. Use your dice to influence an advisor.":
+				promptMsgEle.style.display = "block";
 				advisorEle.css("display", "block");
 				chooseAdvisorEle.css("display", "block");
-				chooseBuildingEle.css("display", "none");
 				selectDiceEle.css("display", "block");
-				promptMsgEle.style.display = "block";
+				//hide the building section when displaying the advisor section
+				chooseBuildingEle.css("display", "none");
 				break;
 			case "You've gained a victory point from the King's reward.":
 				rewardEle.css("display", "block");
@@ -411,6 +412,13 @@ $(document).ready(function () {
 		for (let i = 0; i < message.dice.length; i++) {
 			advEle.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${message.color}/die-${message.dice[i]}.png" />`)
 		}
+	});
+
+	//remove dice on the advisor board
+	socket.on("remove-dice", () => {
+		//{dice, color, advisor}
+		console.log("remove dice message recieved");
+		$(".advisor-dice").empty();
 	});
 
 	//show waiting field when other users have gotten a prompt
@@ -722,6 +730,7 @@ $(document).ready(function () {
 			if (playerData.constructedBuildings.includes(buildings[i].getAttribute("name"))) {
 				buildings[i].classList.add("constructed");
 				buildings[i].classList.remove("valid-building");
+				buildings[i].classList.remove("build-selected");
 			}
 			//see if the prior building has been created already
 			let previousBuilt = false;
@@ -743,6 +752,9 @@ $(document).ready(function () {
 				buildings[i].classList.remove("valid-building");
 			}
 		};
+
+		//remove existing listeners to prevent duplicates
+		$(".select-building").off("click");
 
 		//Select Building on click
 		$(".select-building").on("click", function (event) {
