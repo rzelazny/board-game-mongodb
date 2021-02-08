@@ -378,7 +378,7 @@ $(document).ready(function () {
 
 	//update my dice buttons
 	socket.on("update-dice", ({ color, dice, bonusDie, token, market }) => {
-		console.log("update dice message recieved", color, dice)
+		console.log("update dice message recieved", color, dice, bonusDie);
 
 		//set dice icons and value
 		for (let i = 0; i < dice.length; i++) {
@@ -387,16 +387,48 @@ $(document).ready(function () {
 			diceEle[i].disabled = false;
 			diceEle[i].classList.remove("clicked");
 		}
+		//set bonus die if available
+		if (bonusDie > 0){ 
+			diceImg[3].src = (`../assets/images/dice-white/die-${bonusDie}.png`);
+			diceEle[3].setAttribute("pips", bonusDie);
+			diceEle[3].disabled = false;
+		}
+		else{
+			diceEle[3].src = (`../assets/images/icons/die-3-dis.png`);
+			diceEle[3].disabled = true;
+		}
+		//set 2tokens if available
+		if (token > 0){ 
+			diceImg[4].src = (`../assets/images/icons/2token-icon.png`);
+			diceEle[4].setAttribute("pips", 2);
+			diceEle[4].disabled = false;
+		}
+		else{
+			diceEle[4].src = (`../assets/images/icons/2token-icon-dis.png`);
+			diceEle[4].disabled = true;
+		}
+		//set market buttons if available
+		if (market){ 
+			diceEle[5].src = (`../assets/images/buildings/Market.png`);
+			diceEle[5].setAttribute("pips", -1);
+			diceEle[5].disabled = false;
+			diceEle[6].src = (`../assets/images/buildings/Market.png`);
+			diceEle[6].setAttribute("pips", 1);
+			diceEle[6].disabled = false;
+		}
+		else{
+			diceEle[5].src = (`../assets/images/icons/building-icon-dis.png`);
+			diceEle[5].disabled = true;
+			diceEle[6].src = (`../assets/images/icons/building-icon-dis.png`);
+			diceEle[6].disabled = true;
+		}
+
 		//disable buttons for used dice
 		console.log("mydice length", dice.length);
 		for (let i = dice.length; i < 3; i++) {
 			diceImg[i].src = (`../assets/images/icons/die-3-dis.png`);
 			diceEle[i].disabled = true;
 			diceEle[i].classList.remove("clicked");
-		}
-		if (bonusDie > 0){
-			diceEle[3].src = ("../assets/images/dice-white/die-" + bonusDie + ".png");
-			diceEle[3].disabled = false;
 		}
 
 		//if there are no dice don't show the section anymore
