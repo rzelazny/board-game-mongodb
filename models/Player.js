@@ -46,6 +46,10 @@ const PlayerSchema = new Schema({
         type: Boolean,
         default: false
     },
+    bonusDie: {
+        type: Number,
+        default: 0
+    },
     constructedBuildings: [
         {
             type: Schema.Types.ObjectId,

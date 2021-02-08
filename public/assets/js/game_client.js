@@ -377,7 +377,7 @@ $(document).ready(function () {
 	});
 
 	//update my dice buttons
-	socket.on("update-dice", ({ color, dice }) => {
+	socket.on("update-dice", ({ color, dice, bonusDie, token, market }) => {
 		console.log("update dice message recieved", color, dice)
 
 		//set dice icons and value
@@ -394,9 +394,10 @@ $(document).ready(function () {
 			diceEle[i].disabled = true;
 			diceEle[i].classList.remove("clicked");
 		}
-		// if ("king's die"){
-		// 	diceEle[3].src = ("../assets/images/die-" + myDice[3] + ".png");
-		// }
+		if (bonusDie > 0){
+			diceEle[3].src = ("../assets/images/dice-white/die-" + bonusDie + ".png");
+			diceEle[3].disabled = false;
+		}
 
 		//if there are no dice don't show the section anymore
 		if (dice.length === 0) {
