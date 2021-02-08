@@ -721,13 +721,13 @@ $(document).ready(function () {
 
 	//update the choose buildings tab
 	function updateBuildings(playerData) {
-		console.log("Updating building data")
+		console.log("Updating building data", playerData.constructedBuildings);
 
 		let buildings = document.getElementsByClassName("select-building");
 
 		for (let i = 0; i < buildings.length; i++) {
 			//set already created buildings
-			if (playerData.constructedBuildings.includes(buildings[i].getAttribute("name"))) {
+			if (playerData.constructedBuildings.some(el => el.name === buildings[i].getAttribute("name"))) {
 				buildings[i].classList.add("constructed");
 				buildings[i].classList.remove("valid-building");
 				buildings[i].classList.remove("build-selected");
