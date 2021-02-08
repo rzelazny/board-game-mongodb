@@ -366,6 +366,7 @@ $(document).ready(function () {
 				//hide the building section when displaying the advisor section
 				chooseBuildingEle.css("display", "none");
 				break;
+			case "You recieve the king's aid. Roll an extra die in Spring.":
 			case "You've gained a victory point from the King's reward.":
 				rewardEle.css("display", "block");
 				promptMsgEle.style.display = "block";
