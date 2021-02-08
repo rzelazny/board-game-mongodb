@@ -446,6 +446,12 @@ $(document).ready(function () {
 		for (let i = 0; i < message.dice.length; i++) {
 			advEle.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${message.color}/die-${message.dice[i]}.png" />`)
 		}
+		if(message.bonus>0){
+			advEle.append(`<img alt="player dice" class="icon" src="../assets/images/dice-white/die-${message.bonus}.png" />`)
+		}
+		if(message.token>0){
+			advEle.append(`<img alt="player dice" class="icon" src="../assets/images/icons/2token-icon.png" />`)
+		}
 	});
 
 	//remove dice on the advisor board
