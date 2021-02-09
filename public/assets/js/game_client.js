@@ -394,8 +394,9 @@ $(document).ready(function () {
 			diceEle[3].disabled = false;
 		}
 		else{
-			diceEle[3].src = (`../assets/images/icons/die-3-dis.png`);
+			diceImg[3].src = (`../assets/images/icons/die-3-dis.png`);
 			diceEle[3].disabled = true;
+			diceEle[3].classList.remove("clicked");
 		}
 		//set 2tokens if available
 		if (token > 0){ 
@@ -404,23 +405,26 @@ $(document).ready(function () {
 			diceEle[4].disabled = false;
 		}
 		else{
-			diceEle[4].src = (`../assets/images/icons/2token-icon-dis.png`);
+			diceImg[4].src = (`../assets/images/icons/2token-icon-dis.png`);
 			diceEle[4].disabled = true;
+			diceEle[4].classList.remove("clicked");
 		}
 		//set market buttons if available
 		if (market){ 
-			diceEle[5].src = (`../assets/images/buildings/Market.png`);
+			diceImg[5].src = (`../assets/images/buildings/Market.png`);
 			diceEle[5].setAttribute("pips", -1);
 			diceEle[5].disabled = false;
-			diceEle[6].src = (`../assets/images/buildings/Market.png`);
+			diceImg[6].src = (`../assets/images/buildings/Market.png`);
 			diceEle[6].setAttribute("pips", 1);
 			diceEle[6].disabled = false;
 		}
 		else{
-			diceEle[5].src = (`../assets/images/icons/building-icon-dis.png`);
+			diceImg[5].src = (`../assets/images/icons/building-icon-dis.png`);
 			diceEle[5].disabled = true;
-			diceEle[6].src = (`../assets/images/icons/building-icon-dis.png`);
+			diceEle[5].classList.remove("clicked");
+			diceImg[6].src = (`../assets/images/icons/building-icon-dis.png`);
 			diceEle[6].disabled = true;
+			diceEle[6].classList.remove("clicked");
 		}
 
 		//disable buttons for used dice
