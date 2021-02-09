@@ -290,7 +290,7 @@ $(document).ready(function () {
 				promptEle.css("display", "none");
 				resEle.css("display", "none");
 				break;
-			case 7: // reward phase
+			case 8: // reward phase
 				updateNavBar(3);
 				break;
 			case 9: //productive season 2
