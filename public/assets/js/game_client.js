@@ -476,6 +476,9 @@ $(document).ready(function () {
 	socket.on("use-buildings", (data) => {
 		console.log("use buildings recieved")
 		console.log(data);
+		console.log(data[0]);
+		console.log(data[0].building);
+		console.log(data[0].building[0]);
 
 		//always show the prompt container and hide the wait message
 		$("#prompt-user-container").css("display", "block");
@@ -494,9 +497,9 @@ $(document).ready(function () {
 				col4 = $("<div>").attr("class", "col-md-4");
 
 			//create data elements
-			let name = data[0].building[i];
-			let img = `<img alt="player dice" class="btn-icon" src="../assets/images/buildings/${data[0].building[i]}.png" />`;
-			let description = "If your dice total is under 8 you may reroll all dice." //TODO add to database somewhere
+			let name = data[0].building[i].name;
+			let img = `<img alt="${name}" class="btn-icon" src="../assets/images/buildings/${name}.png" />`;
+			let description = data[0].building[i].effectType
 			var useBtn = $('<button/>', {
 				text: "Use " + name,
 				id: "btnUse" + name,
