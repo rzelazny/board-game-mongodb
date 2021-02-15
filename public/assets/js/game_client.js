@@ -506,14 +506,29 @@ $(document).ready(function () {
 			//create data elements
 			let name = usableBuildings[i].building.name;
 			let img = `<img alt="${name}" class="btn-icon" src="../assets/images/buildings/${name}.png" />`;
-			let description = `In ${usableBuildings[i].building.effectTiming} ${usableBuildings[i].building.effect}`
-			var useBtn = $('<button/>', {
-				text: "Use " + name,
-				id: "btnUse" + name,
-				class: "btn-choice",
-				building: name,
-				click: useBuilding
-			})
+			let description = `During ${usableBuildings[i].building.effectTiming} ${usableBuildings[i].building.effect}`
+			switch (usableBuildings[i].building.choiceType) {
+				case "Dice":
+					let row2 = $("<div>"),
+						diceCol = $("<div>").attr("class", "col-md-12 text-center");
+
+					for (let ii = 0; ii < dice.length; ii++) {
+						diceCol.append(`<img alt="player dice" class="btn-icon" src="../assets/images/dice-${myColor}/die-${dice[ii]}.png" />`);
+					};
+					row2.append(diceCol);
+					building.append(row2);
+				case "YN": //no break on Dice, dice buildings also need a YN button
+					var useBtn = $('<button/>', {
+						text: "Use " + name,
+						id: "btnUse" + name,
+						class: "btn-choice",
+						building: name,
+						click: useBuilding
+					})
+					break;
+				case "Recruit YN":
+					break;
+			}
 			col1.append(name);
 			col2.append(img);
 			col3.append(description);
@@ -732,16 +747,16 @@ $(document).ready(function () {
 		for (let i = 0; i < buildingData.length; i++) {
 			//create data elements
 			let name = buildingData[i].name;
-			
+
 			let description = `During ${buildingData[i].effectTiming} ${buildingData[i].effect}`
-			.replaceAll("res1", `<img alt="Resource1" class="icon" src="../assets/images/icons/res1-icon.png" />`)
-			.replaceAll("res2", `<img alt="Resource1" class="icon" src="../assets/images/icons/res2-icon.png" />`)
-			.replaceAll("res3", `<img alt="Resource1" class="icon" src="../assets/images/icons/res3-icon.png" />`)
-			.replaceAll("resAny", `<img alt="Resource1" class="icon" src="../assets/images/icons/resAny-icon.png" />`)
-			.replaceAll("arrow", `<img alt="Resource1" class="icon" src="../assets/images/icons/arrow-icon.png" />`)
-			.replaceAll("vp", `<img alt="Resource1" class="icon" src="../assets/images/icons/VP-icon.png" />`)
-			.replaceAll("2token", `<img alt="Resource1" class="icon" src="../assets/images/icons/2token-icon.png" />`)
-			.replaceAll("str", `<img alt="Resource1" class="icon" src="../assets/images/icons/str-icon.png" />`);
+				.replaceAll("res1", `<img alt="Resource1" class="icon" src="../assets/images/icons/res1-icon.png" />`)
+				.replaceAll("res2", `<img alt="Resource1" class="icon" src="../assets/images/icons/res2-icon.png" />`)
+				.replaceAll("res3", `<img alt="Resource1" class="icon" src="../assets/images/icons/res3-icon.png" />`)
+				.replaceAll("resAny", `<img alt="Resource1" class="icon" src="../assets/images/icons/resAny-icon.png" />`)
+				.replaceAll("arrow", `<img alt="Resource1" class="icon" src="../assets/images/icons/arrow-icon.png" />`)
+				.replaceAll("vp", `<img alt="Resource1" class="icon" src="../assets/images/icons/VP-icon.png" />`)
+				.replaceAll("2token", `<img alt="Resource1" class="icon" src="../assets/images/icons/2token-icon.png" />`)
+				.replaceAll("str", `<img alt="Resource1" class="icon" src="../assets/images/icons/str-icon.png" />`);
 			description.replace("res1", `<img alt="Resource1" class="icon" src="../assets/images/icons/res1-icon.png" />`)
 
 			let costRes1 = buildingData[i].cost[0];
