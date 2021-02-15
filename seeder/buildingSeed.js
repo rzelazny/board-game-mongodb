@@ -257,7 +257,7 @@ let buildingSetup = [
         strength: 0,
         combatBonus: "N/A",
         effectTiming: "Productive Seasons",
-        effect: "may spend resAny / 2Token arrow vp",
+        effect: "may spend resAny / 2token arrow vp",
         choiceType: "Resource"
     },
     {

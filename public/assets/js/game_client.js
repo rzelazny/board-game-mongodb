@@ -737,8 +737,10 @@ $(document).ready(function () {
 			.replaceAll("res1", `<img alt="Resource1" class="icon" src="../assets/images/icons/res1-icon.png" />`)
 			.replaceAll("res2", `<img alt="Resource1" class="icon" src="../assets/images/icons/res2-icon.png" />`)
 			.replaceAll("res3", `<img alt="Resource1" class="icon" src="../assets/images/icons/res3-icon.png" />`)
+			.replaceAll("resAny", `<img alt="Resource1" class="icon" src="../assets/images/icons/resAny-icon.png" />`)
 			.replaceAll("arrow", `<img alt="Resource1" class="icon" src="../assets/images/icons/arrow-icon.png" />`)
 			.replaceAll("vp", `<img alt="Resource1" class="icon" src="../assets/images/icons/VP-icon.png" />`)
+			.replaceAll("2token", `<img alt="Resource1" class="icon" src="../assets/images/icons/2token-icon.png" />`)
 			.replaceAll("str", `<img alt="Resource1" class="icon" src="../assets/images/icons/str-icon.png" />`);
 			description.replace("res1", `<img alt="Resource1" class="icon" src="../assets/images/icons/res1-icon.png" />`)
 
