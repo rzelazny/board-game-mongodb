@@ -125,7 +125,7 @@ let buildingSetup = [
         strength: -1,
         combatBonus: "N/A",
         effectTiming: "Productive Seasons",
-        effect: "gain a bonus die, but lose 1 str",
+        effect: "gain a bonus die, but lose 1 str during Combat",
         choiceType: ""
     },
     {
