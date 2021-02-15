@@ -8,7 +8,7 @@ const buildingSchema = new Schema(
             type: String,
             trim: true,
         },
-        column: {
+        row: {
             type: Number,
         },
         cost: [

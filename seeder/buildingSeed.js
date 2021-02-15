@@ -16,7 +16,7 @@ let buildingSetup = [
         combatBonus: "N/A",
         effectTiming: "Summer",
         effect: "May spend res2 arrow res1 res1",
-        choiceType: ""
+        choiceType: "YN"
     },
     {
         name: "Quarry",
@@ -27,7 +27,7 @@ let buildingSetup = [
         combatBonus: "N/A",
         effectTiming: "Summer",
         effect: "May spend res3 arrow res1 res1 res1",
-        choiceType: ""
+        choiceType: "YN"
     },
     {
         name: "GoldSmith",
@@ -38,7 +38,7 @@ let buildingSetup = [
         combatBonus: "N/A",
         effectTiming: "Summer",
         effect: "May spend res1 arrow str, vp",
-        choiceType: ""
+        choiceType: "YN"
     },
     {
         name: "Mint",
@@ -60,7 +60,7 @@ let buildingSetup = [
         combatBonus: "N/A",
         effectTiming: "Productive Season",
         effect: "May reroll a die if all die match",
-        choiceType: ""
+        choiceType: "Dice"
     },
     {
         name: "Chapel",
@@ -71,7 +71,7 @@ let buildingSetup = [
         combatBonus: "N/A",
         effectTiming: "Productive Season",
         effect: "If dice total <8 may reroll all dice",
-        choiceType: ""
+        choiceType: "Dice YN"
     },
     {
         name: "Church",
@@ -104,7 +104,7 @@ let buildingSetup = [
         combatBonus: "N/A",
         effectTiming: "Summer",
         effect: "+1 2token",
-        choiceType: ""
+        choiceType: "YN"
     },
     {
         name: "Market",
@@ -258,7 +258,7 @@ let buildingSetup = [
         combatBonus: "N/A",
         effectTiming: "Productive Season",
         effect: "May spend resAny / 2Token arrow vp",
-        choiceType: ""
+        choiceType: "Resource"
     },
     {
         name: "Embassy",
@@ -313,7 +313,7 @@ let buildingSetup = [
         combatBonus: "N/A",
         effectTiming: "Combat",
         effect: "Roll a die. May use it instead of reinforcements in combat",
-        choiceType: ""
+        choiceType: "Recruit YN"
     },
     
 ];
