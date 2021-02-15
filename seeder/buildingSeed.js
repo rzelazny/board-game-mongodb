@@ -30,7 +30,7 @@ let buildingSetup = [
         choiceType: "YN"
     },
     {
-        name: "GoldSmith",
+        name: "Goldsmith",
         row: 3,
         cost: [2,2,2],
         points: 3,
