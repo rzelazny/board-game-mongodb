@@ -388,29 +388,29 @@ $(document).ready(function () {
 			diceEle[i].classList.remove("clicked");
 		}
 		//set bonus die if available
-		if (bonusDie > 0){ 
+		if (bonusDie > 0) {
 			diceImg[3].src = (`../assets/images/dice-white/die-${bonusDie}.png`);
 			diceEle[3].setAttribute("pips", bonusDie);
 			diceEle[3].disabled = false;
 		}
-		else{
+		else {
 			diceImg[3].src = (`../assets/images/icons/die-3-dis.png`);
 			diceEle[3].disabled = true;
 			diceEle[3].classList.remove("clicked");
 		}
 		//set 2tokens if available
-		if (token > 0){ 
+		if (token > 0) {
 			diceImg[4].src = (`../assets/images/icons/2token-icon.png`);
 			diceEle[4].setAttribute("pips", 2);
 			diceEle[4].disabled = false;
 		}
-		else{
+		else {
 			diceImg[4].src = (`../assets/images/icons/2token-icon-dis.png`);
 			diceEle[4].disabled = true;
 			diceEle[4].classList.remove("clicked");
 		}
 		//set market buttons if available
-		if (market){ 
+		if (market) {
 			diceImg[5].src = (`../assets/images/buildings/Market.png`);
 			diceEle[5].setAttribute("pips", -1);
 			diceEle[5].disabled = false;
@@ -418,7 +418,7 @@ $(document).ready(function () {
 			diceEle[6].setAttribute("pips", 1);
 			diceEle[6].disabled = false;
 		}
-		else{
+		else {
 			diceImg[5].src = (`../assets/images/icons/building-icon-dis.png`);
 			diceEle[5].disabled = true;
 			diceEle[5].classList.remove("clicked");
@@ -450,10 +450,10 @@ $(document).ready(function () {
 		for (let i = 0; i < message.dice.length; i++) {
 			advEle.append(`<img alt="player dice" class="icon" src="../assets/images/dice-${message.color}/die-${message.dice[i]}.png" />`)
 		}
-		if(message.bonus>0){
+		if (message.bonus > 0) {
 			advEle.append(`<img alt="player dice" class="icon" src="../assets/images/dice-white/die-${message.bonus}.png" />`)
 		}
-		if(message.token>0){
+		if (message.token > 0) {
 			advEle.append(`<img alt="player dice" class="icon" src="../assets/images/icons/2token-icon.png" />`)
 		}
 	});
@@ -473,10 +473,8 @@ $(document).ready(function () {
 	});
 
 	//display the use building section
-	socket.on("use-buildings", ({building, choice, dice}) => {
-		console.log("use buildings recieved")
-		console.log(building[0][0], choice);
-
+	socket.on("use-buildings", (usableBuildings) => {
+		console.log("use buildings recieved", usableBuildings)
 
 		//always show the prompt container and hide the wait message
 		$("#prompt-user-container").css("display", "block");
@@ -484,8 +482,19 @@ $(document).ready(function () {
 		promptMsgEle.innerHTML = "You have buildings that may be used."
 		buildingEle.css("display", "block");
 
+		//clear existing buildings
+		buildingEle.empty();
+		//Always need a done button
+		let btnDone = $('<button/>', {
+			text: "Done",
+			id: "btn-send-building",
+			class: "btn-choice",
+			click: sendBuilding
+		})
+		buildingEle.append(btnDone);
+
 		//create the building div
-		for (let i = 0; i < building.length; i++) {
+		for (let i = 0; i < usableBuildings.length; i++) {
 			//general layout
 			let useBuildEle = $("<div>").attr("class", "use-building"),
 				row = $("<div>").attr("class", "row"),
@@ -495,9 +504,9 @@ $(document).ready(function () {
 				col4 = $("<div>").attr("class", "col-md-4");
 
 			//create data elements
-			let name = building[i][0].name;
+			let name = usableBuildings[i].building.name;
 			let img = `<img alt="${name}" class="btn-icon" src="../assets/images/buildings/${name}.png" />`;
-			let description = building[i][0].effect
+			let description = `In ${usableBuildings[i].building.effectTiming} ${usableBuildings[i].building.effect}`
 			var useBtn = $('<button/>', {
 				text: "Use " + name,
 				id: "btnUse" + name,
@@ -514,7 +523,7 @@ $(document).ready(function () {
 			useBuildEle.append(row);
 
 			//show dice for the buildings it matters for
-			if (building[i][0] === "Chapel" || building[i][0] === "Statue") {
+			if (name === "Chapel" || name === "Statue") {
 				let row2 = $("<div>"),
 					diceCol = $("<div>").attr("class", "col-md-12 text-center");
 
@@ -524,15 +533,7 @@ $(document).ready(function () {
 				row2.append(diceCol);
 				building.append(row2);
 			}
-			//clear existing then add the new buildings
-			buildingEle.empty();
-			let btnDone = $('<button/>', {
-				text: "Done",
-				id: "btn-send-building",
-				class: "btn-choice",
-				click: sendBuilding
-			})
-			buildingEle.append(btnDone);
+			//add the building
 			buildingEle.prepend(useBuildEle);
 		};
 	});
@@ -731,7 +732,16 @@ $(document).ready(function () {
 		for (let i = 0; i < buildingData.length; i++) {
 			//create data elements
 			let name = buildingData[i].name;
-			let description = buildingData[i].effect;
+			
+			let description = `During ${buildingData[i].effectTiming} ${buildingData[i].effect}`
+			.replaceAll("res1", `<img alt="Resource1" class="icon" src="../assets/images/icons/res1-icon.png" />`)
+			.replaceAll("res2", `<img alt="Resource1" class="icon" src="../assets/images/icons/res2-icon.png" />`)
+			.replaceAll("res3", `<img alt="Resource1" class="icon" src="../assets/images/icons/res3-icon.png" />`)
+			.replaceAll("arrow", `<img alt="Resource1" class="icon" src="../assets/images/icons/arrow-icon.png" />`)
+			.replaceAll("vp", `<img alt="Resource1" class="icon" src="../assets/images/icons/VP-icon.png" />`)
+			.replaceAll("str", `<img alt="Resource1" class="icon" src="../assets/images/icons/str-icon.png" />`);
+			description.replace("res1", `<img alt="Resource1" class="icon" src="../assets/images/icons/res1-icon.png" />`)
+
 			let costRes1 = buildingData[i].cost[0];
 			let costRes2 = buildingData[i].cost[1];
 			let costRes3 = buildingData[i].cost[2];
