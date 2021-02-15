@@ -21,10 +21,14 @@ const buildingSchema = new Schema(
             type: String,
             trim: true,
         },
-        effectType: {
+        effect: {
             type: String,
             trim: true,
         },
+        choiceType: {
+            type: String,
+            trim: true,
+        }
     }
 );
 

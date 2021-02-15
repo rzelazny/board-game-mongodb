@@ -473,12 +473,10 @@ $(document).ready(function () {
 	});
 
 	//display the use building section
-	socket.on("use-buildings", (data) => {
+	socket.on("use-buildings", ({building, choice, dice}) => {
 		console.log("use buildings recieved")
-		console.log(data);
-		console.log(data[0]);
-		console.log(data[0].building);
-		console.log(data[0].building[0]);
+		console.log(building[0][0], choice);
+
 
 		//always show the prompt container and hide the wait message
 		$("#prompt-user-container").css("display", "block");
@@ -487,9 +485,9 @@ $(document).ready(function () {
 		buildingEle.css("display", "block");
 
 		//create the building div
-		for (let i = 0; i < data[0].building.length; i++) {
+		for (let i = 0; i < building.length; i++) {
 			//general layout
-			let building = $("<div>").attr("class", "use-building"),
+			let useBuildEle = $("<div>").attr("class", "use-building"),
 				row = $("<div>").attr("class", "row"),
 				col1 = $("<div>").attr("class", "col-md-2"),
 				col2 = $("<div>").attr("class", "col-md-2"),
@@ -497,9 +495,9 @@ $(document).ready(function () {
 				col4 = $("<div>").attr("class", "col-md-4");
 
 			//create data elements
-			let name = data[0].building[i].name;
+			let name = building[i][0].name;
 			let img = `<img alt="${name}" class="btn-icon" src="../assets/images/buildings/${name}.png" />`;
-			let description = data[0].building[i].effectType
+			let description = building[i][0].effect
 			var useBtn = $('<button/>', {
 				text: "Use " + name,
 				id: "btnUse" + name,
@@ -513,15 +511,15 @@ $(document).ready(function () {
 			col4.append(useBtn);
 
 			row.append(col1, col2, col3, col4);
-			building.append(row);
+			useBuildEle.append(row);
 
 			//show dice for the buildings it matters for
-			if (data[0].building[i] === "Chapel" || data[0].building[i] === "Statue") {
+			if (building[i][0] === "Chapel" || building[i][0] === "Statue") {
 				let row2 = $("<div>"),
 					diceCol = $("<div>").attr("class", "col-md-12 text-center");
 
-				for (let ii = 0; ii < data[0].dice.length; ii++) {
-					diceCol.append(`<img alt="player dice" class="btn-icon" src="../assets/images/dice-${myColor}/die-${data[0].dice[ii]}.png" />`);
+				for (let ii = 0; ii < dice.length; ii++) {
+					diceCol.append(`<img alt="player dice" class="btn-icon" src="../assets/images/dice-${myColor}/die-${dice[ii]}.png" />`);
 				};
 				row2.append(diceCol);
 				building.append(row2);
@@ -535,7 +533,7 @@ $(document).ready(function () {
 				click: sendBuilding
 			})
 			buildingEle.append(btnDone);
-			buildingEle.prepend(building);
+			buildingEle.prepend(useBuildEle);
 		};
 	});
 
@@ -733,7 +731,7 @@ $(document).ready(function () {
 		for (let i = 0; i < buildingData.length; i++) {
 			//create data elements
 			let name = buildingData[i].name;
-			let description = buildingData[i].effectType;
+			let description = buildingData[i].effect;
 			let costRes1 = buildingData[i].cost[0];
 			let costRes2 = buildingData[i].cost[1];
 			let costRes3 = buildingData[i].cost[2];
