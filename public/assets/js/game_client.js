@@ -188,10 +188,11 @@ $(document).ready(function () {
 		event.preventDefault();
 
 		let selectedBuildings = document.getElementsByClassName("building-clicked");
-		let choice = [];
+		let choice = [{building: "", data: ""}];
 
 		for (let i = 0; i < selectedBuildings.length; i++) {
-			choice.push(selectedBuildings[i].getAttribute("building"));
+			choice[i].building = (selectedBuildings[i].getAttribute("building"));
+			choice[i].data = (selectedBuildings[i].getAttribute("choice"));
 		}
 
 		let myChoice = {
@@ -506,39 +507,96 @@ $(document).ready(function () {
 			//create data elements
 			let name = usableBuildings[i].building.name;
 			let img = `<img alt="${name}" class="btn-icon" src="../assets/images/buildings/${name}.png" />`;
-			let description = `During ${usableBuildings[i].building.effectTiming} ${usableBuildings[i].building.effect}`
+			let description = `During ${usableBuildings[i].building.effectTiming} ${usableBuildings[i].building.effect}`;
 			switch (usableBuildings[i].building.choiceType) {
-				case "Dice":
-					let row2 = $("<div>"),
-						diceCol = $("<div>").attr("class", "col-md-12 text-center");
-
-					for (let ii = 0; ii < dice.length; ii++) {
-						diceCol.append(`<img alt="player dice" class="btn-icon" src="../assets/images/dice-${myColor}/die-${dice[ii]}.png" />`);
-					};
-					row2.append(diceCol);
-					building.append(row2);
-				case "YN": //no break on Dice, dice buildings also need a YN button
-					var useBtn = $('<button/>', {
+				case "Dice YN":
+				case "Recruit YN":
+				case "YN": //most buildings only need a generic use button
+					let useBtn = $('<button/>', {
 						text: "Use " + name,
 						id: "btnUse" + name,
 						class: "btn-choice",
 						building: name,
-						click: useBuilding
+						choice: "YN",
+						click: useBuildingToggle
 					})
+					col4.append(useBtn);
 					break;
-				case "Recruit YN":
+				case "Dice": //when individual dice must be selected
+					let dieBtn1 = $('<button/>', {
+						text: `<img alt="Die 1" class="icon" src="../assets/images/dice-${myColor}/die-${$usableBuildings[i].dice[0]}.png`,
+						id: "btnUse" + name,
+						class: "btn-choice",
+						building: name,
+						choice: 0,
+						click: useBuildingToggle
+					})
+					let dieBtn2 = $('<button/>', {
+						text: `<img alt="Die 2" class="icon" src="../assets/images/dice-${myColor}/die-${$usableBuildings[i].dice[1]}.png`,
+						id: "btnUse" + name,
+						class: "btn-choice",
+						building: name,
+						choice: 1,
+						click: useBuildingToggle
+					})
+					let dieBtn3 = $('<button/>', {
+						text: `<img alt="Die 3" class="icon" src="../assets/images/dice-${myColor}/die-${$usableBuildings[i].dice[2]}.png`,
+						id: "btnUse" + name,
+						class: "btn-choice",
+						building: name,
+						choice: 2,
+						click: useBuildingToggle
+					})
+					col4.append(dieBtn1, dieBtn2, dieBtn3);
+					break;
+				case "Resource": //when a resource must be chosen
+					let resBtn1 = $('<button/>', {
+						text: `<img alt="Resource 1" class="icon" src="../assets/images/icons/res1-icon.png`,
+						id: "btnUse" + name,
+						class: "btn-choice",
+						building: name,
+						choice: 0,
+						click: useBuildingToggle
+					})
+					let resBtn2 = $('<button/>', {
+						text: `<img alt="Resource 2" class="icon" src="../assets/images/icons/res2-icon.png`,
+						id: "btnUse" + name,
+						class: "btn-choice",
+						building: name,
+						choice: 1,
+						click: useBuildingToggle
+					})
+					let resBtn3 = $('<button/>', {
+						text: `<img alt="Resource 3" class="icon" src="../assets/images/icons/res3-icon.png`,
+						id: "btnUse" + name,
+						class: "btn-choice",
+						building: name,
+						choice: 2,
+						click: useBuildingToggle
+					})
+					let resBtn4 = $('<button/>', {
+						ttext: `<img alt="2Token" class="icon" src="../assets/images/icons/2token-icon.png`,
+						id: "btnUse" + name,
+						class: "btn-choice",
+						building: name,
+						choice: 3,
+						click: useBuildingToggle
+					})
+					col4.append(resBtn1, resBtn2, resBtn3, resBtn4);
 					break;
 			}
 			col1.append(name);
 			col2.append(img);
 			col3.append(description);
-			col4.append(useBtn);
+
 
 			row.append(col1, col2, col3, col4);
 			useBuildEle.append(row);
 
 			//show dice for the buildings it matters for
-			if (name === "Chapel" || name === "Statue") {
+			if (usableBuildings[i].building.choiceType === "Dice" ||
+				usableBuildings[i].building.choiceType === "Dice YN" ||
+				usableBuildings[i].building.choiceType === "Recruit YN") {
 				let row2 = $("<div>"),
 					diceCol = $("<div>").attr("class", "col-md-12 text-center");
 
@@ -553,10 +611,21 @@ $(document).ready(function () {
 		};
 	});
 
-	function useBuilding() {
+	//lets user pick which buildings to use
+	function useBuildingToggle() {
 		console.log("use building button");
 		event.preventDefault();
-		this.classList.toggle("building-clicked");
+
+		//get the current building
+		let thisBuilding = this.getAttribute("building");
+		console.log("this bld", thisBuilding);
+		//find all the buttons for this building
+
+		let buildBtns = $(`[building=${thisBuilding}]`);
+		console.log("this btns", buildBtns);
+		//toggle all buttons on press
+		buildBtns.toggleClass("building-clicked"); 
+
 	}
 
 	//display the use advisors section
