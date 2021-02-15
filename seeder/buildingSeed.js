@@ -15,7 +15,7 @@ let buildingSetup = [
         strength: 0,
         combatBonus: "N/A",
         effectTiming: "Summer",
-        effect: "May spend res2 arrow res1 res1",
+        effect: "may spend res2 arrow res1 res1",
         choiceType: "YN"
     },
     {
@@ -26,7 +26,7 @@ let buildingSetup = [
         strength: 0,
         combatBonus: "N/A",
         effectTiming: "Summer",
-        effect: "May spend res3 arrow res1 res1 res1",
+        effect: "may spend res3 arrow res1 res1 res1",
         choiceType: "YN"
     },
     {
@@ -37,7 +37,7 @@ let buildingSetup = [
         strength: 0,
         combatBonus: "N/A",
         effectTiming: "Summer",
-        effect: "May spend res1 arrow str, vp",
+        effect: "may spend res1 arrow str, vp",
         choiceType: "YN"
     },
     {
@@ -48,7 +48,7 @@ let buildingSetup = [
         strength: 0,
         combatBonus: "N/A",
         effectTiming: "Spring and Autumn",
-        effect: "May use Sawmill, Quarry, and Goldsmith",
+        effect: "may use Sawmill, Quarry, and Goldsmith",
         choiceType: ""
     },
     {
@@ -58,8 +58,8 @@ let buildingSetup = [
         points: 3,
         strength: 0,
         combatBonus: "N/A",
-        effectTiming: "Productive Season",
-        effect: "May reroll a die if all die match",
+        effectTiming: "Productive Seasons",
+        effect: "may reroll a die if all die match",
         choiceType: "Dice"
     },
     {
@@ -69,8 +69,8 @@ let buildingSetup = [
         points: 5,
         strength: 0,
         combatBonus: "N/A",
-        effectTiming: "Productive Season",
-        effect: "If dice total <8 may reroll all dice",
+        effectTiming: "Productive Seasons",
+        effect: "if dice total <8 may reroll all dice",
         choiceType: "Dice YN"
     },
     {
@@ -113,8 +113,8 @@ let buildingSetup = [
         points: 1,
         strength: 0,
         combatBonus: "N/A",
-        effectTiming: "Productive Season",
-        effect: "May adjust dice total by +-1",
+        effectTiming: "Productive Seasons",
+        effect: "may adjust dice total by +-1",
         choiceType: ""
     },
     {
@@ -124,8 +124,8 @@ let buildingSetup = [
         points: 2,
         strength: -1,
         combatBonus: "N/A",
-        effectTiming: "Productive Season",
-        effect: "Gain a bonus die, but lose 1 str",
+        effectTiming: "Productive Seasons",
+        effect: "gain a bonus die, but lose 1 str",
         choiceType: ""
     },
     {
@@ -135,7 +135,7 @@ let buildingSetup = [
         points: 4,
         strength: 0,
         combatBonus: "N/A",
-        effectTiming: "Productive Season",
+        effectTiming: "Productive Seasons",
         effect: "+1 res1",
         choiceType: ""
     },
@@ -169,7 +169,7 @@ let buildingSetup = [
         strength: 0,
         combatBonus: "N/A",
         effectTiming: "Rally",
-        effect: "Recruit cost is only 1 good",
+        effect: "recruit cost is only 1 good",
         choiceType: ""
     },
     {
@@ -201,7 +201,7 @@ let buildingSetup = [
         points: 2,
         strength: 0,
         combatBonus: "N/A",
-        effectTiming: "Productive Season",
+        effectTiming: "Productive Seasons",
         effect: "+1 str when gaining str from an advisor",
         choiceType: ""
     },
@@ -245,8 +245,8 @@ let buildingSetup = [
         points: 1,
         strength: 0,
         combatBonus: "N/A",
-        effectTiming: "Productive Season",
-        effect: "Row 3 and 4 buildings cost 1 less res1",
+        effectTiming: "Productive Seasons",
+        effect: "row 3 and 4 buildings cost 1 less res1",
         choiceType: ""
     },
     {
@@ -256,8 +256,8 @@ let buildingSetup = [
         points: 2,
         strength: 0,
         combatBonus: "N/A",
-        effectTiming: "Productive Season",
-        effect: "May spend resAny / 2Token arrow vp",
+        effectTiming: "Productive Seasons",
+        effect: "may spend resAny / 2Token arrow vp",
         choiceType: "Resource"
     },
     {
@@ -267,7 +267,7 @@ let buildingSetup = [
         points: 4,
         strength: 0,
         combatBonus: "N/A",
-        effectTiming: "Productive Season",
+        effectTiming: "Productive Seasons",
         effect: "+1 vp",
         choiceType: ""
     },
@@ -279,7 +279,7 @@ let buildingSetup = [
         strength: 0,
         combatBonus: "Str<6",
         effectTiming: "Combat",
-        effect: "+1 Military vs Enemies <6",
+        effect: "+1 str vs Enemies with <6 Strength",
         choiceType: ""
     },
     {
@@ -290,7 +290,7 @@ let buildingSetup = [
         strength: 0,
         combatBonus: "N/A",
         effectTiming: "Rally",
-        effect: "May spend 2token to recruit",
+        effect: "may spend 2token to recruit",
         choiceType: ""
     },
     {
@@ -301,7 +301,7 @@ let buildingSetup = [
         strength: 0,
         combatBonus: "N/A",
         effectTiming: "Rally",
-        effect: "If str <2 then +1 str",
+        effect: "if str <2 then +1 str",
         choiceType: ""
     },
     {
@@ -312,7 +312,7 @@ let buildingSetup = [
         strength: 0,
         combatBonus: "N/A",
         effectTiming: "Combat",
-        effect: "Roll a die. May use it instead of reinforcements in combat",
+        effect: "roll a die. May use it instead of reinforcements in combat",
         choiceType: "Recruit YN"
     },
     
