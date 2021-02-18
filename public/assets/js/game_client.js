@@ -188,8 +188,8 @@ $(document).ready(function () {
 		event.preventDefault();
 
 		let selectedBuildings = document.getElementsByClassName("building-clicked");
-		let choice = [{building: "", data: ""}];
-
+		let choice = [{ building: "", data: "" }];
+		console.log("selected buildings:", selectedBuildings);
 		for (let i = 0; i < selectedBuildings.length; i++) {
 			choice[i].building = (selectedBuildings[i].getAttribute("building"));
 			choice[i].data = (selectedBuildings[i].getAttribute("choice"));
@@ -282,12 +282,12 @@ $(document).ready(function () {
 
 		//hide elements from earlier phases, this is usually due to a timeout
 		switch (parsePhase) {
-			case 1:
-				updateNavBar(parsePhase);
+			case 1: //aid phase one
+				updateNavBar(1);
 				//$("#select-resource").css("display", "block");
 				break;
 			case 2: //productive season 1
-				updateNavBar(parsePhase);
+				updateNavBar(2);
 				promptEle.css("display", "none");
 				resEle.css("display", "none");
 				break;
@@ -298,6 +298,9 @@ $(document).ready(function () {
 				promptEle.css("display", "none");
 				resEle.css("display", "none");
 				updateNavBar(4);
+				break;
+			case 15: //aid phase two
+				updateNavBar(5);
 				break;
 			default:
 				console.log("Phase not found");
@@ -354,10 +357,6 @@ $(document).ready(function () {
 			case "You recieve the king's aid. Pick a bonus resource:":
 				resEle.css("display", "block");
 				break;
-			case "Would you like to use your Statue?":
-			case "Would you like to use your Chapel?":
-				yesNoEle.css("display", "block");
-				break;
 			case "Use your dice to influence an advisor.":
 			case "Invalid choice. Use your dice to influence an advisor.":
 				promptMsgEle.style.display = "block";
@@ -369,6 +368,7 @@ $(document).ready(function () {
 				break;
 			case "You recieve the king's aid. Roll an extra die in Spring.":
 			case "You've gained a victory point from the King's reward.":
+			case "You recieve the king's envoy. Use it to build an extra building or influencean already influenced advisor.":
 				rewardEle.css("display", "block");
 				promptMsgEle.style.display = "block";
 				break;
@@ -624,7 +624,7 @@ $(document).ready(function () {
 		let buildBtns = $(`[building=${thisBuilding}]`);
 		console.log("this btns", buildBtns);
 		//toggle all buttons on press
-		buildBtns.toggleClass("building-clicked"); 
+		buildBtns.toggleClass("building-clicked");
 
 	}
 
