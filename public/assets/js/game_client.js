@@ -291,7 +291,7 @@ $(document).ready(function () {
 				promptEle.css("display", "none");
 				resEle.css("display", "none");
 				break;
-			case 8: // reward phase
+			case 8: //reward phase
 				updateNavBar(3);
 				break;
 			case 9: //productive season 2
@@ -303,7 +303,12 @@ $(document).ready(function () {
 				updateNavBar(5);
 				break;
 			case 16: //productive season 3
+				promptEle.css("display", "none");
+				resEle.css("display", "none");
 				updateNavBar(6);
+				break;
+			case 22: //rally phase
+				updateNavBar(3);
 				break;
 			default:
 				console.log("Phase not found");
