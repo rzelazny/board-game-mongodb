@@ -302,6 +302,9 @@ $(document).ready(function () {
 			case 15: //aid phase two
 				updateNavBar(5);
 				break;
+			case 16: //productive season 3
+				updateNavBar(6);
+				break;
 			default:
 				console.log("Phase not found");
 				break;
