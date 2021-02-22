@@ -360,6 +360,7 @@ $(document).ready(function () {
 		//always show the prompt container and hide the wait message
 		$("#prompt-user-container").css("display", "block");
 		promptMsgEle.innerHTML = message;
+		promptMsgEle.style.display = "block";
 		waitEle.css("display", "none");
 
 		//display various prompts based on the message
@@ -369,7 +370,6 @@ $(document).ready(function () {
 				break;
 			case "Use your dice to influence an advisor.":
 			case "Invalid choice. Use your dice to influence an advisor.":
-				promptMsgEle.style.display = "block";
 				advisorEle.css("display", "block");
 				chooseAdvisorEle.css("display", "block");
 				selectDiceEle.css("display", "block");
@@ -380,7 +380,6 @@ $(document).ready(function () {
 			case "You've gained a victory point from the King's reward.":
 			case "You recieve the king's envoy. Use it to build an extra building or influencean already influenced advisor.":
 				rewardEle.css("display", "block");
-				promptMsgEle.style.display = "block";
 				break;
 			case "Winter is coming. Will you spend any resources to rally more troops?":
 				useRallyEle.css("display", "block");
