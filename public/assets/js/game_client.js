@@ -19,6 +19,8 @@ $(document).ready(function () {
 		chooseBuildingEle = $("#building-container"),
 		createBuildingEle = $("#select-building"),
 		useAdvisorContainer = $("#use-advisors"),
+		showStrengthContainer = $("#rally-container"),
+		useRallyEle = $("#use-rally"),
 		rewardEle = $("#get-reward"),
 		waitEle = $("#waiting"),
 		diceImg = document.getElementsByClassName("dice-btn"),
@@ -380,6 +382,9 @@ $(document).ready(function () {
 				rewardEle.css("display", "block");
 				promptMsgEle.style.display = "block";
 				break;
+			case "Winter is coming. Will you spend any resources to rally more troops?":
+				useRallyEle.css("display", "block");
+				showStrengthContainer.css("display", "block");
 			default:
 				console.log("Unknown message prompt: ", message);
 		}
