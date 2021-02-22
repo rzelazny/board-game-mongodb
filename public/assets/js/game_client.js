@@ -310,7 +310,7 @@ $(document).ready(function () {
 				updateNavBar(6);
 				break;
 			case 22: //rally phase
-				updateNavBar(3);
+				updateNavBar(7);
 				break;
 			default:
 				console.log("Phase not found");
@@ -384,6 +384,9 @@ $(document).ready(function () {
 			case "Winter is coming. Will you spend any resources to rally more troops?":
 				useRallyEle.css("display", "block");
 				showStrengthContainer.css("display", "block");
+				//hide the building section when displaying the advisor section
+				chooseBuildingEle.css("display", "none");
+				break;
 			default:
 				console.log("Unknown message prompt: ", message);
 		}
