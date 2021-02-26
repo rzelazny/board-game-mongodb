@@ -393,6 +393,24 @@ $(document).ready(function () {
 		}
 	});
 
+	//handles prompt for rally phase.
+	socket.on("rally-prompt", (playerData) => {
+		console.log("prompt rally recieved");
+
+		//always show the prompt container and hide the wait message
+		$("#prompt-user-container").css("display", "block");
+		promptMsgEle.innerHTML = "Winter is coming. Will you spend any resources to rally more troops?";
+		promptMsgEle.style.display = "block";
+		waitEle.css("display", "none");
+
+		updateStrength(playerData);
+		useRallyEle.css("display", "block");
+		showStrengthContainer.css("display", "block");
+		//hide the building section when displaying the advisor section
+		chooseBuildingEle.css("display", "none");
+
+	});
+
 	//update my dice buttons
 	socket.on("update-dice", ({ color, dice, bonusDie, token, market }) => {
 		console.log("update dice message recieved", color, dice, bonusDie);
