@@ -404,7 +404,7 @@ $(document).ready(function () {
 		waitEle.css("display", "none");
 
 		updateStrength(playerData);
-		useRallyEle.css("display", "block");
+		resEle.css("display", "block");
 		combatContainer.css("display", "block");
 		//hide the building section when displaying the advisor section
 		chooseBuildingEle.css("display", "none");
@@ -967,133 +967,28 @@ $(document).ready(function () {
 	function updateStrength(playerData) {
 		console.log("updating rally container for", playerData);
 		
-		//clear existing elements
-		useRallyEle.empty();
-		//Always need a done button
-		let btnDone = $('<button/>', {
-			text: "Done",
-			id: "btn-send-building",
-			class: "btn-choice",
-			click: sendBuilding
-		})
-		buildingEle.append(btnDone);
+		//span elements that will display the data
+		let advStrEle = document.getElementById("str-advisor"),
+		buildStrEle = document.getElementById("str-building"),
+		curRallyStrEle = document.getElementById("str-rally"),
+		totalStrEle = document.getElementById("str-total");
 
-		//create the building div
-		for (let i = 0; i < usableBuildings.length; i++) {
-			//general layout
-			let useBuildEle = $("<div>").attr("class", "use-building"),
-				row = $("<div>").attr("class", "row"),
-				col1 = $("<div>").attr("class", "col-md-2"),
-				col2 = $("<div>").attr("class", "col-md-2"),
-				col3 = $("<div>").attr("class", "col-md-4"),
-				col4 = $("<div>").attr("class", "col-md-4");
+		//data we'll be displaying
+		let advStr = playerData.strength,
+		buildStr = 0,
+		rallyStr = 0,
+		totalStr = advStr + buildStr + rallyStr;
 
-			//create data elements
-			let name = usableBuildings[i].building.name;
-			let img = `<img alt="${name}" class="btn-icon" src="../assets/images/buildings/${name}.png" />`;
-			let description = `During ${usableBuildings[i].building.effectTiming} ${usableBuildings[i].building.effect}`;
-			switch (usableBuildings[i].building.choiceType) {
-				case "Dice YN":
-				case "Recruit YN":
-				case "YN": //most buildings only need a generic use button
-					let useBtn = $('<button/>', {
-						text: "Use " + name,
-						id: "btnUse" + name,
-						class: "btn-choice",
-						building: name,
-						choice: "YN",
-						click: useBuildingToggle
-					})
-					col4.append(useBtn);
-					break;
-				case "Dice": //when individual dice must be selected
-					let dieBtn1 = $('<button/>', {
-						text: `<img alt="Die 1" class="icon" src="../assets/images/dice-${myColor}/die-${$usableBuildings[i].dice[0]}.png`,
-						id: "btnUse" + name,
-						class: "btn-choice",
-						building: name,
-						choice: 0,
-						click: useBuildingToggle
-					})
-					let dieBtn2 = $('<button/>', {
-						text: `<img alt="Die 2" class="icon" src="../assets/images/dice-${myColor}/die-${$usableBuildings[i].dice[1]}.png`,
-						id: "btnUse" + name,
-						class: "btn-choice",
-						building: name,
-						choice: 1,
-						click: useBuildingToggle
-					})
-					let dieBtn3 = $('<button/>', {
-						text: `<img alt="Die 3" class="icon" src="../assets/images/dice-${myColor}/die-${$usableBuildings[i].dice[2]}.png`,
-						id: "btnUse" + name,
-						class: "btn-choice",
-						building: name,
-						choice: 2,
-						click: useBuildingToggle
-					})
-					col4.append(dieBtn1, dieBtn2, dieBtn3);
-					break;
-				case "Resource": //when a resource must be chosen
-					let resBtn1 = $('<button/>', {
-						text: `<img alt="Resource 1" class="icon" src="../assets/images/icons/res1-icon.png`,
-						id: "btnUse" + name,
-						class: "btn-choice",
-						building: name,
-						choice: 0,
-						click: useBuildingToggle
-					})
-					let resBtn2 = $('<button/>', {
-						text: `<img alt="Resource 2" class="icon" src="../assets/images/icons/res2-icon.png`,
-						id: "btnUse" + name,
-						class: "btn-choice",
-						building: name,
-						choice: 1,
-						click: useBuildingToggle
-					})
-					let resBtn3 = $('<button/>', {
-						text: `<img alt="Resource 3" class="icon" src="../assets/images/icons/res3-icon.png`,
-						id: "btnUse" + name,
-						class: "btn-choice",
-						building: name,
-						choice: 2,
-						click: useBuildingToggle
-					})
-					let resBtn4 = $('<button/>', {
-						ttext: `<img alt="2Token" class="icon" src="../assets/images/icons/2token-icon.png`,
-						id: "btnUse" + name,
-						class: "btn-choice",
-						building: name,
-						choice: 3,
-						click: useBuildingToggle
-					})
-					col4.append(resBtn1, resBtn2, resBtn3, resBtn4);
-					break;
-			}
-			col1.append(name);
-			col2.append(img);
-			col3.append(description);
+		//show building strength, currently as one number TODO: add new list elements to display
+		for(let i=0; i<playerData.constructedBuildings.length; i++){
+			buildStr += playerData.constructedBuildings[i].strength;
+		}
 
-
-			row.append(col1, col2, col3, col4);
-			useBuildEle.append(row);
-
-			//show dice for the buildings it matters for
-			if (usableBuildings[i].building.choiceType === "Dice" ||
-				usableBuildings[i].building.choiceType === "Dice YN" ||
-				usableBuildings[i].building.choiceType === "Recruit YN") {
-				let row2 = $("<div>"),
-					diceCol = $("<div>").attr("class", "col-md-12 text-center");
-
-				for (let ii = 0; ii < dice.length; ii++) {
-					diceCol.append(`<img alt="player dice" class="btn-icon" src="../assets/images/dice-${myColor}/die-${dice[ii]}.png" />`);
-				};
-				row2.append(diceCol);
-				building.append(row2);
-			}
-			//add the building
-			buildingEle.prepend(useBuildEle);
-		};
-
+		//display the data
+		advStrEle.textContent = advStr;
+		buildStrEle.textContent = buildStr;
+		curRallyStrEle.textContent = rallyStr;
+		totalStrEle.textContent = totalStr;
 	}
 
 	//function converts icon names into images
