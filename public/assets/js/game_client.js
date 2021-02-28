@@ -19,7 +19,7 @@ $(document).ready(function () {
 		chooseBuildingEle = $("#building-container"),
 		createBuildingEle = $("#select-building"),
 		useAdvisorContainer = $("#use-advisors"),
-		showStrengthContainer = $("#rally-container"),
+		combatContainer = $("#combat-container"),
 		rewardEle = $("#get-reward"),
 		waitEle = $("#waiting"),
 		diceImg = document.getElementsByClassName("dice-btn"),
@@ -384,7 +384,7 @@ $(document).ready(function () {
 			case "Winter is coming. Will you spend any resources to rally more troops?":
 				updateStrength(message);
 				resEle.css("display", "block");
-				showStrengthContainer.css("display", "block");
+				combatContainer.css("display", "block");
 				//hide the building section when displaying the advisor section
 				chooseBuildingEle.css("display", "none");
 				break;
@@ -405,7 +405,7 @@ $(document).ready(function () {
 
 		updateStrength(playerData);
 		useRallyEle.css("display", "block");
-		showStrengthContainer.css("display", "block");
+		combatContainer.css("display", "block");
 		//hide the building section when displaying the advisor section
 		chooseBuildingEle.css("display", "none");
 

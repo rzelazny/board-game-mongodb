@@ -41,7 +41,7 @@
 					<p><img src="../assets/images/icons/res1-icon.png" class="icon" alt="Resource 1"> <span id="sidebar-res1"> : 0 </span></p>
 					<p><img src="../assets/images/icons/res2-icon.png" class="icon" alt="Resource 2"> <span id="sidebar-res2"> : 0 </span></p>
 					<p><img src="../assets/images/icons/res3-icon.png" class="icon" alt="Resource 3"> <span id="sidebar-res3"> : 0 </span></p>
-					<p><img src="../assets/images/icons/2token-icon.png" class="icon" alt="Resource 3"> <span id="sidebar-2token"> : 0 </span></p>
+					<p><img src="../assets/images/icons/2token-icon.png" class="icon" alt="Two token"> <span id="sidebar-2token"> : 0 </span></p>
 
 				</div>
 			</div>
@@ -301,7 +301,18 @@
 					<div class="container-fluid" id="building-container" style="display:none">
 					</div>
 
-					<div class="container-fluid" id="rally-container" style="display:none">
+					<div class="container-fluid" id="combat-container" style="display:none">
+						<div class="row">
+							<div class="col-lg-8"> <!-- Strength calcs here -->
+								<p>Strength from Buildings: <span id="str-building">0</span></p>
+								<p>Strength from Advisors: <span id="str-advisor">0</span></p>
+								<p>Strength from Rallied Troops: <span id="str-rally">0</span></p>
+								<p>Current Strength Total: <span id="str-total">0</span></p>
+							</div>
+							<div class="col-lg-4"> <!-- Enemy card here -->
+								<div id="display-enemy"></div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
