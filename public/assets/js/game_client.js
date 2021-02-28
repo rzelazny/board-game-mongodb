@@ -20,7 +20,6 @@ $(document).ready(function () {
 		createBuildingEle = $("#select-building"),
 		useAdvisorContainer = $("#use-advisors"),
 		showStrengthContainer = $("#rally-container"),
-		useRallyEle = $("#use-rally"),
 		rewardEle = $("#get-reward"),
 		waitEle = $("#waiting"),
 		diceImg = document.getElementsByClassName("dice-btn"),
@@ -286,7 +285,7 @@ $(document).ready(function () {
 		switch (parsePhase) {
 			case 1: //aid phase one
 				updateNavBar(1);
-				//$("#select-resource").css("display", "block");
+				//resEle.css("display", "block"); only show res if mutliple players get the bonus
 				break;
 			case 2: //productive season 1
 				updateNavBar(2);
@@ -311,6 +310,7 @@ $(document).ready(function () {
 				break;
 			case 22: //rally phase
 				updateNavBar(7);
+				resEle.css("display", "block");
 				break;
 			default:
 				console.log("Phase not found");
@@ -383,7 +383,7 @@ $(document).ready(function () {
 				break;
 			case "Winter is coming. Will you spend any resources to rally more troops?":
 				updateStrength(message);
-				useRallyEle.css("display", "block");
+				resEle.css("display", "block");
 				showStrengthContainer.css("display", "block");
 				//hide the building section when displaying the advisor section
 				chooseBuildingEle.css("display", "none");
@@ -965,9 +965,10 @@ $(document).ready(function () {
 
 	//update strength data for the rally phase
 	function updateStrength(playerData) {
-		console.log("updating rally container");
-		//clear existing buildings
-		buildingEle.empty();
+		console.log("updating rally container for", playerData);
+		
+		//clear existing elements
+		useRallyEle.empty();
 		//Always need a done button
 		let btnDone = $('<button/>', {
 			text: "Done",
