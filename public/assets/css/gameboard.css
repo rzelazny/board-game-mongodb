@@ -25,6 +25,7 @@ footer{
     overflow-y: scroll; */
 }
 
+#combat-container,
 #advisor-container{
     background-image: url("/assets/images/backgrounds/stone-background.png") ;
     max-height: 700px;
