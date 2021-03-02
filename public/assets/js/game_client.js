@@ -99,7 +99,7 @@ $(document).ready(function () {
 
 		let updateData = {
 			player: curUser,
-			choiceType: "aidResource",
+			choiceType: "resource",
 			choice: this.getAttribute("choice")
 		}
 		socket.emit("player-choice", updateData)
