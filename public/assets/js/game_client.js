@@ -970,14 +970,16 @@ $(document).ready(function () {
 		//span elements that will display the data
 		let advStrEle = document.getElementById("str-advisor"),
 		buildStrEle = document.getElementById("str-building"),
+		buildBonusStrEle = document.getElementById("str-bonus"),
 		curRallyStrEle = document.getElementById("str-rally"),
 		totalStrEle = document.getElementById("str-total");
 
 		//data we'll be displaying
 		let advStr = playerData.strength,
 		buildStr = 0,
+		buildBonusStr = 0,
 		rallyStr = 0,
-		totalStr = advStr + buildStr + rallyStr;
+		totalStr = advStr + buildStr + buildBonusStr + rallyStr;
 
 		//show building strength, currently as one number TODO: add new list elements to display
 		for(let i=0; i<playerData.constructedBuildings.length; i++){
@@ -987,6 +989,7 @@ $(document).ready(function () {
 		//display the data
 		advStrEle.textContent = advStr;
 		buildStrEle.textContent = buildStr;
+		buildBonusStrEle.text = buildBonusStr;
 		curRallyStrEle.textContent = rallyStr;
 		totalStrEle.textContent = totalStr;
 	}
