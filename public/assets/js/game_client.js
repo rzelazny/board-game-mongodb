@@ -984,6 +984,8 @@ $(document).ready(function () {
 		//show building strength, currently as one number TODO: add new list elements to display
 		for(let i=0; i<playerData.constructedBuildings.length; i++){
 			buildStr += playerData.constructedBuildings[i].strength;
+			buildBonusStr += playerData.constructedBuildings[i].strength;
+			rallyStr += playerData.constructedBuildings[i].strength;
 		}
 
 		//display the data
